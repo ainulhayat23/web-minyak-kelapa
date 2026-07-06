@@ -1,0 +1,377 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+|--------------------------------------------------------------------------
+| Identitas Visual UMKM Maloppo
+|--------------------------------------------------------------------------
+|
+| Merah utama   : #BE0000
+| Merah gelap   : #990100
+| Kuning utama  : #F7E900
+| Kuning lembut : #FFF9B0
+| Latar halaman : #FFFEF5
+|
+*/
+
+@layer base {
+    :root {
+        --maloppo-red: #be0000;
+        --maloppo-red-dark: #990100;
+        --maloppo-red-soft: #fee2e2;
+
+        --maloppo-yellow: #f7e900;
+        --maloppo-yellow-soft: #fff9b0;
+        --maloppo-yellow-pale: #fffdf0;
+
+        --maloppo-white: #ffffff;
+        --maloppo-background: #fffef5;
+
+        --maloppo-text: #1f2937;
+        --maloppo-text-muted: #6b7280;
+        --maloppo-border: #f1e7a4;
+
+        --maloppo-success: #16a34a;
+        --maloppo-success-soft: #dcfce7;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--maloppo-background);
+        color: var(--maloppo-text);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+        background-color: var(--maloppo-yellow);
+        color: var(--maloppo-red-dark);
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    input,
+    textarea,
+    select {
+        accent-color: var(--maloppo-red);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        border-color: var(--maloppo-red) !important;
+        --tw-ring-color: rgba(190, 0, 0, 0.18) !important;
+    }
+}
+
+@layer components {
+    /*
+    |--------------------------------------------------------------------------
+    | Tombol
+    |--------------------------------------------------------------------------
+    */
+
+    .btn-maloppo-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.625rem;
+        background-color: var(--maloppo-red);
+        padding: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--maloppo-white);
+        box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.05),
+            0 6px 14px rgba(190, 0, 0, 0.12);
+        transition:
+            background-color 150ms ease,
+            transform 150ms ease,
+            box-shadow 150ms ease;
+    }
+
+    .btn-maloppo-primary:hover {
+        background-color: var(--maloppo-red-dark);
+        transform: translateY(-1px);
+        box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.05),
+            0 8px 18px rgba(153, 1, 0, 0.18);
+    }
+
+    .btn-maloppo-primary:focus {
+        outline: 3px solid rgba(247, 233, 0, 0.55);
+        outline-offset: 2px;
+    }
+
+    .btn-maloppo-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border: 1px solid var(--maloppo-red);
+        border-radius: 0.625rem;
+        background-color: var(--maloppo-white);
+        padding: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--maloppo-red);
+        transition:
+            background-color 150ms ease,
+            color 150ms ease,
+            transform 150ms ease;
+    }
+
+    .btn-maloppo-secondary:hover {
+        background-color: var(--maloppo-yellow-soft);
+        color: var(--maloppo-red-dark);
+        transform: translateY(-1px);
+    }
+
+    .btn-maloppo-yellow {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border: 1px solid var(--maloppo-yellow);
+        border-radius: 0.625rem;
+        background-color: var(--maloppo-yellow);
+        padding: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--maloppo-red-dark);
+        transition:
+            filter 150ms ease,
+            transform 150ms ease;
+    }
+
+    .btn-maloppo-yellow:hover {
+        filter: brightness(0.96);
+        transform: translateY(-1px);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Kartu
+    |--------------------------------------------------------------------------
+    */
+
+    .card-maloppo {
+        border: 1px solid var(--maloppo-border);
+        border-radius: 1rem;
+        background-color: var(--maloppo-white);
+        box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.04),
+            0 8px 24px rgba(153, 1, 0, 0.04);
+    }
+
+    .card-maloppo-hover {
+        transition:
+            transform 180ms ease,
+            box-shadow 180ms ease,
+            border-color 180ms ease;
+    }
+
+    .card-maloppo-hover:hover {
+        border-color: rgba(190, 0, 0, 0.25);
+        transform: translateY(-3px);
+        box-shadow:
+            0 4px 8px rgba(0, 0, 0, 0.05),
+            0 14px 30px rgba(153, 1, 0, 0.08);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Label dan Badge
+    |--------------------------------------------------------------------------
+    */
+
+    .label-maloppo {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        background-color: var(--maloppo-yellow-soft);
+        padding: 0.375rem 0.875rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--maloppo-red-dark);
+        text-transform: uppercase;
+    }
+
+    .badge-maloppo-red {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        background-color: var(--maloppo-red-soft);
+        padding: 0.3rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--maloppo-red-dark);
+    }
+
+    .badge-maloppo-yellow {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        background-color: var(--maloppo-yellow);
+        padding: 0.3rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--maloppo-red-dark);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hero dan Bagian Halaman
+    |--------------------------------------------------------------------------
+    */
+
+    .hero-maloppo {
+        background:
+            radial-gradient(
+                circle at top right,
+                rgba(247, 233, 0, 0.42),
+                transparent 34%
+            ),
+            linear-gradient(
+                135deg,
+                #fffef5 0%,
+                #fff9b0 100%
+            );
+    }
+
+    .section-maloppo-soft {
+        background-color: var(--maloppo-yellow-pale);
+    }
+
+    .section-maloppo-red {
+        background:
+            linear-gradient(
+                135deg,
+                var(--maloppo-red) 0%,
+                var(--maloppo-red-dark) 100%
+            );
+        color: var(--maloppo-white);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Garis Dekorasi
+    |--------------------------------------------------------------------------
+    */
+
+    .maloppo-brand-line {
+        height: 0.25rem;
+        width: 100%;
+        background:
+            linear-gradient(
+                90deg,
+                var(--maloppo-red) 0%,
+                var(--maloppo-red) 65%,
+                var(--maloppo-yellow) 65%,
+                var(--maloppo-yellow) 100%
+            );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Form
+    |--------------------------------------------------------------------------
+    */
+
+    .input-maloppo {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: 0.625rem;
+        background-color: var(--maloppo-white);
+        padding: 0.75rem 0.875rem;
+        color: var(--maloppo-text);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        transition:
+            border-color 150ms ease,
+            box-shadow 150ms ease;
+    }
+
+    .input-maloppo:focus {
+        border-color: var(--maloppo-red);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(190, 0, 0, 0.13);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Notifikasi
+    |--------------------------------------------------------------------------
+    */
+
+    .alert-maloppo-success {
+        border: 1px solid #86efac;
+        border-radius: 0.625rem;
+        background-color: var(--maloppo-success-soft);
+        padding: 1rem 1.25rem;
+        font-size: 0.875rem;
+        color: #166534;
+    }
+
+    .alert-maloppo-error {
+        border: 1px solid #fca5a5;
+        border-radius: 0.625rem;
+        background-color: #fee2e2;
+        padding: 1rem 1.25rem;
+        font-size: 0.875rem;
+        color: #991b1b;
+    }
+}
+
+@layer utilities {
+    .text-maloppo-red {
+        color: var(--maloppo-red);
+    }
+
+    .text-maloppo-red-dark {
+        color: var(--maloppo-red-dark);
+    }
+
+    .text-maloppo-yellow {
+        color: var(--maloppo-yellow);
+    }
+
+    .bg-maloppo-red {
+        background-color: var(--maloppo-red);
+    }
+
+    .bg-maloppo-red-dark {
+        background-color: var(--maloppo-red-dark);
+    }
+
+    .bg-maloppo-yellow {
+        background-color: var(--maloppo-yellow);
+    }
+
+    .bg-maloppo-yellow-soft {
+        background-color: var(--maloppo-yellow-soft);
+    }
+
+    .bg-maloppo-page {
+        background-color: var(--maloppo-background);
+    }
+
+    .border-maloppo-red {
+        border-color: var(--maloppo-red);
+    }
+
+    .border-maloppo-yellow {
+        border-color: var(--maloppo-yellow);
+    }
+
+    .border-maloppo-soft {
+        border-color: var(--maloppo-border);
+    }
+}
