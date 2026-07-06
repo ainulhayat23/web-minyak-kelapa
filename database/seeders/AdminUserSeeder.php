@@ -15,12 +15,12 @@ class AdminUserSeeder extends Seeder
     {
         User::firstOrCreate(
             [
-                'email' => env('ADMIN_EMAIL'),
+                'email' => env('ADMIN_EMAIL', 'admin@maloppo.com'),
             ],
             [
                 'name' => env('ADMIN_NAME', 'Admin Maloppo'),
                 'email_verified_at' => now(),
-                'password' => Hash::make(env('ADMIN_PASSWORD')),
+                'password' => Hash::make(env('ADMIN_PASSWORD', 'admin123')),
             ]
         );
     }
