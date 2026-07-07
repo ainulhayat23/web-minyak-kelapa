@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
 
@@ -24,137 +25,88 @@
     <x-public-navbar />
 
     {{-- Header halaman --}}
-    <section class="hero-maloppo relative overflow-hidden">
+    <header class="border-b border-gray-200 bg-white">
 
-        <div
-            class="absolute -right-24 -top-24 h-64 w-64 rounded-full opacity-40"
-            style="background-color: #f7e900;"
-        ></div>
+        <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
 
-        <div
-            class="absolute -bottom-28 -left-24 h-72 w-72 rounded-full opacity-10"
-            style="background-color: #be0000;"
-        ></div>
+            <div
+                class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+            >
+                <div>
 
-        <div
-            class="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 py-16 lg:grid-cols-[1fr_auto] lg:py-20"
-        >
+                    <p class="text-sm font-semibold uppercase tracking-wider text-red-700">
+                        Blog dan Kegiatan
+                    </p>
 
-            <div>
+                    <h1 class="mt-2 max-w-3xl text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+                        Kegiatan Terbaru UMKM Maloppo
+                    </h1>
 
-                <span class="label-maloppo">
-                    Blog dan Kegiatan
-                </span>
-
-                <h1
-                    class="mt-5 max-w-3xl text-4xl font-extrabold leading-tight text-gray-900 md:text-5xl"
-                >
-                    Kegiatan Terbaru
-                    <span class="text-maloppo-red">
-                        UMKM Maloppo
-                    </span>
-                </h1>
-
-                <p class="mt-5 max-w-2xl text-lg leading-8 text-gray-600">
-                    Informasi mengenai kegiatan, pelatihan, proses produksi,
-                    pameran, dan perkembangan usaha minyak kelapa Maloppo.
-                </p>
-
-                <div class="mt-7 flex flex-wrap gap-3">
-
-                    <div
-                        class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
-                    >
-                        <span>🏭</span>
-                        Proses produksi
-                    </div>
-
-                    <div
-                        class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
-                    >
-                        <span>🎓</span>
-                        Pelatihan UMKM
-                    </div>
-
-                    <div
-                        class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
-                    >
-                        <span>📢</span>
-                        Informasi terbaru
-                    </div>
+                    <p class="mt-3 max-w-2xl text-sm leading-6 text-gray-600 sm:text-base">
+                        Informasi mengenai kegiatan, pelatihan, proses produksi,
+                        pameran, dan perkembangan usaha UMKM Maloppo.
+                    </p>
 
                 </div>
 
-            </div>
-
-            {{-- Logo Maloppo --}}
-            <div
-                class="mx-auto flex h-44 w-64 items-center justify-center overflow-hidden rounded-3xl border-4 bg-white p-3 shadow-lg lg:mx-0"
-                style="border-color: #f7e900;"
-            >
-                <img
-                    src="{{ asset('images/brand/logo-maloppo-full.jpg') }}"
-                    alt="Logo UMKM Maloppo"
-                    class="h-full w-full object-contain"
+                <a
+                    href="{{ route('catalog.index') }}"
+                    class="btn-maloppo-secondary shrink-0"
                 >
+                    Lihat Produk
+                </a>
+
             </div>
 
         </div>
 
-    </section>
+    </header>
 
     {{-- Daftar kegiatan --}}
-    <main class="mx-auto max-w-7xl px-6 py-14 lg:py-16">
+    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
 
-        {{-- Judul daftar --}}
+        {{-- Informasi daftar --}}
         <div
-            class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+            class="mb-7 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"
         >
-
             <div>
 
-                <span class="label-maloppo">
-                    Informasi Terbaru
-                </span>
-
-                <h2 class="mt-4 text-3xl font-extrabold text-gray-900">
+                <h2 class="text-xl font-semibold text-gray-900">
                     Berita dan Kegiatan
                 </h2>
 
-                <p class="mt-2 max-w-2xl leading-7 text-gray-500">
-                    Ikuti berbagai kegiatan dan perkembangan terbaru dari
-                    UMKM Maloppo.
+                <p class="mt-1 text-sm text-gray-500">
+                    {{ $posts->total() }} artikel dan kegiatan ditemukan.
                 </p>
 
             </div>
 
-            <a
-                href="{{ route('catalog.index') }}"
-                class="btn-maloppo-secondary whitespace-nowrap"
-            >
-                Lihat Produk
-            </a>
+            @if ($posts->hasPages())
 
+                <p class="text-xs text-gray-500">
+                    Halaman {{ $posts->currentPage() }}
+                    dari {{ $posts->lastPage() }}
+                </p>
+
+            @endif
         </div>
 
         {{-- Grid kegiatan --}}
-        <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
 
             @forelse ($posts as $post)
 
                 <article
-                    class="card-maloppo card-maloppo-hover flex h-full flex-col overflow-hidden"
+                    class="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white"
                 >
 
-                    {{-- Gambar kegiatan --}}
+                    {{-- Gambar --}}
                     <a
                         href="{{ route('blog.show', $post->slug) }}"
-                        class="relative block overflow-hidden"
+                        class="block"
                     >
-
                         <div
-                            class="flex h-60 items-center justify-center overflow-hidden"
-                            style="background-color: #fffdf0;"
+                            class="flex h-52 items-center justify-center overflow-hidden bg-gray-50"
                         >
 
                             @if ($post->image)
@@ -162,109 +114,71 @@
                                 <img
                                     src="{{ asset('storage/' . $post->image) }}"
                                     alt="{{ $post->title }}"
-                                    class="h-full w-full object-cover transition duration-300 hover:scale-105"
+                                    class="h-full w-full object-cover"
                                 >
 
                             @else
 
-                                <div class="px-6 text-center">
-
-                                    <div class="text-6xl">
-                                        📰
-                                    </div>
-
-                                    <p class="mt-4 text-sm text-gray-400">
-                                        Gambar kegiatan belum tersedia
-                                    </p>
-
-                                </div>
+                                <p class="px-5 text-center text-sm text-gray-400">
+                                    Gambar kegiatan belum tersedia
+                                </p>
 
                             @endif
 
                         </div>
-
-                        {{-- Label --}}
-                        <div class="absolute left-4 top-4">
-
-                            <span
-                                class="inline-flex rounded-full px-3 py-1 text-xs font-bold shadow-sm"
-                                style="
-                                    background-color: #f7e900;
-                                    color: #990100;
-                                "
-                            >
-                                Kegiatan Maloppo
-                            </span>
-
-                        </div>
-
                     </a>
 
-                    {{-- Informasi kegiatan --}}
-                    <div class="flex flex-1 flex-col p-6">
+                    {{-- Isi artikel --}}
+                    <div class="flex flex-1 flex-col p-5">
 
-                        {{-- Tanggal dan penulis --}}
+                        {{-- Metadata --}}
                         <div
-                            class="flex flex-wrap items-center gap-2 text-xs text-gray-500"
+                            class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500"
                         >
-
-                            <span
-                                class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5"
-                                style="background-color: #fff9b0;"
-                            >
-                                <span>📅</span>
-
+                            <span>
                                 {{ $post->published_at?->format('d M Y') ?? 'Belum diterbitkan' }}
                             </span>
 
-                            <span
-                                class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5"
-                            >
-                                <span>👤</span>
-
-                                {{ $post->user?->name ?? 'Admin' }}
+                            <span class="text-gray-300">
+                                •
                             </span>
 
+                            <span>
+                                {{ $post->user?->name ?? 'Admin' }}
+                            </span>
                         </div>
 
                         {{-- Judul --}}
-                        <h3
-                            class="mt-5 text-xl font-extrabold leading-7 text-gray-900"
-                        >
+                        <h2 class="mt-3 line-clamp-2 text-lg font-semibold leading-7 text-gray-900">
+
                             <a
                                 href="{{ route('blog.show', $post->slug) }}"
-                                class="transition hover:text-maloppo-red"
+                                class="transition hover:text-red-700"
                             >
                                 {{ $post->title }}
                             </a>
-                        </h3>
+
+                        </h2>
 
                         {{-- Ringkasan --}}
-                        <p class="mt-3 line-clamp-4 flex-1 text-sm leading-7 text-gray-600">
+                        <p class="mt-3 line-clamp-4 flex-1 text-sm leading-6 text-gray-600">
                             {{
                                 $post->excerpt
-                                ?: \Illuminate\Support\Str::limit(
-                                    strip_tags($post->content),
-                                    150
-                                )
+                                    ?: \Illuminate\Support\Str::limit(
+                                        strip_tags($post->content),
+                                        150
+                                    )
                             }}
                         </p>
 
-                        {{-- Tombol --}}
-                        <div
-                            class="mt-6 border-t pt-5"
-                            style="border-color: #f1e7a4;"
-                        >
+                        {{-- Aksi --}}
+                        <div class="mt-5 border-t border-gray-100 pt-4">
 
                             <a
                                 href="{{ route('blog.show', $post->slug) }}"
-                                class="inline-flex items-center gap-2 text-sm font-bold text-maloppo-red"
+                                class="text-sm font-semibold text-red-700 transition hover:text-red-900"
                             >
                                 Baca selengkapnya
-
-                                <span aria-hidden="true">
-                                    →
-                                </span>
                             </a>
 
                         </div>
@@ -275,32 +189,27 @@
 
             @empty
 
-                <div class="card-maloppo col-span-full px-6 py-20 text-center">
+                <section
+                    class="col-span-full rounded-xl border border-gray-200 bg-white px-5 py-14 text-center"
+                >
 
-                    <div
-                        class="mx-auto flex h-20 w-20 items-center justify-center rounded-full text-5xl"
-                        style="background-color: #fff9b0;"
-                    >
-                        📰
-                    </div>
-
-                    <h3 class="mt-6 text-xl font-bold text-gray-800">
+                    <h2 class="text-lg font-semibold text-gray-900">
                         Belum ada kegiatan yang diterbitkan
-                    </h3>
+                    </h2>
 
-                    <p class="mx-auto mt-3 max-w-md text-sm leading-6 text-gray-500">
-                        Informasi kegiatan terbaru UMKM Maloppo akan
-                        ditampilkan pada halaman ini.
+                    <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-gray-500">
+                        Informasi kegiatan terbaru UMKM Maloppo akan ditampilkan
+                        pada halaman ini.
                     </p>
 
                     <a
                         href="{{ route('home') }}"
-                        class="btn-maloppo-primary mt-6"
+                        class="btn-maloppo-secondary mt-5"
                     >
                         Kembali ke Beranda
                     </a>
 
-                </div>
+                </section>
 
             @endforelse
 
@@ -308,77 +217,74 @@
 
         {{-- Pagination --}}
         @if ($posts->hasPages())
-            <div
-                class="mt-12 rounded-2xl border bg-white px-5 py-4 shadow-sm"
-                style="border-color: #f1e7a4;"
-            >
+
+            <div class="mt-8 rounded-xl border border-gray-200 bg-white px-5 py-4">
                 {{ $posts->links() }}
             </div>
+
         @endif
 
     </main>
 
-    {{-- Ajakan --}}
-    <section class="section-maloppo-red">
+    {{-- Informasi singkat --}}
+    <section class="border-y border-gray-200 bg-white">
 
         <div
-            class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-7 px-6 py-12 text-center lg:flex-row lg:text-left"
+            class="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-10 sm:grid-cols-3 sm:px-6 lg:px-8"
         >
 
             <div>
 
-                <span
-                    class="inline-flex rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider"
-                    style="
-                        background-color: #f7e900;
-                        color: #990100;
-                    "
-                >
-                    UMKM Maloppo
-                </span>
-
-                <h2 class="mt-4 text-2xl font-extrabold text-white">
-                    Temukan produk minyak kelapa Maloppo
+                <h2 class="text-sm font-semibold text-gray-900">
+                    Proses Produksi
                 </h2>
 
-                <p class="mt-2 max-w-2xl text-sm leading-7 text-red-100">
-                    Lihat pilihan produk, ukuran, harga, dan ketersediaan
-                    stok melalui katalog kami.
+                <p class="mt-1 text-xs leading-5 text-gray-500">
+                    Informasi mengenai proses pengolahan produk Maloppo.
                 </p>
 
             </div>
 
-            <a
-                href="{{ route('catalog.index') }}"
-                class="btn-maloppo-yellow whitespace-nowrap px-7 py-3.5"
-            >
-                Buka Katalog Produk
-            </a>
+            <div>
+
+                <h2 class="text-sm font-semibold text-gray-900">
+                    Pelatihan UMKM
+                </h2>
+
+                <p class="mt-1 text-xs leading-5 text-gray-500">
+                    Dokumentasi pelatihan dan pengembangan usaha.
+                </p>
+
+            </div>
+
+            <div>
+
+                <h2 class="text-sm font-semibold text-gray-900">
+                    Informasi Terbaru
+                </h2>
+
+                <p class="mt-1 text-xs leading-5 text-gray-500">
+                    Perkembangan kegiatan dan usaha UMKM Maloppo.
+                </p>
+
+            </div>
 
         </div>
 
     </section>
 
     {{-- Footer --}}
-    <footer
-        class="border-t bg-white"
-        style="border-color: #f1e7a4;"
-    >
+    <footer class="border-t border-gray-200 bg-white">
 
-        <div class="maloppo-brand-line"></div>
+        <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
 
-        <div class="mx-auto max-w-7xl px-6 py-10">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
 
-            <div
-                class="flex flex-col items-center justify-between gap-8 lg:flex-row"
-            >
-
-                {{-- Identitas footer --}}
-                <div class="text-center lg:text-left">
+                {{-- Identitas --}}
+                <div>
 
                     <div
-                        class="mx-auto flex h-20 w-36 items-center justify-center overflow-hidden rounded-xl lg:mx-0"
-                        style="background-color: #f7e900;"
+                        class="flex h-14 w-32 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
                     >
                         <img
                             src="{{ asset('images/brand/logo-maloppo-wordmark.jpg') }}"
@@ -387,28 +293,28 @@
                         >
                     </div>
 
-                    <p class="mt-4 text-sm font-bold text-gray-800">
+                    <p class="mt-4 text-sm font-semibold text-gray-900">
                         UMKM Maloppo
                     </p>
 
-                    <p class="mt-1 text-xs text-gray-500">
-                        Produk minyak kelapa murni dari kelapa pilihan
+                    <p class="mt-1 max-w-sm text-xs leading-5 text-gray-500">
+                        Produk minyak kelapa murni dari kelapa pilihan.
                     </p>
 
                 </div>
 
                 {{-- Media sosial --}}
-                <div class="text-center">
+                <div class="md:text-right">
 
-                    <p class="text-sm font-bold text-gray-700">
-                        Ikuti dan hubungi UMKM Maloppo
+                    <p class="text-sm font-semibold text-gray-900">
+                        Hubungi dan ikuti Maloppo
                     </p>
 
                     <p class="mt-1 text-xs text-gray-500">
-                        Dapatkan informasi produk dan kegiatan terbaru kami.
+                        Dapatkan informasi produk dan kegiatan terbaru.
                     </p>
 
-                    <div class="mt-5">
+                    <div class="mt-4 md:flex md:justify-end">
                         <x-social-media />
                     </div>
 
@@ -417,16 +323,18 @@
             </div>
 
             <div
-                class="mt-8 flex flex-col gap-2 border-t pt-6 text-center text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between sm:text-left"
-                style="border-color: #f1e7a4;"
+                class="mt-8 flex flex-col gap-2 border-t border-gray-200 pt-5 text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between"
             >
                 <p>
-                    &copy; {{ date('Y') }} UMKM Maloppo. Hak cipta dilindungi.
+                    &copy; {{ date('Y') }} UMKM Maloppo.
                 </p>
 
-                <p>
-                    Produk lokal dari kelapa pilihan
-                </p>
+                <a
+                    href="{{ route('catalog.index') }}"
+                    class="font-medium text-gray-600 transition hover:text-red-700"
+                >
+                    Lihat Produk
+                </a>
             </div>
 
         </div>
@@ -434,4 +342,5 @@
     </footer>
 
 </body>
+
 </html>

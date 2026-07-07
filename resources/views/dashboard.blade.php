@@ -5,328 +5,160 @@
         <div
             class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
-
             <div>
-
-                <h1 class="text-2xl font-extrabold leading-tight text-gray-900">
-                    Dashboard Admin
+                <h1 class="page-title-maloppo">
+                    Dashboard
                 </h1>
 
-                <p class="mt-2 text-sm font-normal text-gray-600">
-                    Ringkasan pengelolaan produk dan aktivitas UMKM Maloppo.
+                <p class="page-description-maloppo">
+                    Ringkasan data produk dan persediaan UMKM Maloppo.
                 </p>
-
             </div>
 
             <a
                 href="{{ route('admin.products.create') }}"
                 class="btn-maloppo-primary"
             >
-                <span class="text-lg">
-                    +
-                </span>
-
                 Tambah Produk
             </a>
-
         </div>
 
     </x-slot>
 
-    <div class="py-8 lg:py-10">
+    <div class="py-6 lg:py-8">
 
-        <div class="mx-auto max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
 
-            {{-- Sambutan --}}
-            <section
-                class="relative overflow-hidden rounded-3xl p-6 shadow-lg sm:p-8"
-                style="
-                    background:
-                        radial-gradient(
-                            circle at top right,
-                            rgba(247, 233, 0, 0.35),
-                            transparent 38%
-                        ),
-                        linear-gradient(
-                            135deg,
-                            #be0000 0%,
-                            #990100 100%
-                        );
-                "
-            >
-
-                {{-- Dekorasi --}}
-                <div
-                    class="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full opacity-20"
-                    style="background-color: #f7e900;"
-                ></div>
+            {{-- Sambutan sederhana --}}
+            <section class="panel-maloppo px-5 py-5 sm:px-6">
 
                 <div
-                    class="pointer-events-none absolute -bottom-24 left-1/3 h-52 w-52 rounded-full bg-white opacity-5"
-                ></div>
-
-                <div
-                    class="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between"
+                    class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
                 >
-
                     <div>
+                        <p class="text-sm text-gray-500">
+                            Selamat datang,
+                        </p>
 
-                        <span
-                            class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider"
-                            style="
-                                background-color: #f7e900;
-                                color: #990100;
-                            "
-                        >
-                            <span>👋</span>
-                            Selamat datang
-                        </span>
-
-                        <h2 class="mt-5 text-3xl font-extrabold text-white">
+                        <h2 class="mt-1 text-xl font-semibold text-gray-900">
                             {{ Auth::user()->name }}
                         </h2>
 
-                        <p class="mt-3 max-w-2xl leading-7 text-red-100">
-                            Kelola produk, harga, stok, gambar, kegiatan,
-                            dan pesanan UMKM Maloppo melalui dashboard
-                            administrator.
+                        <p class="mt-2 max-w-2xl text-sm leading-6 text-gray-600">
+                            Kelola produk, stok, kegiatan, dan pesanan melalui
+                            halaman administrator Maloppo.
                         </p>
-
-                        <div class="mt-6 flex flex-wrap gap-3">
-
-                            <a
-                                href="{{ route('admin.products.index') }}"
-                                class="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold shadow-sm"
-                                style="color: #be0000;"
-                            >
-                                <span>🥥</span>
-                                Kelola Produk
-                            </a>
-
-                            <a
-                                href="{{ route('admin.orders.index') }}"
-                                class="inline-flex items-center gap-2 rounded-xl border px-5 py-3 text-sm font-bold text-white"
-                                style="
-                                    border-color: rgba(255, 255, 255, 0.45);
-                                    background-color: rgba(255, 255, 255, 0.10);
-                                "
-                            >
-                                <span>📦</span>
-                                Lihat Pesanan
-                            </a>
-
-                        </div>
-
                     </div>
 
-                    {{-- Logo --}}
-                    <div
-                        class="relative flex h-36 w-full shrink-0 items-center justify-center overflow-hidden rounded-3xl border-4 p-3 shadow-xl md:w-64"
-                        style="
-                            background-color: #f7e900;
-                            border-color: rgba(255, 255, 255, 0.45);
-                        "
-                    >
-                        <img
-                            src="{{ asset('images/brand/logo-maloppo-full.jpg') }}"
-                            alt="Logo UMKM Maloppo"
-                            class="h-full w-full object-contain"
+                    <div class="flex flex-wrap gap-2">
+
+                        <a
+                            href="{{ route('admin.products.index') }}"
+                            class="btn-maloppo-secondary"
                         >
-                    </div>
+                            Kelola Produk
+                        </a>
 
+                        <a
+                            href="{{ route('admin.orders.index') }}"
+                            class="btn-maloppo-secondary"
+                        >
+                            Lihat Pesanan
+                        </a>
+
+                    </div>
                 </div>
 
             </section>
 
-            {{-- Statistik produk --}}
+            {{-- Statistik --}}
             <section>
 
-                <div class="mb-5">
-
-                    <span class="label-maloppo">
-                        Ringkasan Data
-                    </span>
-
-                    <h2 class="mt-3 text-2xl font-extrabold text-gray-900">
-                        Statistik Produk
+                <div class="mb-4">
+                    <h2 class="text-base font-semibold text-gray-900">
+                        Ringkasan Produk
                     </h2>
 
-                    <p class="mt-2 text-sm text-gray-500">
-                        Informasi terbaru mengenai produk dan persediaan.
+                    <p class="mt-1 text-sm text-gray-500">
+                        Kondisi produk dan persediaan saat ini.
                     </p>
-
                 </div>
 
-                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
 
                     {{-- Total produk --}}
-                    <article class="card-maloppo card-maloppo-hover p-6">
+                    <article class="panel-maloppo p-4 sm:p-5">
 
-                        <div class="flex items-start justify-between gap-4">
+                        <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                            Total Produk
+                        </p>
 
-                            <div>
+                        <p class="mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
+                            {{ $totalProducts }}
+                        </p>
 
-                                <p class="text-sm font-semibold text-gray-500">
-                                    Total Produk
-                                </p>
-
-                                <p class="mt-3 text-4xl font-extrabold text-gray-900">
-                                    {{ $totalProducts }}
-                                </p>
-
-                                <p class="mt-2 text-xs leading-5 text-gray-500">
-                                    Seluruh produk yang tersimpan
-                                </p>
-
-                            </div>
-
-                            <div
-                                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl"
-                                style="background-color: #fff9b0;"
-                            >
-                                📦
-                            </div>
-
-                        </div>
-
-                        <div
-                            class="mt-5 h-1.5 w-full overflow-hidden rounded-full"
-                            style="background-color: #fff9b0;"
-                        >
-                            <div
-                                class="h-full w-3/4 rounded-full"
-                                style="background-color: #be0000;"
-                            ></div>
-                        </div>
+                        <p class="mt-2 text-xs text-gray-500">
+                            Seluruh produk
+                        </p>
 
                     </article>
 
                     {{-- Produk aktif --}}
-                    <article class="card-maloppo card-maloppo-hover p-6">
+                    <article class="panel-maloppo p-4 sm:p-5">
 
-                        <div class="flex items-start justify-between gap-4">
+                        <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                            Produk Aktif
+                        </p>
 
-                            <div>
+                        <p class="mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
+                            {{ $activeProducts }}
+                        </p>
 
-                                <p class="text-sm font-semibold text-gray-500">
-                                    Produk Aktif
-                                </p>
-
-                                <p class="mt-3 text-4xl font-extrabold text-gray-900">
-                                    {{ $activeProducts }}
-                                </p>
-
-                                <p class="mt-2 text-xs leading-5 text-gray-500">
-                                    Tampil pada katalog pengunjung
-                                </p>
-
-                            </div>
-
-                            <div
-                                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl"
-                                style="
-                                    background-color: #dcfce7;
-                                    color: #166534;
-                                "
-                            >
-                                ✓
-                            </div>
-
-                        </div>
-
-                        <div
-                            class="mt-5 rounded-xl px-3 py-2 text-xs font-semibold"
-                            style="
-                                background-color: #dcfce7;
-                                color: #166534;
-                            "
-                        >
-                            Produk dapat dilihat pelanggan
-                        </div>
+                        <p class="mt-2 text-xs text-green-700">
+                            Tampil di katalog
+                        </p>
 
                     </article>
 
                     {{-- Stok habis --}}
-                    <article class="card-maloppo card-maloppo-hover p-6">
+                    <article class="panel-maloppo p-4 sm:p-5">
 
-                        <div class="flex items-start justify-between gap-4">
+                        <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                            Stok Habis
+                        </p>
 
-                            <div>
-
-                                <p class="text-sm font-semibold text-gray-500">
-                                    Stok Habis
-                                </p>
-
-                                <p class="mt-3 text-4xl font-extrabold text-gray-900">
-                                    {{ $outOfStockProducts }}
-                                </p>
-
-                                <p class="mt-2 text-xs leading-5 text-gray-500">
-                                    Produk dengan jumlah stok nol
-                                </p>
-
-                            </div>
-
-                            <div
-                                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl font-extrabold"
-                                style="
-                                    background-color: #fee2e2;
-                                    color: #991b1b;
-                                "
-                            >
-                                !
-                            </div>
-
-                        </div>
+                        <p
+                            class="mt-2 text-2xl font-semibold sm:text-3xl
+                                {{ $outOfStockProducts > 0
+                                    ? 'text-red-700'
+                                    : 'text-gray-900' }}"
+                        >
+                            {{ $outOfStockProducts }}
+                        </p>
 
                         <a
                             href="{{ route('admin.products.index') }}"
-                            class="mt-5 inline-flex text-xs font-bold text-maloppo-red"
+                            class="mt-2 inline-block text-xs font-medium text-red-700 hover:text-red-900"
                         >
-                            Periksa persediaan →
+                            Periksa produk
                         </a>
 
                     </article>
 
                     {{-- Total stok --}}
-                    <article class="card-maloppo card-maloppo-hover p-6">
+                    <article class="panel-maloppo p-4 sm:p-5">
 
-                        <div class="flex items-start justify-between gap-4">
+                        <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                            Total Stok
+                        </p>
 
-                            <div>
+                        <p class="mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
+                            {{ $totalStock }}
+                        </p>
 
-                                <p class="text-sm font-semibold text-gray-500">
-                                    Total Stok
-                                </p>
-
-                                <p class="mt-3 text-4xl font-extrabold text-gray-900">
-                                    {{ $totalStock }}
-                                </p>
-
-                                <p class="mt-2 text-xs leading-5 text-gray-500">
-                                    Jumlah seluruh persediaan
-                                </p>
-
-                            </div>
-
-                            <div
-                                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl"
-                                style="background-color: #fff9b0;"
-                            >
-                                📊
-                            </div>
-
-                        </div>
-
-                        <div
-                            class="mt-5 rounded-xl px-3 py-2 text-xs font-semibold"
-                            style="
-                                background-color: #fff9b0;
-                                color: #990100;
-                            "
-                        >
-                            Akumulasi seluruh produk
-                        </div>
+                        <p class="mt-2 text-xs text-gray-500">
+                            Seluruh persediaan
+                        </p>
 
                     </article>
 
@@ -334,177 +166,75 @@
 
             </section>
 
-            {{-- Akses cepat --}}
-            <section class="card-maloppo overflow-hidden">
+            {{-- Menu pengelolaan --}}
+            <section class="panel-maloppo overflow-hidden">
 
-                <div
-                    class="border-b px-6 py-5"
-                    style="
-                        background-color: #fffdf0;
-                        border-color: #f1e7a4;
-                    "
-                >
+                <div class="section-header-maloppo">
 
-                    <div
-                        class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
-                    >
+                    <h2 class="section-title-maloppo">
+                        Menu Pengelolaan
+                    </h2>
 
-                        <div>
-
-                            <h2 class="text-xl font-extrabold text-gray-900">
-                                Akses Cepat
-                            </h2>
-
-                            <p class="mt-1 text-sm text-gray-500">
-                                Pilih bagian sistem yang ingin dikelola.
-                            </p>
-
-                        </div>
-
-                        <span
-                            class="inline-flex w-fit rounded-full px-3 py-1.5 text-xs font-bold"
-                            style="
-                                background-color: #f7e900;
-                                color: #990100;
-                            "
-                        >
-                            Menu Administrator
-                        </span>
-
-                    </div>
+                    <p class="section-description-maloppo">
+                        Akses cepat ke bagian utama sistem.
+                    </p>
 
                 </div>
 
-                <div
-                    class="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2 lg:grid-cols-5"
-                >
+                <div class="grid grid-cols-2 divide-x divide-y divide-gray-100 md:grid-cols-4 md:divide-y-0">
 
-                    {{-- Kelola produk --}}
                     <a
                         href="{{ route('admin.products.index') }}"
-                        class="card-maloppo-hover rounded-2xl border p-5"
-                        style="border-color: #f1e7a4;"
+                        class="px-4 py-4 transition hover:bg-gray-50 sm:px-5"
                     >
-
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
-                            style="background-color: #fff9b0;"
-                        >
-                            🥥
-                        </div>
-
-                        <h3 class="mt-4 font-bold text-gray-900">
-                            Kelola Produk
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-gray-500">
-                            Lihat, ubah, dan hapus data produk.
+                        <p class="text-sm font-semibold text-gray-900">
+                            Produk
                         </p>
 
-                    </a>
-
-                    {{-- Tambah produk --}}
-                    <a
-                        href="{{ route('admin.products.create') }}"
-                        class="card-maloppo-hover rounded-2xl border p-5"
-                        style="border-color: #f1e7a4;"
-                    >
-
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl text-2xl font-bold"
-                            style="
-                                background-color: #be0000;
-                                color: white;
-                            "
-                        >
-                            +
-                        </div>
-
-                        <h3 class="mt-4 font-bold text-gray-900">
-                            Tambah Produk
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-gray-500">
-                            Masukkan produk baru ke katalog.
+                        <p class="mt-1 text-xs leading-5 text-gray-500">
+                            Kelola data dan stok produk.
                         </p>
-
                     </a>
 
-                    {{-- Kegiatan --}}
                     <a
                         href="{{ route('admin.posts.index') }}"
-                        class="card-maloppo-hover rounded-2xl border p-5"
-                        style="border-color: #f1e7a4;"
+                        class="px-4 py-4 transition hover:bg-gray-50 sm:px-5"
                     >
-
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
-                            style="background-color: #fff9b0;"
-                        >
-                            📰
-                        </div>
-
-                        <h3 class="mt-4 font-bold text-gray-900">
+                        <p class="text-sm font-semibold text-gray-900">
                             Kegiatan
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-gray-500">
-                            Kelola berita dan aktivitas UMKM.
                         </p>
 
+                        <p class="mt-1 text-xs leading-5 text-gray-500">
+                            Kelola berita dan aktivitas.
+                        </p>
                     </a>
 
-                    {{-- Pesanan --}}
                     <a
                         href="{{ route('admin.orders.index') }}"
-                        class="card-maloppo-hover rounded-2xl border p-5"
-                        style="border-color: #f1e7a4;"
+                        class="px-4 py-4 transition hover:bg-gray-50 sm:px-5"
                     >
-
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
-                            style="background-color: #fff9b0;"
-                        >
-                            📦
-                        </div>
-
-                        <h3 class="mt-4 font-bold text-gray-900">
+                        <p class="text-sm font-semibold text-gray-900">
                             Pesanan
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-gray-500">
-                            Periksa dan proses pesanan pelanggan.
                         </p>
 
+                        <p class="mt-1 text-xs leading-5 text-gray-500">
+                            Periksa pesanan pelanggan.
+                        </p>
                     </a>
 
-                    {{-- Katalog publik --}}
                     <a
                         href="{{ route('catalog.index') }}"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="card-maloppo-hover rounded-2xl border p-5"
-                        style="border-color: #f1e7a4;"
+                        class="px-4 py-4 transition hover:bg-gray-50 sm:px-5"
                     >
-
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
-                            style="
-                                background-color: #dbeafe;
-                                color: #1d4ed8;
-                            "
-                        >
-                            🌐
-                        </div>
-
-                        <h3 class="mt-4 font-bold text-gray-900">
-                            Lihat Katalog
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-gray-500">
-                            Buka tampilan produk pengunjung.
+                        <p class="text-sm font-semibold text-gray-900">
+                            Katalog Publik
                         </p>
 
+                        <p class="mt-1 text-xs leading-5 text-gray-500">
+                            Lihat tampilan untuk pelanggan.
+                        </p>
                     </a>
 
                 </div>
@@ -512,112 +242,60 @@
             </section>
 
             {{-- Produk terbaru --}}
-            <section class="card-maloppo overflow-hidden">
+            <section class="panel-maloppo overflow-hidden">
 
                 <div
-                    class="flex flex-col gap-4 border-b px-6 py-5 sm:flex-row sm:items-center sm:justify-between"
-                    style="
-                        background-color: #fffdf0;
-                        border-color: #f1e7a4;
-                    "
+                    class="flex flex-col gap-3 border-b border-gray-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6"
                 >
+                    <div>
+                        <h2 class="section-title-maloppo">
+                            Produk Terbaru
+                        </h2>
 
-                    <div class="flex items-center gap-4">
-
-                        <div
-                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                            style="background-color: #f7e900;"
-                        >
-                            🕘
-                        </div>
-
-                        <div>
-
-                            <h2 class="text-xl font-extrabold text-gray-900">
-                                Produk Terbaru
-                            </h2>
-
-                            <p class="mt-1 text-sm text-gray-500">
-                                Lima produk yang terakhir ditambahkan.
-                            </p>
-
-                        </div>
-
+                        <p class="section-description-maloppo">
+                            Lima produk yang terakhir ditambahkan.
+                        </p>
                     </div>
 
                     <a
                         href="{{ route('admin.products.index') }}"
-                        class="btn-maloppo-secondary"
+                        class="text-sm font-medium text-red-700 hover:text-red-900"
                     >
-                        Lihat Semua Produk
+                        Lihat semua
                     </a>
-
                 </div>
 
                 {{-- Tampilan desktop --}}
                 <div class="hidden overflow-x-auto md:block">
 
-                    <table class="w-full text-left">
+                    <table class="table-maloppo">
 
                         <thead>
-
-                            <tr
-                                class="border-b"
-                                style="
-                                    background-color: #fff9b0;
-                                    border-color: #f1e7a4;
-                                "
-                            >
-
-                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
-                                    Produk
-                                </th>
-
-                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
-                                    Ukuran
-                                </th>
-
-                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
-                                    Harga
-                                </th>
-
-                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
-                                    Stok
-                                </th>
-
-                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
-                                    Status
-                                </th>
-
-                                <th class="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider text-gray-700">
+                            <tr>
+                                <th>Produk</th>
+                                <th>Ukuran</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Status</th>
+                                <th class="text-right">
                                     Aksi
                                 </th>
-
                             </tr>
-
                         </thead>
 
                         <tbody>
 
                             @forelse ($latestProducts as $product)
 
-                                <tr
-                                    class="border-b transition last:border-b-0 hover:bg-yellow-50/40"
-                                    style="border-color: #f1e7a4;"
-                                >
+                                <tr>
 
-                                    <td class="px-6 py-4">
+                                    <td>
 
-                                        <div class="flex items-center gap-4">
+                                        <div class="flex items-center gap-3">
 
                                             <div
-                                                class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border"
-                                                style="
-                                                    background-color: #fffdf0;
-                                                    border-color: #f1e7a4;
-                                                "
+                                                class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
                                             >
-
                                                 @if ($product->image)
 
                                                     <img
@@ -628,22 +306,20 @@
 
                                                 @else
 
-                                                    <span class="text-xl">
-                                                        🥥
+                                                    <span class="text-xs font-medium text-gray-400">
+                                                        Foto
                                                     </span>
 
                                                 @endif
-
                                             </div>
 
-                                            <div>
+                                            <div class="min-w-0">
 
-                                                <p class="font-bold text-gray-900">
+                                                <p class="truncate font-medium text-gray-900">
                                                     {{ $product->name }}
                                                 </p>
 
                                                 <p class="mt-1 text-xs text-gray-500">
-                                                    Ditambahkan
                                                     {{ $product->created_at->format('d M Y') }}
                                                 </p>
 
@@ -653,54 +329,40 @@
 
                                     </td>
 
-                                    <td class="px-6 py-4">
-
-                                        <span class="badge-maloppo-yellow">
-                                            {{ $product->size ?? '-' }}
-                                        </span>
-
+                                    <td>
+                                        {{ $product->size ?? '-' }}
                                     </td>
 
-                                    <td class="px-6 py-4 text-sm font-extrabold text-maloppo-red">
+                                    <td class="font-medium text-gray-900">
                                         Rp {{ number_format($product->price, 0, ',', '.') }}
                                     </td>
 
-                                    <td class="px-6 py-4">
+                                    <td>
 
                                         <span
-                                            class="inline-flex rounded-full px-3 py-1 text-xs font-bold"
-                                            style="{{ $product->stock > 0
-                                                ? 'background-color: #dcfce7; color: #166534;'
-                                                : 'background-color: #fee2e2; color: #991b1b;' }}"
+                                            class="{{ $product->stock > 0
+                                                ? 'text-green-700'
+                                                : 'text-red-700' }}"
                                         >
                                             {{ $product->stock }}
                                         </span>
 
                                     </td>
 
-                                    <td class="px-6 py-4">
+                                    <td>
 
                                         @if ($product->is_active)
 
                                             <span
-                                                class="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold"
-                                                style="
-                                                    background-color: #dcfce7;
-                                                    color: #166534;
-                                                "
+                                                class="inline-flex rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700"
                                             >
-                                                <span>✓</span>
                                                 Aktif
                                             </span>
 
                                         @else
 
                                             <span
-                                                class="inline-flex rounded-full px-3 py-1 text-xs font-bold"
-                                                style="
-                                                    background-color: #fee2e2;
-                                                    color: #991b1b;
-                                                "
+                                                class="inline-flex rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600"
                                             >
                                                 Tidak Aktif
                                             </span>
@@ -709,14 +371,12 @@
 
                                     </td>
 
-                                    <td class="px-6 py-4 text-center">
+                                    <td class="text-right">
 
                                         <a
                                             href="{{ route('admin.products.edit', $product) }}"
-                                            class="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold text-white shadow-sm"
-                                            style="background-color: #be0000;"
+                                            class="text-sm font-medium text-red-700 hover:text-red-900"
                                         >
-                                            <span>✏️</span>
                                             Edit
                                         </a>
 
@@ -727,29 +387,25 @@
                             @empty
 
                                 <tr>
-
                                     <td
                                         colspan="6"
-                                        class="px-6 py-16 text-center"
+                                        class="py-12 text-center"
                                     >
-
-                                        <div
-                                            class="mx-auto flex h-16 w-16 items-center justify-center rounded-full text-4xl"
-                                            style="background-color: #fff9b0;"
-                                        >
-                                            🥥
-                                        </div>
-
-                                        <p class="mt-4 font-bold text-gray-700">
+                                        <p class="font-medium text-gray-700">
                                             Belum ada produk
                                         </p>
 
-                                        <p class="mt-2 text-sm text-gray-500">
-                                            Tambahkan produk pertama ke katalog Maloppo.
+                                        <p class="mt-1 text-sm text-gray-500">
+                                            Tambahkan produk pertama ke katalog.
                                         </p>
 
+                                        <a
+                                            href="{{ route('admin.products.create') }}"
+                                            class="btn-maloppo-primary mt-4"
+                                        >
+                                            Tambah Produk
+                                        </a>
                                     </td>
-
                                 </tr>
 
                             @endforelse
@@ -761,22 +417,17 @@
                 </div>
 
                 {{-- Tampilan HP --}}
-                <div class="divide-y md:hidden" style="border-color: #f1e7a4;">
+                <div class="divide-y divide-gray-100 md:hidden">
 
                     @forelse ($latestProducts as $product)
 
-                        <article class="p-5">
+                        <article class="p-4">
 
-                            <div class="flex items-start gap-4">
+                            <div class="flex items-start gap-3">
 
                                 <div
-                                    class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border"
-                                    style="
-                                        background-color: #fffdf0;
-                                        border-color: #f1e7a4;
-                                    "
+                                    class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
                                 >
-
                                     @if ($product->image)
 
                                         <img
@@ -787,26 +438,25 @@
 
                                     @else
 
-                                        <span class="text-3xl">
-                                            🥥
+                                        <span class="text-xs font-medium text-gray-400">
+                                            Foto
                                         </span>
 
                                     @endif
-
                                 </div>
 
                                 <div class="min-w-0 flex-1">
 
                                     <div class="flex items-start justify-between gap-3">
 
-                                        <div>
+                                        <div class="min-w-0">
 
-                                            <h3 class="font-bold leading-6 text-gray-900">
+                                            <h3 class="truncate text-sm font-semibold text-gray-900">
                                                 {{ $product->name }}
                                             </h3>
 
                                             <p class="mt-1 text-xs text-gray-500">
-                                                {{ $product->created_at->format('d M Y') }}
+                                                {{ $product->size ?? '-' }}
                                             </p>
 
                                         </div>
@@ -814,11 +464,7 @@
                                         @if ($product->is_active)
 
                                             <span
-                                                class="shrink-0 rounded-full px-2.5 py-1 text-xs font-bold"
-                                                style="
-                                                    background-color: #dcfce7;
-                                                    color: #166534;
-                                                "
+                                                class="shrink-0 rounded-full bg-green-50 px-2 py-1 text-[10px] font-medium text-green-700"
                                             >
                                                 Aktif
                                             </span>
@@ -826,11 +472,7 @@
                                         @else
 
                                             <span
-                                                class="shrink-0 rounded-full px-2.5 py-1 text-xs font-bold"
-                                                style="
-                                                    background-color: #fee2e2;
-                                                    color: #991b1b;
-                                                "
+                                                class="shrink-0 rounded-full bg-gray-100 px-2 py-1 text-[10px] font-medium text-gray-600"
                                             >
                                                 Nonaktif
                                             </span>
@@ -839,28 +481,29 @@
 
                                     </div>
 
-                                    <div class="mt-3 flex flex-wrap items-center gap-2">
-
-                                        <span class="badge-maloppo-yellow">
-                                            {{ $product->size ?? '-' }}
-                                        </span>
-
-                                        <span class="text-xs text-gray-500">
-                                            Stok {{ $product->stock }}
-                                        </span>
-
-                                    </div>
-
-                                    <p class="mt-3 text-lg font-extrabold text-maloppo-red">
+                                    <p class="mt-2 text-sm font-semibold text-gray-900">
                                         Rp {{ number_format($product->price, 0, ',', '.') }}
                                     </p>
 
-                                    <a
-                                        href="{{ route('admin.products.edit', $product) }}"
-                                        class="btn-maloppo-secondary mt-4 w-full py-2.5"
-                                    >
-                                        Edit Produk
-                                    </a>
+                                    <div class="mt-2 flex items-center justify-between gap-3">
+
+                                        <span
+                                            class="text-xs
+                                                {{ $product->stock > 0
+                                                    ? 'text-green-700'
+                                                    : 'text-red-700' }}"
+                                        >
+                                            Stok {{ $product->stock }}
+                                        </span>
+
+                                        <a
+                                            href="{{ route('admin.products.edit', $product) }}"
+                                            class="text-xs font-semibold text-red-700"
+                                        >
+                                            Edit
+                                        </a>
+
+                                    </div>
 
                                 </div>
 
@@ -870,22 +513,19 @@
 
                     @empty
 
-                        <div class="px-6 py-16 text-center">
+                        <div class="px-5 py-12 text-center">
 
-                            <div
-                                class="mx-auto flex h-16 w-16 items-center justify-center rounded-full text-4xl"
-                                style="background-color: #fff9b0;"
-                            >
-                                🥥
-                            </div>
-
-                            <p class="mt-4 font-bold text-gray-700">
+                            <p class="font-medium text-gray-700">
                                 Belum ada produk
+                            </p>
+
+                            <p class="mt-1 text-sm text-gray-500">
+                                Tambahkan produk pertama ke katalog.
                             </p>
 
                             <a
                                 href="{{ route('admin.products.create') }}"
-                                class="btn-maloppo-primary mt-5"
+                                class="btn-maloppo-primary mt-4"
                             >
                                 Tambah Produk
                             </a>

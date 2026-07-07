@@ -1,37 +1,5 @@
 <x-app-layout>
 
-    <x-slot name="header">
-
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-
-            <div>
-
-                <p class="text-sm font-semibold text-maloppo-red">
-                    Detail Pesanan
-                </p>
-
-                <h1 class="mt-1 text-2xl font-extrabold leading-tight text-gray-900">
-                    {{ $order->order_code }}
-                </h1>
-
-                <p class="mt-2 text-sm text-gray-600">
-                    Periksa rincian pelanggan, produk, dan perkembangan pesanan.
-                </p>
-
-            </div>
-
-            <a
-                href="{{ route('admin.orders.index') }}"
-                class="btn-maloppo-secondary"
-            >
-                <span aria-hidden="true">←</span>
-                Kembali ke Pesanan
-            </a>
-
-        </div>
-
-    </x-slot>
-
     @php
         $statusLabel = match ($order->status) {
             'pending' => 'Menunggu',
@@ -42,22 +10,13 @@
             default => ucfirst($order->status),
         };
 
-        $statusStyle = match ($order->status) {
-            'pending' => 'background-color: #fff9b0; color: #92400e;',
-            'confirmed' => 'background-color: #dbeafe; color: #1d4ed8;',
-            'processing' => 'background-color: #e0e7ff; color: #4338ca;',
-            'completed' => 'background-color: #dcfce7; color: #166534;',
-            'cancelled' => 'background-color: #fee2e2; color: #991b1b;',
-            default => 'background-color: #f3f4f6; color: #374151;',
-        };
-
-        $statusIcon = match ($order->status) {
-            'pending' => '⏳',
-            'confirmed' => '✓',
-            'processing' => '⚙️',
-            'completed' => '✅',
-            'cancelled' => '✕',
-            default => '•',
+        $statusClass = match ($order->status) {
+            'pending' => 'bg-amber-50 text-amber-700',
+            'confirmed' => 'bg-blue-50 text-blue-700',
+            'processing' => 'bg-indigo-50 text-indigo-700',
+            'completed' => 'bg-green-50 text-green-700',
+            'cancelled' => 'bg-red-50 text-red-700',
+            default => 'bg-gray-100 text-gray-600',
         };
 
         $totalQuantity = $order->items->sum('quantity');
@@ -69,9 +28,11 @@
         );
 
         if (str_starts_with($whatsappNumber, '0')) {
-            $whatsappNumber = '62' . substr($whatsappNumber, 1);
+            $whatsappNumber =
+                '62' . substr($whatsappNumber, 1);
         } elseif (str_starts_with($whatsappNumber, '8')) {
-            $whatsappNumber = '62' . $whatsappNumber;
+            $whatsappNumber =
+                '62' . $whatsappNumber;
         }
 
         $messageLines = [
@@ -80,7 +41,9 @@
             'Kami dari UMKM Maloppo ingin mengonfirmasi pesanan Anda.',
             '',
             'Kode Pesanan: ' . $order->order_code,
-            'Tanggal Pesanan: ' . $order->created_at->format('d/m/Y H:i') . ' WITA',
+            'Tanggal Pesanan: ' .
+                $order->created_at->format('d/m/Y H:i') .
+                ' WITA',
             'Nomor WhatsApp: ' . $order->customer_phone,
             '',
             'Alamat Pengiriman:',
@@ -101,20 +64,34 @@
                 '  ' .
                 $item->quantity .
                 ' x Rp ' .
-                number_format($item->price, 0, ',', '.') .
+                number_format(
+                    $item->price,
+                    0,
+                    ',',
+                    '.'
+                ) .
                 ' = Rp ' .
-                number_format($item->subtotal, 0, ',', '.');
+                number_format(
+                    $item->subtotal,
+                    0,
+                    ',',
+                    '.'
+                );
         }
 
         $messageLines[] = '';
 
         $messageLines[] =
             'Total Pesanan: Rp ' .
-            number_format($order->total_amount, 0, ',', '.');
+            number_format(
+                $order->total_amount,
+                0,
+                ',',
+                '.'
+            );
 
         $messageLines[] =
-            'Status Pesanan: ' .
-            $statusLabel;
+            'Status Pesanan: ' . $statusLabel;
 
         if ($order->customer_notes) {
             $messageLines[] = '';
@@ -135,7 +112,10 @@
         $messageLines[] =
             'Terima kasih telah berbelanja di UMKM Maloppo.';
 
-        $whatsappMessage = implode("\n", $messageLines);
+        $whatsappMessage = implode(
+            "\n",
+            $messageLines
+        );
 
         $whatsappUrl =
             'https://wa.me/' .
@@ -144,31 +124,67 @@
             urlencode($whatsappMessage);
     @endphp
 
-    <div class="py-8 lg:py-10">
+    <x-slot name="header">
 
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+            <div>
+
+                <div class="flex flex-wrap items-center gap-2">
+
+                    <h1 class="page-title-maloppo">
+                        {{ $order->order_code }}
+                    </h1>
+
+                    <span
+                        class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium {{ $statusClass }}"
+                    >
+                        {{ $statusLabel }}
+                    </span>
+
+                </div>
+
+                <p class="page-description-maloppo">
+                    Detail pesanan
+                    {{ $order->created_at->format('d M Y, H:i') }}
+                    WITA.
+                </p>
+
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+
+                <a
+                    href="{{ $whatsappUrl }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center rounded-lg bg-green-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800"
+                >
+                    Hubungi Pelanggan
+                </a>
+
+                <a
+                    href="{{ route('admin.orders.index') }}"
+                    class="btn-maloppo-secondary"
+                >
+                    Kembali
+                </a>
+
+            </div>
+        </div>
+
+    </x-slot>
+
+    <div class="py-6 lg:py-8">
+
+        <div class="mx-auto max-w-7xl space-y-5 px-4 sm:px-6 lg:px-8">
 
             {{-- Notifikasi berhasil --}}
             @if (session('success'))
 
-                <div
-                    class="mb-7 flex items-start gap-3 rounded-xl border px-5 py-4 text-sm"
-                    style="
-                        background-color: #dcfce7;
-                        border-color: #86efac;
-                        color: #166534;
-                    "
-                >
-                    <span
-                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-bold"
-                        style="background-color: #bbf7d0;"
-                    >
-                        ✓
-                    </span>
-
-                    <p class="pt-1 font-medium">
-                        {{ session('success') }}
-                    </p>
+                <div class="alert-maloppo-success">
+                    {{ session('success') }}
                 </div>
 
             @endif
@@ -176,24 +192,8 @@
             {{-- Notifikasi kesalahan --}}
             @if (session('error'))
 
-                <div
-                    class="mb-7 flex items-start gap-3 rounded-xl border px-5 py-4 text-sm"
-                    style="
-                        background-color: #fee2e2;
-                        border-color: #fca5a5;
-                        color: #991b1b;
-                    "
-                >
-                    <span
-                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-bold"
-                        style="background-color: #fecaca;"
-                    >
-                        !
-                    </span>
-
-                    <p class="pt-1 font-medium">
-                        {{ session('error') }}
-                    </p>
+                <div class="alert-maloppo-error">
+                    {{ session('error') }}
                 </div>
 
             @endif
@@ -201,13 +201,13 @@
             {{-- Kesalahan validasi --}}
             @if ($errors->any())
 
-                <div class="alert-maloppo-error mb-7">
+                <div class="alert-maloppo-error">
 
-                    <p class="font-bold">
-                        Perubahan belum dapat disimpan
+                    <p class="font-semibold">
+                        Perubahan belum dapat disimpan.
                     </p>
 
-                    <ul class="mt-2 list-inside list-disc space-y-1 text-sm">
+                    <ul class="mt-2 list-inside list-disc space-y-1">
                         @foreach ($errors->all() as $error)
                             <li>
                                 {{ $error }}
@@ -219,78 +219,60 @@
 
             @endif
 
-            {{-- Ringkasan atas --}}
-            <section
-                class="relative mb-8 overflow-hidden rounded-3xl p-6 shadow-lg sm:p-8"
-                style="
-                    background:
-                        radial-gradient(
-                            circle at top right,
-                            rgba(247, 233, 0, 0.32),
-                            transparent 38%
-                        ),
-                        linear-gradient(
-                            135deg,
-                            #be0000 0%,
-                            #990100 100%
-                        );
-                "
-            >
+            {{-- Ringkasan utama --}}
+            <section class="panel-maloppo p-5 sm:p-6">
 
                 <div
-                    class="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full opacity-20"
-                    style="background-color: #f7e900;"
-                ></div>
-
-                <div
-                    class="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+                    class="grid grid-cols-2 gap-5 md:grid-cols-4"
                 >
 
                     <div>
 
-                        <span
-                            class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-extrabold uppercase tracking-wider"
-                            style="
-                                background-color: #f7e900;
-                                color: #990100;
-                            "
-                        >
-                            <span>📦</span>
-                            Pesanan Pelanggan
-                        </span>
+                        <p class="text-xs font-medium text-gray-500">
+                            Kode Pesanan
+                        </p>
 
-                        <h2 class="mt-5 text-3xl font-extrabold text-white">
+                        <p class="mt-1 text-sm font-semibold text-gray-900">
                             {{ $order->order_code }}
-                        </h2>
-
-                        <p class="mt-3 text-sm text-red-100">
-                            Dibuat pada
-                            {{ $order->created_at->format('d/m/Y H:i') }}
-                            WITA
                         </p>
 
                     </div>
 
-                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <div>
+
+                        <p class="text-xs font-medium text-gray-500">
+                            Jumlah Barang
+                        </p>
+
+                        <p class="mt-1 text-sm font-semibold text-gray-900">
+                            {{ $totalQuantity }} barang
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-xs font-medium text-gray-500">
+                            Status
+                        </p>
 
                         <span
-                            class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-extrabold"
-                            style="{{ $statusStyle }}"
+                            class="mt-1 inline-flex rounded-full px-2.5 py-1 text-xs font-medium {{ $statusClass }}"
                         >
-                            <span>{{ $statusIcon }}</span>
                             {{ $statusLabel }}
                         </span>
 
-                        <a
-                            href="{{ $whatsappUrl }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold text-white shadow-sm"
-                            style="background-color: #16a34a;"
-                        >
-                            <span>💬</span>
-                            Hubungi Pelanggan
-                        </a>
+                    </div>
+
+                    <div>
+
+                        <p class="text-xs font-medium text-gray-500">
+                            Total Pesanan
+                        </p>
+
+                        <p class="mt-1 text-base font-semibold text-red-700">
+                            Rp {{ number_format($order->total_amount, 0, ',', '.') }}
+                        </p>
 
                     </div>
 
@@ -298,72 +280,39 @@
 
             </section>
 
-            <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
 
                 {{-- Bagian utama --}}
-                <div class="space-y-8 lg:col-span-2">
+                <div class="space-y-5 lg:col-span-2">
 
                     {{-- Produk yang dipesan --}}
-                    <section class="card-maloppo overflow-hidden">
+                    <section class="panel-maloppo overflow-hidden">
 
-                        <div
-                            class="flex flex-col gap-3 border-b px-6 py-5 sm:flex-row sm:items-center sm:justify-between"
-                            style="
-                                background-color: #fffdf0;
-                                border-color: #f1e7a4;
-                            "
-                        >
+                        <div class="section-header-maloppo">
 
-                            <div class="flex items-center gap-4">
+                            <h2 class="section-title-maloppo">
+                                Produk yang Dipesan
+                            </h2>
 
-                                <div
-                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                                    style="background-color: #f7e900;"
-                                >
-                                    🛒
-                                </div>
-
-                                <div>
-
-                                    <h2 class="text-xl font-extrabold text-gray-900">
-                                        Produk yang Dipesan
-                                    </h2>
-
-                                    <p class="mt-1 text-sm text-gray-500">
-                                        {{ $order->items->count() }} jenis produk,
-                                        total {{ $totalQuantity }} barang.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                            <span class="badge-maloppo-yellow">
-                                {{ $totalQuantity }} Barang
-                            </span>
+                            <p class="section-description-maloppo">
+                                {{ $order->items->count() }} jenis produk dengan
+                                total {{ $totalQuantity }} barang.
+                            </p>
 
                         </div>
 
-                        <div
-                            class="divide-y"
-                            style="border-color: #f1e7a4;"
-                        >
+                        <div class="divide-y divide-gray-100">
 
                             @foreach ($order->items as $item)
 
-                                <article class="p-5 sm:p-6">
+                                <article class="p-4 sm:p-5">
 
-                                    <div class="flex flex-col gap-5 sm:flex-row sm:items-center">
+                                    <div class="flex items-start gap-4">
 
                                         {{-- Gambar produk --}}
                                         <div
-                                            class="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border"
-                                            style="
-                                                background-color: #fffdf0;
-                                                border-color: #f1e7a4;
-                                            "
+                                            class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 sm:h-20 sm:w-20"
                                         >
-
                                             @if ($item->product && $item->product->image)
 
                                                 <img
@@ -374,59 +323,54 @@
 
                                             @else
 
-                                                <span class="text-4xl">
-                                                    🥥
+                                                <span class="text-xs font-medium text-gray-400">
+                                                    Foto
                                                 </span>
 
                                             @endif
-
                                         </div>
 
                                         {{-- Detail produk --}}
                                         <div class="min-w-0 flex-1">
 
                                             <div
-                                                class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+                                                class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
                                             >
 
-                                                <div>
+                                                <div class="min-w-0">
 
-                                                    <h3 class="text-lg font-extrabold text-gray-900">
+                                                    <h3 class="font-semibold text-gray-900">
                                                         {{ $item->product_name }}
                                                     </h3>
 
-                                                    <div class="mt-3 flex flex-wrap items-center gap-2">
-
-                                                        <span class="badge-maloppo-yellow">
+                                                    <div
+                                                        class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500"
+                                                    >
+                                                        <span>
+                                                            Ukuran
                                                             {{ $item->product_size ?? '-' }}
                                                         </span>
 
-                                                        <span
-                                                            class="inline-flex rounded-full px-3 py-1 text-xs font-bold"
-                                                            style="
-                                                                background-color: #dcfce7;
-                                                                color: #166534;
-                                                            "
-                                                        >
+                                                        <span>
                                                             {{ $item->quantity }} barang
                                                         </span>
-
                                                     </div>
 
-                                                    <p class="mt-3 text-sm text-gray-500">
-                                                        {{ $item->quantity }} ×
-                                                        Rp {{ number_format($item->price, 0, ',', '.') }}
+                                                    <p class="mt-2 text-sm text-gray-600">
+                                                        {{ $item->quantity }}
+                                                        × Rp
+                                                        {{ number_format($item->price, 0, ',', '.') }}
                                                     </p>
 
                                                 </div>
 
                                                 <div class="sm:text-right">
 
-                                                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                                                    <p class="text-xs text-gray-500">
                                                         Subtotal
                                                     </p>
 
-                                                    <p class="mt-2 text-xl font-extrabold text-maloppo-red">
+                                                    <p class="mt-1 font-semibold text-gray-900">
                                                         Rp {{ number_format($item->subtotal, 0, ',', '.') }}
                                                     </p>
 
@@ -444,106 +388,64 @@
 
                         </div>
 
-                        {{-- Total pesanan --}}
+                        {{-- Total --}}
                         <div
-                            class="border-t px-6 py-6"
-                            style="
-                                background-color: #fff9b0;
-                                border-color: #f1e7a4;
-                            "
+                            class="flex flex-col gap-2 border-t border-gray-200 bg-gray-50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
                         >
+                            <div>
 
-                            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                <p class="text-sm font-medium text-gray-700">
+                                    Total Pesanan
+                                </p>
 
-                                <div>
-
-                                    <p class="text-sm font-bold text-gray-700">
-                                        Total Pesanan
-                                    </p>
-
-                                    <p class="mt-1 text-xs text-gray-500">
-                                        {{ $totalQuantity }} barang dalam pesanan
-                                    </p>
-
-                                </div>
-
-                                <p class="text-3xl font-extrabold text-maloppo-red">
-                                    Rp {{ number_format($order->total_amount, 0, ',', '.') }}
+                                <p class="mt-1 text-xs text-gray-500">
+                                    {{ $totalQuantity }} barang
                                 </p>
 
                             </div>
+
+                            <p class="text-xl font-semibold text-red-700">
+                                Rp {{ number_format($order->total_amount, 0, ',', '.') }}
+                            </p>
 
                         </div>
 
                     </section>
 
-                    {{-- Informasi pengiriman --}}
-                    <section class="card-maloppo overflow-hidden">
+                    {{-- Alamat dan catatan --}}
+                    <section class="panel-maloppo overflow-hidden">
 
-                        <div
-                            class="border-b px-6 py-5"
-                            style="
-                                background-color: #fffdf0;
-                                border-color: #f1e7a4;
-                            "
-                        >
+                        <div class="section-header-maloppo">
 
-                            <div class="flex items-center gap-4">
+                            <h2 class="section-title-maloppo">
+                                Alamat dan Catatan
+                            </h2>
 
-                                <div
-                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                                    style="background-color: #f7e900;"
-                                >
-                                    📍
-                                </div>
-
-                                <div>
-
-                                    <h2 class="text-xl font-extrabold text-gray-900">
-                                        Alamat dan Catatan
-                                    </h2>
-
-                                    <p class="mt-1 text-sm text-gray-500">
-                                        Informasi pengiriman yang diberikan pelanggan.
-                                    </p>
-
-                                </div>
-
-                            </div>
+                            <p class="section-description-maloppo">
+                                Informasi pengiriman dari pelanggan.
+                            </p>
 
                         </div>
 
-                        <div class="grid grid-cols-1 gap-5 p-6 md:grid-cols-2">
+                        <div class="grid grid-cols-1 divide-y divide-gray-100 md:grid-cols-2 md:divide-x md:divide-y-0">
 
-                            <div
-                                class="rounded-2xl border p-5"
-                                style="
-                                    background-color: #fffdf0;
-                                    border-color: #f1e7a4;
-                                "
-                            >
+                            <div class="p-5">
 
-                                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">
+                                <p class="text-xs font-medium uppercase tracking-wide text-gray-500">
                                     Alamat Pengiriman
                                 </p>
 
-                                <p class="mt-3 whitespace-pre-line text-sm leading-7 text-gray-700">{{ $order->customer_address }}</p>
+                                <p class="mt-3 whitespace-pre-line text-sm leading-6 text-gray-700">{{ $order->customer_address }}</p>
 
                             </div>
 
-                            <div
-                                class="rounded-2xl border p-5"
-                                style="
-                                    background-color: #fffdf0;
-                                    border-color: #f1e7a4;
-                                "
-                            >
+                            <div class="p-5">
 
-                                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">
+                                <p class="text-xs font-medium uppercase tracking-wide text-gray-500">
                                     Catatan Pelanggan
                                 </p>
 
-                                <p class="mt-3 whitespace-pre-line text-sm leading-7 text-gray-700">{{ $order->customer_notes ?: 'Tidak ada catatan tambahan.' }}</p>
+                                <p class="mt-3 whitespace-pre-line text-sm leading-6 text-gray-700">{{ $order->customer_notes ?: 'Tidak ada catatan tambahan.' }}</p>
 
                             </div>
 
@@ -554,53 +456,32 @@
                 </div>
 
                 {{-- Sidebar --}}
-                <aside class="space-y-8">
+                <aside class="space-y-5">
 
                     {{-- Data pelanggan --}}
-                    <section class="card-maloppo overflow-hidden">
+                    <section class="panel-maloppo overflow-hidden">
 
-                        <div
-                            class="border-b px-6 py-5"
-                            style="
-                                background-color: #fffdf0;
-                                border-color: #f1e7a4;
-                            "
-                        >
+                        <div class="section-header-maloppo">
 
-                            <div class="flex items-center gap-3">
+                            <h2 class="section-title-maloppo">
+                                Data Pelanggan
+                            </h2>
 
-                                <div
-                                    class="flex h-11 w-11 items-center justify-center rounded-full text-sm font-extrabold text-white"
-                                    style="background-color: #be0000;"
-                                >
-                                    {{ strtoupper(substr($order->customer_name, 0, 1)) }}
-                                </div>
-
-                                <div>
-
-                                    <h2 class="font-extrabold text-gray-900">
-                                        Data Pelanggan
-                                    </h2>
-
-                                    <p class="mt-1 text-xs text-gray-500">
-                                        Informasi pemesan
-                                    </p>
-
-                                </div>
-
-                            </div>
+                            <p class="section-description-maloppo">
+                                Informasi pemesan.
+                            </p>
 
                         </div>
 
-                        <div class="space-y-5 p-6">
+                        <div class="space-y-4 p-5">
 
                             <div>
 
-                                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">
+                                <p class="text-xs font-medium text-gray-500">
                                     Nama
                                 </p>
 
-                                <p class="mt-2 font-bold text-gray-900">
+                                <p class="mt-1 text-sm font-semibold text-gray-900">
                                     {{ $order->customer_name }}
                                 </p>
 
@@ -608,11 +489,11 @@
 
                             <div>
 
-                                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">
+                                <p class="text-xs font-medium text-gray-500">
                                     Nomor WhatsApp
                                 </p>
 
-                                <p class="mt-2 font-bold text-gray-900">
+                                <p class="mt-1 text-sm font-semibold text-gray-900">
                                     {{ $order->customer_phone }}
                                 </p>
 
@@ -622,57 +503,34 @@
                                 href="{{ $whatsappUrl }}"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold text-white shadow-sm"
-                                style="background-color: #16a34a;"
+                                class="inline-flex w-full items-center justify-center rounded-lg bg-green-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800"
                             >
-                                <span>💬</span>
-                                Hubungi Pelanggan
+                                Hubungi melalui WhatsApp
                             </a>
 
                         </div>
 
                     </section>
 
-                    {{-- Form ubah status --}}
-                    <section class="card-maloppo overflow-hidden">
+                    {{-- Ubah status --}}
+                    <section class="panel-maloppo overflow-hidden">
 
-                        <div
-                            class="border-b px-6 py-5"
-                            style="
-                                background-color: #fffdf0;
-                                border-color: #f1e7a4;
-                            "
-                        >
+                        <div class="section-header-maloppo">
 
-                            <div class="flex items-center gap-3">
+                            <h2 class="section-title-maloppo">
+                                Ubah Status
+                            </h2>
 
-                                <div
-                                    class="flex h-11 w-11 items-center justify-center rounded-xl text-lg"
-                                    style="background-color: #f7e900;"
-                                >
-                                    ⚙️
-                                </div>
-
-                                <div>
-
-                                    <h2 class="font-extrabold text-gray-900">
-                                        Ubah Status
-                                    </h2>
-
-                                    <p class="mt-1 text-xs text-gray-500">
-                                        Perbarui proses pesanan
-                                    </p>
-
-                                </div>
-
-                            </div>
+                            <p class="section-description-maloppo">
+                                Perbarui proses pesanan pelanggan.
+                            </p>
 
                         </div>
 
                         <form
                             action="{{ route('admin.orders.update-status', $order) }}"
                             method="POST"
-                            class="space-y-5 p-6"
+                            class="space-y-4 p-5"
                         >
                             @csrf
                             @method('PATCH')
@@ -681,7 +539,7 @@
 
                                 <label
                                     for="status"
-                                    class="block text-sm font-bold text-gray-700"
+                                    class="block text-sm font-medium text-gray-700"
                                 >
                                     Status Pesanan
                                 </label>
@@ -729,7 +587,7 @@
                                 </select>
 
                                 @error('status')
-                                    <p class="mt-2 text-sm font-medium text-red-600">
+                                    <p class="mt-2 text-sm text-red-700">
                                         {{ $message }}
                                     </p>
                                 @enderror
@@ -738,10 +596,9 @@
 
                             <button
                                 type="submit"
-                                class="btn-maloppo-primary w-full py-3"
+                                class="btn-maloppo-primary w-full"
                                 onclick="return confirm('Yakin ingin mengubah status pesanan ini?')"
                             >
-                                <span>💾</span>
                                 Simpan Status
                             </button>
 
@@ -749,97 +606,96 @@
 
                     </section>
 
-                    {{-- Informasi pencatatan --}}
-                    <section
-                        class="rounded-2xl border p-6"
-                        style="
-                            background-color: #fff9b0;
-                            border-color: #f7e900;
-                        "
-                    >
+                    {{-- Informasi pesanan --}}
+                    <section class="panel-maloppo overflow-hidden">
 
-                        <div class="flex items-center gap-3">
+                        <div class="section-header-maloppo">
 
-                            <div
-                                class="flex h-10 w-10 items-center justify-center rounded-xl text-lg text-white"
-                                style="background-color: #be0000;"
-                            >
-                                ℹ️
-                            </div>
-
-                            <h2 class="font-extrabold text-gray-900">
+                            <h2 class="section-title-maloppo">
                                 Informasi Pesanan
                             </h2>
 
                         </div>
 
-                        <div class="mt-5 space-y-4">
+                        <dl class="divide-y divide-gray-100 px-5">
 
-                            <div class="flex items-center justify-between gap-4 text-sm">
+                            <div class="flex items-center justify-between gap-4 py-3 text-sm">
 
-                                <span class="text-gray-600">
+                                <dt class="text-gray-500">
                                     Status
-                                </span>
+                                </dt>
 
-                                <span
-                                    class="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold"
-                                    style="{{ $statusStyle }}"
-                                >
-                                    {{ $statusIcon }}
-                                    {{ $statusLabel }}
-                                </span>
+                                <dd>
+                                    <span
+                                        class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium {{ $statusClass }}"
+                                    >
+                                        {{ $statusLabel }}
+                                    </span>
+                                </dd>
 
                             </div>
 
-                            <div class="flex items-center justify-between gap-4 text-sm">
+                            <div class="flex items-center justify-between gap-4 py-3 text-sm">
 
-                                <span class="text-gray-600">
+                                <dt class="text-gray-500">
                                     Jenis produk
-                                </span>
+                                </dt>
 
-                                <span class="font-extrabold text-gray-900">
+                                <dd class="font-medium text-gray-900">
                                     {{ $order->items->count() }}
-                                </span>
+                                </dd>
 
                             </div>
 
-                            <div class="flex items-center justify-between gap-4 text-sm">
+                            <div class="flex items-center justify-between gap-4 py-3 text-sm">
 
-                                <span class="text-gray-600">
+                                <dt class="text-gray-500">
                                     Total barang
-                                </span>
+                                </dt>
 
-                                <span class="font-extrabold text-gray-900">
+                                <dd class="font-medium text-gray-900">
                                     {{ $totalQuantity }}
-                                </span>
+                                </dd>
 
                             </div>
 
-                            <div class="flex items-center justify-between gap-4 text-sm">
+                            <div class="flex items-center justify-between gap-4 py-3 text-sm">
 
-                                <span class="text-gray-600">
-                                    WhatsApp
-                                </span>
+                                <dt class="text-gray-500">
+                                    Dialihkan ke WhatsApp
+                                </dt>
 
-                                <span class="font-extrabold text-gray-900">
+                                <dd class="font-medium text-gray-900">
                                     {{ $order->whatsapp_redirected_at ? 'Sudah' : 'Belum' }}
-                                </span>
+                                </dd>
 
                             </div>
 
-                            <div class="flex items-center justify-between gap-4 text-sm">
+                            <div class="flex items-start justify-between gap-4 py-3 text-sm">
 
-                                <span class="text-gray-600">
-                                    Terakhir diperbarui
-                                </span>
+                                <dt class="text-gray-500">
+                                    Dibuat
+                                </dt>
 
-                                <span class="text-right font-semibold text-gray-900">
-                                    {{ $order->updated_at->format('d/m/Y H:i') }}
-                                </span>
+                                <dd class="text-right font-medium text-gray-900">
+                                    {{ $order->created_at->format('d M Y H:i') }}
+                                </dd>
 
                             </div>
 
-                        </div>
+                            <div class="flex items-start justify-between gap-4 py-3 text-sm">
+
+                                <dt class="text-gray-500">
+                                    Diperbarui
+                                </dt>
+
+                                <dd class="text-right font-medium text-gray-900">
+                                    {{ $order->updated_at->format('d M Y H:i') }}
+                                </dd>
+
+                            </div>
+
+                        </dl>
 
                     </section>
 

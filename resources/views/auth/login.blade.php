@@ -5,19 +5,15 @@
         class="w-full"
     >
 
-        {{-- Identitas UMKM Maloppo --}}
-        <div class="mb-7 text-center">
+        {{-- Identitas --}}
+        <div class="mb-6 text-center">
 
             <a
                 href="{{ route('home') }}"
                 class="inline-flex items-center justify-center"
             >
                 <div
-                    class="flex h-24 w-44 items-center justify-center overflow-hidden rounded-2xl border-2 p-2 shadow-sm"
-                    style="
-                        background-color: #f7e900;
-                        border-color: #be0000;
-                    "
+                    class="flex h-14 w-32 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white"
                 >
                     <img
                         src="{{ asset('images/brand/logo-maloppo-wordmark.jpg') }}"
@@ -27,70 +23,52 @@
                 </div>
             </a>
 
-            <span class="label-maloppo mt-5">
+            <p class="mt-5 text-xs font-semibold uppercase tracking-wider text-red-700">
                 Akses Administrator
-            </span>
+            </p>
 
-            <h1 class="mt-4 text-2xl font-extrabold text-gray-900">
+            <h1 class="mt-2 text-2xl font-semibold text-gray-900">
                 Masuk ke Dashboard
             </h1>
 
             <p class="mx-auto mt-2 max-w-sm text-sm leading-6 text-gray-500">
-                Kelola produk, kegiatan, stok, dan pesanan UMKM Maloppo
-                melalui halaman administrator.
+                Masukkan email dan password administrator UMKM Maloppo.
             </p>
 
         </div>
 
         {{-- Status sesi --}}
         @if (session('status'))
-            <div
-                class="mb-5 rounded-xl border px-4 py-3 text-sm font-medium"
-                style="
-                    background-color: #dcfce7;
-                    border-color: #86efac;
-                    color: #166534;
-                "
-            >
+
+            <div class="mb-5 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
                 {{ session('status') }}
             </div>
+
         @endif
 
         {{-- Kesalahan login --}}
         @if ($errors->any())
+
             <div class="alert-maloppo-error mb-5">
 
-                <div class="flex items-start gap-3">
+                <p class="font-semibold">
+                    Login belum berhasil.
+                </p>
 
-                    <div
-                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-bold"
-                        style="
-                            background-color: #fecaca;
-                            color: #991b1b;
-                        "
-                    >
-                        !
-                    </div>
+                <ul class="mt-2 list-inside list-disc space-y-1">
 
-                    <div>
+                    @foreach ($errors->all() as $error)
 
-                        <p class="font-bold">
-                            Login belum berhasil
-                        </p>
+                        <li>
+                            {{ $error }}
+                        </li>
 
-                        <ul class="mt-1 list-inside list-disc space-y-1">
-                            @foreach ($errors->all() as $error)
-                                <li>
-                                    {{ $error }}
-                                </li>
-                            @endforeach
-                        </ul>
+                    @endforeach
 
-                    </div>
-
-                </div>
+                </ul>
 
             </div>
+
         @endif
 
         <form
@@ -105,37 +83,29 @@
 
                 <label
                     for="email"
-                    class="block text-sm font-bold text-gray-700"
+                    class="block text-sm font-medium text-gray-700"
                 >
                     Email
                 </label>
 
-                <div class="relative mt-2">
-
-                    <div
-                        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400"
-                    >
-                        ✉️
-                    </div>
-
-                    <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        value="{{ old('email') }}"
-                        class="input-maloppo pl-11"
-                        placeholder="Masukkan email administrator"
-                        autocomplete="username"
-                        autofocus
-                        required
-                    >
-
-                </div>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    class="input-maloppo mt-2"
+                    placeholder="Masukkan email administrator"
+                    autocomplete="username"
+                    autofocus
+                    required
+                >
 
                 @error('email')
-                    <p class="mt-2 text-sm font-medium text-red-600">
+
+                    <p class="mt-2 text-sm text-red-700">
                         {{ $message }}
                     </p>
+
                 @enderror
 
             </div>
@@ -147,35 +117,31 @@
 
                     <label
                         for="password"
-                        class="block text-sm font-bold text-gray-700"
+                        class="block text-sm font-medium text-gray-700"
                     >
                         Password
                     </label>
 
                     @if (Route::has('password.request'))
+
                         <a
                             href="{{ route('password.request') }}"
-                            class="text-xs font-bold text-maloppo-red hover:underline"
+                            class="text-xs font-medium text-red-700 transition hover:text-red-900"
                         >
                             Lupa password?
                         </a>
+
                     @endif
 
                 </div>
 
                 <div class="relative mt-2">
 
-                    <div
-                        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400"
-                    >
-                        🔒
-                    </div>
-
                     <input
                         id="password"
                         :type="showPassword ? 'text' : 'password'"
                         name="password"
-                        class="input-maloppo pl-11 pr-14"
+                        class="input-maloppo pr-12"
                         placeholder="Masukkan password"
                         autocomplete="current-password"
                         required
@@ -183,39 +149,65 @@
 
                     <button
                         type="button"
-                        class="absolute inset-y-0 right-0 flex items-center px-4 text-xs font-bold text-maloppo-red"
-                        @click="showPassword = ! showPassword"
+                        class="absolute inset-y-0 right-0 flex items-center justify-center px-3 text-gray-400 transition hover:text-gray-700"
+                        @click="showPassword = !showPassword"
+                        :aria-label="showPassword ? 'Sembunyikan password' : 'Tampilkan password'"
                     >
-                        <span x-show="! showPassword">
-                            Lihat
-                        </span>
 
-                        <span
+                        <svg
+                            x-show="!showPassword"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="h-5 w-5"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+
+                        <svg
                             x-show="showPassword"
                             x-cloak
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="h-5 w-5"
                         >
-                            Tutup
-                        </span>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M3.98 8.223A10.477 10.477 0 002.036 11.68a1.012 1.012 0 000 .639C3.423 16.49 7.36 19.5 12 19.5c1.526 0 2.97-.324 4.272-.904M6.228 6.228A9.953 9.953 0 0112 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638a10.451 10.451 0 01-2.293 3.95M6.228 6.228L3 3m3.228 3.228l3.65 3.65m9.792 6.388L21 21m-3.33-3.33l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243L9.88 9.88"
+                            />
+                        </svg>
+
                     </button>
 
                 </div>
 
                 @error('password')
-                    <p class="mt-2 text-sm font-medium text-red-600">
+
+                    <p class="mt-2 text-sm text-red-700">
                         {{ $message }}
                     </p>
+
                 @enderror
 
             </div>
 
             {{-- Ingat saya --}}
-            <div
-                class="flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center sm:justify-between"
-                style="
-                    background-color: #fffdf0;
-                    border-color: #f1e7a4;
-                "
-            >
+            <div class="flex items-center justify-between gap-4">
 
                 <label
                     for="remember_me"
@@ -225,17 +217,16 @@
                         id="remember_me"
                         type="checkbox"
                         name="remember"
-                        class="rounded border-gray-300 shadow-sm"
-                        style="color: #be0000;"
+                        class="rounded border-gray-300 text-red-700 shadow-sm focus:ring-red-600"
                     >
 
-                    <span class="ml-2 text-sm font-medium text-gray-600">
+                    <span class="ml-2 text-sm text-gray-600">
                         Ingat akun saya
                     </span>
                 </label>
 
                 <span class="text-xs text-gray-400">
-                    Khusus perangkat pribadi
+                    Perangkat pribadi
                 </span>
 
             </div>
@@ -243,64 +234,29 @@
             {{-- Tombol masuk --}}
             <button
                 type="submit"
-                class="btn-maloppo-primary w-full py-4 text-base"
+                class="btn-maloppo-primary w-full"
             >
-                <span>
-                    🔐
-                </span>
-
                 Masuk ke Dashboard
-
-                <span aria-hidden="true">
-                    →
-                </span>
             </button>
 
         </form>
 
         {{-- Kembali ke website --}}
-        <div
-            class="mt-7 border-t pt-6 text-center"
-            style="border-color: #f1e7a4;"
-        >
-
-            <p class="text-xs text-gray-500">
-                Bukan administrator?
-            </p>
+        <div class="mt-6 border-t border-gray-200 pt-5 text-center">
 
             <a
                 href="{{ route('home') }}"
-                class="mt-3 inline-flex items-center gap-2 text-sm font-bold text-maloppo-red"
+                class="text-sm font-medium text-gray-600 transition hover:text-red-700"
             >
-                <span aria-hidden="true">
-                    ←
-                </span>
-
                 Kembali ke Website Maloppo
             </a>
 
         </div>
 
         {{-- Informasi keamanan --}}
-        <div
-            class="mt-6 flex items-start gap-3 rounded-xl px-4 py-3"
-            style="
-                background-color: #fff9b0;
-                color: #713f12;
-            "
-        >
-
-            <span class="text-lg">
-                🛡️
-            </span>
-
-            <p class="text-xs leading-5">
-                Halaman ini hanya digunakan oleh administrator resmi
-                UMKM Maloppo. Jangan memberikan email dan password kepada
-                orang lain.
-            </p>
-
-        </div>
+        <p class="mt-4 text-center text-xs leading-5 text-gray-400">
+            Halaman ini hanya digunakan oleh administrator resmi UMKM Maloppo.
+        </p>
 
     </div>
 

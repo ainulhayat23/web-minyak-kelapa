@@ -1,108 +1,41 @@
-<section class="space-y-6">
+<section class="space-y-5">
 
-    {{-- Peringatan utama --}}
-    <div
-        class="rounded-2xl border p-5"
-        style="
-            background-color: #fef2f2;
-            border-color: #fca5a5;
-        "
-    >
-        <div class="flex items-start gap-4">
+    {{-- Peringatan --}}
+    <div class="rounded-lg border border-red-200 bg-red-50 p-4">
 
-            <div
-                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl text-white"
-                style="background-color: #be0000;"
-            >
-                ⚠️
-            </div>
+        <h3 class="text-sm font-semibold text-red-800">
+            Penghapusan akun bersifat permanen
+        </h3>
 
-            <div>
-
-                <h3 class="font-extrabold text-gray-900">
-                    Tindakan permanen
-                </h3>
-
-                <p class="mt-2 text-sm leading-6 text-gray-600">
-                    Setelah akun dihapus, akun administrator tidak dapat digunakan
-                    kembali untuk masuk ke dashboard UMKM Maloppo.
-                </p>
-
-            </div>
-
-        </div>
-    </div>
-
-    {{-- Informasi akibat penghapusan --}}
-    <div
-        class="rounded-2xl border p-5"
-        style="
-            background-color: #fffdf0;
-            border-color: #f1e7a4;
-        "
-    >
-
-        <p class="text-sm font-bold text-gray-800">
-            Sebelum menghapus akun
+        <p class="mt-1 text-sm leading-6 text-red-700">
+            Setelah akun dihapus, akun administrator tidak dapat digunakan
+            kembali untuk masuk ke dashboard UMKM Maloppo.
         </p>
 
-        <div class="mt-4 space-y-3">
+    </div>
 
-            <div class="flex items-start gap-3">
+    {{-- Informasi --}}
+    <div>
 
-                <span
-                    class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold"
-                    style="
-                        background-color: #fff9b0;
-                        color: #990100;
-                    "
-                >
-                    1
-                </span>
+        <p class="text-sm font-medium text-gray-800">
+            Sebelum menghapus akun:
+        </p>
 
-                <p class="pt-1 text-sm leading-5 text-gray-600">
-                    Pastikan masih ada akun administrator lain yang dapat digunakan.
-                </p>
+        <ul class="mt-3 list-inside list-disc space-y-2 text-sm leading-6 text-gray-600">
 
-            </div>
+            <li>
+                Pastikan masih tersedia akun administrator lain.
+            </li>
 
-            <div class="flex items-start gap-3">
+            <li>
+                Simpan data penting yang masih diperlukan.
+            </li>
 
-                <span
-                    class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold"
-                    style="
-                        background-color: #fff9b0;
-                        color: #990100;
-                    "
-                >
-                    2
-                </span>
+            <li>
+                Penghapusan akun tidak dapat dibatalkan.
+            </li>
 
-                <p class="pt-1 text-sm leading-5 text-gray-600">
-                    Simpan data penting yang masih diperlukan sebelum melanjutkan.
-                </p>
-
-            </div>
-
-            <div class="flex items-start gap-3">
-
-                <span
-                    class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold"
-                    style="
-                        background-color: #fff9b0;
-                        color: #990100;
-                    "
-                >
-                    3
-                </span>
-
-                <p class="pt-1 text-sm leading-5 text-gray-600">
-                    Penghapusan akun tidak dapat dibatalkan setelah dikonfirmasi.
-                </p>
-
-            </div>
-
-        </div>
+        </ul>
 
     </div>
 
@@ -111,11 +44,9 @@
         type="button"
         x-data
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-        class="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
-        style="background-color: #be0000;"
+        class="inline-flex items-center justify-center rounded-lg bg-red-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-800"
     >
-        <span>🗑️</span>
-        Hapus Akun Permanen
+        Hapus Akun
     </button>
 
     {{-- Modal konfirmasi --}}
@@ -128,104 +59,111 @@
         <form
             method="POST"
             action="{{ route('profile.destroy') }}"
-            class="p-6 sm:p-8"
+            class="p-6 sm:p-7"
             x-data="{ showPassword: false }"
         >
             @csrf
             @method('DELETE')
 
             {{-- Header modal --}}
-            <div class="flex items-start gap-4">
+            <div>
 
-                <div
-                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl text-white"
-                    style="background-color: #be0000;"
-                >
-                    ⚠️
-                </div>
+                <h2 class="text-lg font-semibold text-gray-900">
+                    Hapus Akun Administrator?
+                </h2>
 
-                <div>
-
-                    <h2 class="text-xl font-extrabold text-gray-900">
-                        Hapus Akun Administrator?
-                    </h2>
-
-                    <p class="mt-2 text-sm leading-6 text-gray-600">
-                        Akun
-                        <span class="font-bold text-gray-900">
-                            {{ Auth::user()->email }}
-                        </span>
-                        akan dihapus secara permanen.
-                    </p>
-
-                </div>
+                <p class="mt-2 text-sm leading-6 text-gray-600">
+                    Akun
+                    <span class="font-medium text-gray-900">
+                        {{ Auth::user()->email }}
+                    </span>
+                    akan dihapus secara permanen.
+                </p>
 
             </div>
 
             {{-- Peringatan --}}
-            <div
-                class="mt-6 rounded-xl border p-4"
-                style="
-                    background-color: #fef2f2;
-                    border-color: #fca5a5;
-                "
-            >
+            <div class="mt-5 rounded-lg border border-red-200 bg-red-50 p-4">
 
-                <p class="text-sm font-bold text-red-800">
+                <p class="text-sm font-medium text-red-800">
                     Konfirmasi diperlukan
                 </p>
 
-                <p class="mt-1 text-xs leading-6 text-red-700">
-                    Masukkan password akun saat ini untuk memastikan bahwa
+                <p class="mt-1 text-xs leading-5 text-red-700">
+                    Masukkan password akun saat ini untuk memastikan
                     penghapusan dilakukan oleh pemilik akun.
                 </p>
 
             </div>
 
             {{-- Password --}}
-            <div class="mt-6">
+            <div class="mt-5">
 
                 <label
                     for="delete_account_password"
-                    class="block text-sm font-bold text-gray-700"
+                    class="block text-sm font-medium text-gray-700"
                 >
                     Password Saat Ini
-                    <span style="color: #be0000;">*</span>
+                    <span class="text-red-700">*</span>
                 </label>
 
                 <div class="relative mt-2">
-
-                    <div
-                        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400"
-                    >
-                        🔒
-                    </div>
 
                     <input
                         id="delete_account_password"
                         name="password"
                         :type="showPassword ? 'text' : 'password'"
-                        class="input-maloppo pl-11 pr-14"
+                        class="input-maloppo pr-12"
                         placeholder="Masukkan password untuk konfirmasi"
                         autocomplete="current-password"
+                        required
                     >
 
                     <button
                         type="button"
-                        class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-500 hover:text-maloppo-red"
+                        class="absolute inset-y-0 right-0 flex items-center justify-center px-3 text-gray-400 transition hover:text-gray-700"
                         @click="showPassword = !showPassword"
                         :aria-label="showPassword ? 'Sembunyikan password' : 'Tampilkan password'"
                     >
-                        <span x-show="!showPassword">
-                            👁️
-                        </span>
 
-                        <span
+                        <svg
+                            x-show="!showPassword"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="h-5 w-5"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+
+                        <svg
                             x-show="showPassword"
                             x-cloak
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="h-5 w-5"
                         >
-                            🙈
-                        </span>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M3.98 8.223A10.477 10.477 0 002.036 11.68a1.012 1.012 0 000 .639C3.423 16.49 7.36 19.5 12 19.5c1.526 0 2.97-.324 4.272-.904M6.228 6.228A9.953 9.953 0 0112 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638a10.451 10.451 0 01-2.293 3.95M6.228 6.228L3 3m3.228 3.228l3.65 3.65m9.792 6.388L21 21m-3.33-3.33l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243L9.88 9.88"
+                            />
+                        </svg>
+
                     </button>
 
                 </div>
@@ -236,7 +174,7 @@
 
                         @foreach ($errors->userDeletion->get('password') as $message)
 
-                            <p class="text-sm font-medium text-red-600">
+                            <p class="text-sm text-red-700">
                                 {{ $message }}
                             </p>
 
@@ -250,8 +188,7 @@
 
             {{-- Tombol modal --}}
             <div
-                class="mt-7 flex flex-col-reverse gap-3 border-t pt-6 sm:flex-row sm:justify-end"
-                style="border-color: #f1e7a4;"
+                class="mt-6 flex flex-col-reverse gap-3 border-t border-gray-200 pt-5 sm:flex-row sm:justify-end"
             >
 
                 <button
@@ -264,10 +201,8 @@
 
                 <button
                     type="submit"
-                    class="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
-                    style="background-color: #be0000;"
+                    class="inline-flex items-center justify-center rounded-lg bg-red-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-800"
                 >
-                    <span>🗑️</span>
                     Ya, Hapus Akun
                 </button>
 

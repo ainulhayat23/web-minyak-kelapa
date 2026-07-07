@@ -2,14 +2,15 @@
 
     <x-slot name="header">
 
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-
+        <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
             <div>
-                <h1 class="text-2xl font-extrabold leading-tight text-gray-900">
+                <h1 class="page-title-maloppo">
                     Profil Admin
                 </h1>
 
-                <p class="mt-2 text-sm font-normal text-gray-600">
+                <p class="page-description-maloppo">
                     Kelola informasi akun dan keamanan administrator UMKM Maloppo.
                 </p>
             </div>
@@ -18,70 +19,44 @@
                 href="{{ route('dashboard') }}"
                 class="btn-maloppo-secondary"
             >
-                <span aria-hidden="true">←</span>
-                Kembali ke Dashboard
+                Kembali
             </a>
-
         </div>
 
     </x-slot>
 
-    <div class="py-8 lg:py-10">
+    <div class="py-6 lg:py-8">
 
-        <div class="mx-auto max-w-6xl space-y-7 px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-5xl space-y-5 px-4 sm:px-6 lg:px-8">
 
             {{-- Ringkasan akun --}}
-            <section
-                class="relative overflow-hidden rounded-3xl p-6 shadow-lg sm:p-8"
-                style="
-                    background:
-                        radial-gradient(
-                            circle at top right,
-                            rgba(247, 233, 0, 0.35),
-                            transparent 38%
-                        ),
-                        linear-gradient(
-                            135deg,
-                            #be0000 0%,
-                            #990100 100%
-                        );
-                "
-            >
+            <section class="panel-maloppo p-5 sm:p-6">
 
-                <div
-                    class="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full opacity-20"
-                    style="background-color: #f7e900;"
-                ></div>
-
-                <div class="relative flex flex-col gap-6 sm:flex-row sm:items-center">
+                <div class="flex items-center gap-4">
 
                     <div
-                        class="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl text-3xl font-extrabold shadow-lg"
-                        style="
-                            background-color: #f7e900;
-                            color: #990100;
-                        "
+                        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-50 text-base font-semibold text-red-700"
                     >
                         {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                     </div>
 
-                    <div>
+                    <div class="min-w-0">
 
-                        <span
-                            class="inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider"
-                            style="
-                                background-color: rgba(255, 255, 255, 0.16);
-                                color: white;
-                            "
-                        >
-                            Administrator
-                        </span>
+                        <div class="flex flex-wrap items-center gap-2">
 
-                        <h2 class="mt-3 text-2xl font-extrabold text-white">
-                            {{ Auth::user()->name }}
-                        </h2>
+                            <h2 class="truncate text-base font-semibold text-gray-900">
+                                {{ Auth::user()->name }}
+                            </h2>
 
-                        <p class="mt-2 text-sm text-red-100">
+                            <span
+                                class="inline-flex rounded-full bg-gray-100 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-gray-600"
+                            >
+                                Administrator
+                            </span>
+
+                        </div>
+
+                        <p class="mt-1 truncate text-sm text-gray-500">
                             {{ Auth::user()->email }}
                         </p>
 
@@ -92,42 +67,21 @@
             </section>
 
             {{-- Informasi profil --}}
-            <section class="card-maloppo overflow-hidden">
+            <section class="panel-maloppo overflow-hidden">
 
-                <div
-                    class="border-b px-6 py-5 sm:px-8"
-                    style="
-                        background-color: #fffdf0;
-                        border-color: #f1e7a4;
-                    "
-                >
+                <div class="section-header-maloppo">
 
-                    <div class="flex items-center gap-4">
+                    <h2 class="section-title-maloppo">
+                        Informasi Profil
+                    </h2>
 
-                        <div
-                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                            style="background-color: #f7e900;"
-                        >
-                            👤
-                        </div>
-
-                        <div>
-
-                            <h2 class="text-xl font-extrabold text-gray-900">
-                                Informasi Profil
-                            </h2>
-
-                            <p class="mt-1 text-sm text-gray-500">
-                                Perbarui nama dan alamat email akun administrator.
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <p class="section-description-maloppo">
+                        Perbarui nama dan alamat email akun administrator.
+                    </p>
 
                 </div>
 
-                <div class="p-6 sm:p-8">
+                <div class="p-5 sm:p-6">
 
                     <div class="max-w-2xl">
                         @include('profile.partials.update-profile-information-form')
@@ -138,42 +92,21 @@
             </section>
 
             {{-- Password --}}
-            <section class="card-maloppo overflow-hidden">
+            <section class="panel-maloppo overflow-hidden">
 
-                <div
-                    class="border-b px-6 py-5 sm:px-8"
-                    style="
-                        background-color: #fffdf0;
-                        border-color: #f1e7a4;
-                    "
-                >
+                <div class="section-header-maloppo">
 
-                    <div class="flex items-center gap-4">
+                    <h2 class="section-title-maloppo">
+                        Ubah Password
+                    </h2>
 
-                        <div
-                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                            style="background-color: #f7e900;"
-                        >
-                            🔐
-                        </div>
-
-                        <div>
-
-                            <h2 class="text-xl font-extrabold text-gray-900">
-                                Keamanan Password
-                            </h2>
-
-                            <p class="mt-1 text-sm text-gray-500">
-                                Gunakan password yang kuat untuk menjaga keamanan akun.
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <p class="section-description-maloppo">
+                        Gunakan password yang kuat dan tidak mudah ditebak.
+                    </p>
 
                 </div>
 
-                <div class="p-6 sm:p-8">
+                <div class="p-5 sm:p-6">
 
                     <div class="max-w-2xl">
                         @include('profile.partials.update-password-form')
@@ -184,45 +117,21 @@
             </section>
 
             {{-- Hapus akun --}}
-            <section
-                class="overflow-hidden rounded-2xl border bg-white shadow-sm"
-                style="border-color: #fca5a5;"
-            >
+            <section class="overflow-hidden rounded-xl border border-red-200 bg-white">
 
-                <div
-                    class="border-b px-6 py-5 sm:px-8"
-                    style="
-                        background-color: #fef2f2;
-                        border-color: #fca5a5;
-                    "
-                >
+                <div class="border-b border-red-100 bg-red-50 px-5 py-4 sm:px-6">
 
-                    <div class="flex items-center gap-4">
+                    <h2 class="text-base font-semibold text-red-800">
+                        Hapus Akun
+                    </h2>
 
-                        <div
-                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl text-white"
-                            style="background-color: #be0000;"
-                        >
-                            ⚠️
-                        </div>
-
-                        <div>
-
-                            <h2 class="text-xl font-extrabold text-gray-900">
-                                Hapus Akun
-                            </h2>
-
-                            <p class="mt-1 text-sm text-gray-500">
-                                Tindakan ini akan menghapus akun secara permanen.
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <p class="mt-1 text-sm text-red-700">
+                        Tindakan ini akan menghapus akun administrator secara permanen.
+                    </p>
 
                 </div>
 
-                <div class="p-6 sm:p-8">
+                <div class="p-5 sm:p-6">
 
                     <div class="max-w-2xl">
                         @include('profile.partials.delete-user-form')

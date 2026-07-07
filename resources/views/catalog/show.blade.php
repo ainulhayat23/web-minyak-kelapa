@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
 
@@ -24,121 +25,106 @@
     <x-public-navbar />
 
     {{-- Header halaman --}}
-    <section class="hero-maloppo relative overflow-hidden">
+    <header class="border-b border-gray-200 bg-white">
 
-        <div
-            class="absolute -right-24 -top-24 h-64 w-64 rounded-full opacity-40"
-            style="background-color: #f7e900;"
-        ></div>
-
-        <div
-            class="absolute -bottom-28 -left-24 h-72 w-72 rounded-full opacity-10"
-            style="background-color: #be0000;"
-        ></div>
-
-        <div class="relative mx-auto max-w-7xl px-6 py-12">
+        <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
             <a
                 href="{{ route('catalog.index') }}"
-                class="inline-flex items-center gap-2 text-sm font-bold text-maloppo-red"
+                class="inline-flex items-center text-sm font-medium text-gray-600 transition hover:text-red-700"
             >
-                <span aria-hidden="true">
-                    ←
-                </span>
-
+                <span class="mr-2" aria-hidden="true">←</span>
                 Kembali ke katalog
             </a>
 
-            <div class="mt-6">
+            <div class="mt-5">
 
-                <span class="label-maloppo">
+                <p class="text-sm font-semibold uppercase tracking-wider text-red-700">
                     Detail Produk
-                </span>
+                </p>
 
-                <h1
-                    class="mt-4 max-w-4xl text-3xl font-extrabold leading-tight text-gray-900 md:text-4xl"
-                >
+                <h1 class="mt-2 max-w-3xl text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
                     {{ $product->name }}
                 </h1>
 
-                <p class="mt-3 max-w-2xl leading-7 text-gray-600">
-                    Informasi lengkap mengenai produk, ukuran, harga,
-                    ketersediaan stok, dan komposisi produk Maloppo.
+                <p class="mt-3 max-w-2xl text-sm leading-6 text-gray-600 sm:text-base">
+                    Lihat informasi harga, ukuran, stok, deskripsi, dan komposisi produk.
                 </p>
 
             </div>
 
         </div>
 
-    </section>
+    </header>
 
-    <main class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
 
         {{-- Notifikasi berhasil --}}
         @if (session('success'))
+
             <div
-                class="mb-7 flex flex-col gap-3 rounded-xl border px-5 py-4 text-sm sm:flex-row sm:items-center sm:justify-between"
-                style="
-                    background-color: #dcfce7;
-                    border-color: #86efac;
-                    color: #166534;
-                "
+                class="alert-maloppo-success mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
             >
-                <span class="font-medium">
+                <span>
                     {{ session('success') }}
                 </span>
 
                 @guest
                     <a
                         href="{{ route('cart.index') }}"
-                        class="font-bold underline"
+                        class="font-semibold underline"
                     >
                         Lihat Keranjang
                     </a>
                 @endguest
             </div>
+
         @endif
 
         {{-- Notifikasi kesalahan --}}
         @if (session('error'))
-            <div class="alert-maloppo-error mb-7">
+
+            <div class="alert-maloppo-error mb-6">
                 {{ session('error') }}
             </div>
+
         @endif
 
         {{-- Validasi --}}
         @if ($errors->any())
-            <div class="alert-maloppo-error mb-7">
+
+            <div class="alert-maloppo-error mb-6">
 
                 <p class="font-semibold">
-                    Terjadi kesalahan:
+                    Data belum dapat diproses.
                 </p>
 
                 <ul class="mt-2 list-inside list-disc space-y-1">
+
                     @foreach ($errors->all() as $error)
+
                         <li>
                             {{ $error }}
                         </li>
+
                     @endforeach
+
                 </ul>
 
             </div>
+
         @endif
 
-        {{-- Detail utama --}}
+        {{-- Detail produk --}}
         <section
-            class="card-maloppo grid grid-cols-1 gap-10 overflow-hidden p-6 lg:grid-cols-2 lg:p-10"
+            class="grid grid-cols-1 gap-8 rounded-xl border border-gray-200 bg-white p-4 sm:p-6 lg:grid-cols-2 lg:gap-10 lg:p-8"
         >
 
             {{-- Gambar produk --}}
-            <div class="relative">
+            <div>
 
                 <div
-                    class="relative flex min-h-96 items-center justify-center overflow-hidden rounded-3xl border"
-                    style="
-                        background-color: #fffdf0;
-                        border-color: #f1e7a4;
-                    "
+                    class="flex min-h-80 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-50 sm:min-h-96"
                 >
 
                     @if ($product->image)
@@ -146,87 +132,56 @@
                         <img
                             src="{{ asset('storage/' . $product->image) }}"
                             alt="{{ $product->name }}"
-                            class="h-full min-h-96 w-full object-cover"
+                            class="h-full min-h-80 w-full object-cover sm:min-h-96"
                         >
 
                     @else
 
-                        <div class="px-8 py-20 text-center">
-
-                            <div class="text-7xl">
-                                🥥
-                            </div>
-
-                            <p class="mt-5 text-sm font-medium text-gray-400">
-                                Gambar produk belum tersedia
-                            </p>
-
-                        </div>
+                        <p class="px-6 text-center text-sm text-gray-400">
+                            Gambar produk belum tersedia
+                        </p>
 
                     @endif
 
-                    {{-- Status stok --}}
-                    <div class="absolute left-5 top-5">
-
-                        @if ($product->stock > 0)
-
-                            <span
-                                class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold shadow-sm"
-                                style="
-                                    background-color: #dcfce7;
-                                    color: #166534;
-                                "
-                            >
-                                <span>✓</span>
-                                Stok tersedia
-                            </span>
-
-                        @else
-
-                            <span
-                                class="inline-flex items-center rounded-full px-4 py-2 text-xs font-bold shadow-sm"
-                                style="
-                                    background-color: #fee2e2;
-                                    color: #991b1b;
-                                "
-                            >
-                                Stok habis
-                            </span>
-
-                        @endif
-
-                    </div>
-
                 </div>
 
-                {{-- Identitas produk --}}
+                {{-- Informasi singkat --}}
                 <div
-                    class="mt-5 flex items-center gap-4 rounded-2xl border p-4"
-                    style="
-                        background-color: #fff9b0;
-                        border-color: #f7e900;
-                    "
+                    class="mt-4 grid grid-cols-2 gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4"
                 >
-                    <div
-                        class="flex h-14 w-24 shrink-0 items-center justify-center overflow-hidden rounded-lg"
-                        style="background-color: #f7e900;"
-                    >
-                        <img
-                            src="{{ asset('images/brand/logo-maloppo-wordmark.jpg') }}"
-                            alt="Logo Maloppo"
-                            class="h-full w-full object-contain"
-                        >
+
+                    <div>
+
+                        <p class="text-xs text-gray-500">
+                            Ukuran
+                        </p>
+
+                        <p class="mt-1 text-sm font-medium text-gray-900">
+                            {{ $product->size ?: '-' }}
+                        </p>
+
                     </div>
 
                     <div>
-                        <p class="text-sm font-bold text-maloppo-red-dark">
-                            Produk UMKM Maloppo
+
+                        <p class="text-xs text-gray-500">
+                            Ketersediaan
                         </p>
 
-                        <p class="mt-1 text-xs leading-5 text-gray-600">
-                            Diolah dari kelapa pilihan melalui proses yang
-                            bersih dan terjaga.
-                        </p>
+                        @if ($product->stock > 0)
+
+                            <p class="mt-1 text-sm font-medium text-green-700">
+                                {{ $product->stock }} produk
+                            </p>
+
+                        @else
+
+                            <p class="mt-1 text-sm font-medium text-red-700">
+                                Stok habis
+                            </p>
+
+                        @endif
+
                     </div>
 
                 </div>
@@ -238,134 +193,78 @@
 
                 <div>
 
-                    <span class="label-maloppo">
+                    <p class="text-sm font-medium text-red-700">
                         Minyak Kelapa Maloppo
-                    </span>
+                    </p>
 
-                    <h2
-                        class="mt-5 text-3xl font-extrabold leading-tight text-gray-900 md:text-4xl"
-                    >
+                    <h2 class="mt-2 text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl">
                         {{ $product->name }}
                     </h2>
 
-                    @if ($product->size)
+                    @if ($product->short_description)
 
-                        <span class="badge-maloppo-yellow mt-4">
-                            Ukuran {{ $product->size }}
-                        </span>
+                        <p class="mt-4 text-sm leading-7 text-gray-600 sm:text-base">
+                            {{ $product->short_description }}
+                        </p>
 
                     @endif
 
                 </div>
 
-                {{-- Harga dan stok --}}
-                <div
-                    class="mt-7 rounded-2xl border p-5"
-                    style="
-                        background-color: #fffdf0;
-                        border-color: #f1e7a4;
-                    "
-                >
+                {{-- Harga --}}
+                <div class="mt-6 border-y border-gray-200 py-5">
 
-                    <div
-                        class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
-                    >
+                    <p class="text-sm text-gray-500">
+                        Harga Produk
+                    </p>
 
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">
-                                Harga Produk
-                            </p>
+                    <p class="mt-1 text-3xl font-semibold text-red-700">
+                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                    </p>
 
-                            <p class="mt-1 text-3xl font-extrabold text-maloppo-red">
-                                Rp {{ number_format($product->price, 0, ',', '.') }}
-                            </p>
-                        </div>
+                    <div class="mt-3">
 
-                        <div class="sm:text-right">
+                        @if ($product->stock > 0)
 
-                            <p class="text-sm text-gray-500">
-                                Ketersediaan stok
-                            </p>
+                            <span
+                                class="inline-flex rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700"
+                            >
+                                Stok tersedia
+                            </span>
 
-                            @if ($product->stock > 0)
+                        @else
 
-                                <p
-                                    class="mt-1 text-lg font-bold"
-                                    style="color: #166534;"
-                                >
-                                    {{ $product->stock }} produk
-                                </p>
+                            <span
+                                class="inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700"
+                            >
+                                Stok habis
+                            </span>
 
-                            @else
-
-                                <p
-                                    class="mt-1 text-lg font-bold"
-                                    style="color: #991b1b;"
-                                >
-                                    Stok sedang habis
-                                </p>
-
-                            @endif
-
-                        </div>
+                        @endif
 
                     </div>
 
                 </div>
 
-                {{-- Deskripsi singkat --}}
-                @if ($product->short_description)
+                {{-- Deskripsi dan komposisi --}}
+                <div class="mt-6 space-y-3">
 
-                    <div class="mt-7">
-
-                        <p class="text-sm font-bold uppercase tracking-wider text-maloppo-red">
-                            Ringkasan Produk
-                        </p>
-
-                        <p class="mt-3 leading-8 text-gray-600">
-                            {{ $product->short_description }}
-                        </p>
-
-                    </div>
-
-                @endif
-
-                {{-- Informasi produk --}}
-                <div class="mt-8 space-y-4">
-
-                    {{-- Deskripsi lengkap --}}
                     <div
                         x-data="{ open: true }"
-                        class="overflow-hidden rounded-2xl border"
-                        style="border-color: #f1e7a4;"
+                        class="overflow-hidden rounded-lg border border-gray-200"
                     >
 
                         <button
                             type="button"
-                            class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
-                            style="background-color: #fffdf0;"
-                            @click="open = ! open"
+                            class="flex w-full items-center justify-between gap-4 bg-gray-50 px-4 py-3 text-left"
+                            @click="open = !open"
                         >
-                            <span class="flex items-center gap-3">
-
-                                <span
-                                    class="flex h-9 w-9 items-center justify-center rounded-lg"
-                                    style="
-                                        background-color: #f7e900;
-                                        color: #990100;
-                                    "
-                                >
-                                    📄
-                                </span>
-
-                                <span class="font-bold text-gray-900">
-                                    Deskripsi Produk
-                                </span>
-
+                            <span class="text-sm font-semibold text-gray-900">
+                                Deskripsi Produk
                             </span>
 
                             <span
-                                class="font-bold text-maloppo-red"
+                                class="text-lg text-gray-500"
                                 x-text="open ? '−' : '+'"
                             ></span>
                         </button>
@@ -373,49 +272,29 @@
                         <div
                             x-show="open"
                             x-collapse
-                            class="border-t px-5 py-5"
-                            style="border-color: #f1e7a4;"
+                            class="border-t border-gray-200 px-4 py-4"
                         >
-                            <p class="whitespace-pre-line leading-8 text-gray-600">
-                                {{ $product->description ?: 'Deskripsi lengkap produk belum tersedia.' }}
-                            </p>
+                            <p class="whitespace-pre-line text-sm leading-7 text-gray-600">{{ $product->description ?: 'Deskripsi lengkap produk belum tersedia.' }}</p>
                         </div>
 
                     </div>
 
-                    {{-- Komposisi --}}
                     <div
-                        x-data="{ open: true }"
-                        class="overflow-hidden rounded-2xl border"
-                        style="border-color: #f1e7a4;"
+                        x-data="{ open: false }"
+                        class="overflow-hidden rounded-lg border border-gray-200"
                     >
 
                         <button
                             type="button"
-                            class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
-                            style="background-color: #fffdf0;"
-                            @click="open = ! open"
+                            class="flex w-full items-center justify-between gap-4 bg-gray-50 px-4 py-3 text-left"
+                            @click="open = !open"
                         >
-                            <span class="flex items-center gap-3">
-
-                                <span
-                                    class="flex h-9 w-9 items-center justify-center rounded-lg"
-                                    style="
-                                        background-color: #f7e900;
-                                        color: #990100;
-                                    "
-                                >
-                                    🥥
-                                </span>
-
-                                <span class="font-bold text-gray-900">
-                                    Komposisi
-                                </span>
-
+                            <span class="text-sm font-semibold text-gray-900">
+                                Komposisi
                             </span>
 
                             <span
-                                class="font-bold text-maloppo-red"
+                                class="text-lg text-gray-500"
                                 x-text="open ? '−' : '+'"
                             ></span>
                         </button>
@@ -423,23 +302,17 @@
                         <div
                             x-show="open"
                             x-collapse
-                            class="border-t px-5 py-5"
-                            style="border-color: #f1e7a4;"
+                            class="border-t border-gray-200 px-4 py-4"
                         >
-                            <p class="whitespace-pre-line leading-8 text-gray-600">
-                                {{ $product->composition ?: 'Informasi komposisi belum tersedia.' }}
-                            </p>
+                            <p class="whitespace-pre-line text-sm leading-7 text-gray-600">{{ $product->composition ?: 'Informasi komposisi belum tersedia.' }}</p>
                         </div>
 
                     </div>
 
                 </div>
 
-                {{-- Bagian pemesanan --}}
-                <div
-                    class="mt-8 border-t pt-7"
-                    style="border-color: #f1e7a4;"
-                >
+                {{-- Pemesanan --}}
+                <div class="mt-6 border-t border-gray-200 pt-6">
 
                     @if ($product->stock > 0)
 
@@ -459,65 +332,41 @@
 
                                 <button
                                     type="submit"
-                                    class="btn-maloppo-primary w-full py-4 text-base"
+                                    class="btn-maloppo-primary w-full"
                                 >
-                                    <span>
-                                        🛒
-                                    </span>
-
-                                    Tambahkan ke Keranjang
+                                    Tambah ke Keranjang
                                 </button>
 
                             </form>
 
                             <a
                                 href="{{ route('cart.index') }}"
-                                class="btn-maloppo-secondary mt-3 w-full py-4"
+                                class="btn-maloppo-secondary mt-3 w-full"
                             >
                                 Lihat Keranjang
                             </a>
 
-                            <div
-                                class="mt-4 flex items-start gap-3 rounded-xl px-4 py-3"
-                                style="
-                                    background-color: #fff9b0;
-                                    color: #713f12;
-                                "
-                            >
-                                <span>
-                                    ℹ️
-                                </span>
-
-                                <p class="text-xs leading-5">
-                                    Produk akan dimasukkan ke keranjang.
-                                    Jumlah produk masih dapat diubah sebelum
-                                    melanjutkan ke proses checkout.
-                                </p>
-                            </div>
+                            <p class="mt-3 text-xs leading-5 text-gray-500">
+                                Jumlah produk dapat diubah kembali pada halaman keranjang.
+                            </p>
 
                         @else
 
-                            <div
-                                class="rounded-xl border px-5 py-5 text-center"
-                                style="
-                                    background-color: #fff9b0;
-                                    border-color: #f7e900;
-                                    color: #990100;
-                                "
-                            >
-                                <p class="text-sm font-bold">
-                                    Anda sedang masuk sebagai admin
+                            <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
+
+                                <p class="text-sm font-medium text-gray-900">
+                                    Pemesanan tersedia untuk pengunjung
                                 </p>
 
-                                <p class="mt-2 text-xs leading-5">
-                                    Pemesanan produk hanya tersedia untuk
-                                    pengunjung website.
+                                <p class="mt-1 text-xs leading-5 text-gray-500">
+                                    Anda sedang masuk menggunakan akun administrator.
                                 </p>
+
                             </div>
 
                             <a
                                 href="{{ route('dashboard') }}"
-                                class="btn-maloppo-primary mt-3 w-full"
+                                class="btn-maloppo-secondary mt-3 w-full"
                             >
                                 Kembali ke Dashboard
                             </a>
@@ -526,22 +375,16 @@
 
                     @else
 
-                        <div
-                            class="rounded-xl border px-6 py-5 text-center"
-                            style="
-                                background-color: #fee2e2;
-                                border-color: #fca5a5;
-                                color: #991b1b;
-                            "
-                        >
-                            <p class="font-bold">
+                        <div class="rounded-lg border border-red-200 bg-red-50 p-4 text-center">
+
+                            <p class="text-sm font-semibold text-red-800">
                                 Stok produk sedang habis
                             </p>
 
-                            <p class="mt-2 text-xs leading-5">
-                                Silakan pilih produk lain yang masih tersedia
-                                di dalam katalog.
+                            <p class="mt-1 text-xs leading-5 text-red-700">
+                                Silakan pilih produk lain yang masih tersedia.
                             </p>
+
                         </div>
 
                         <a
@@ -559,138 +402,73 @@
 
         </section>
 
-        {{-- Keunggulan --}}
-        <section class="mt-10">
+        {{-- Informasi keunggulan --}}
+        <section
+            class="mt-8 grid grid-cols-1 gap-6 border-y border-gray-200 py-8 sm:grid-cols-3"
+        >
 
-            <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+            <div>
 
-                <article class="card-maloppo p-5">
+                <h3 class="text-sm font-semibold text-gray-900">
+                    Kelapa Pilihan
+                </h3>
 
-                    <div
-                        class="flex h-11 w-11 items-center justify-center rounded-xl text-xl"
-                        style="background-color: #fff9b0;"
-                    >
-                        🥥
-                    </div>
+                <p class="mt-1 text-xs leading-5 text-gray-500">
+                    Bahan baku dipilih sebelum proses pengolahan.
+                </p>
 
-                    <h3 class="mt-4 font-bold text-gray-900">
-                        Kelapa Pilihan
-                    </h3>
+            </div>
 
-                    <p class="mt-2 text-sm leading-6 text-gray-500">
-                        Menggunakan bahan baku kelapa yang dipilih sebelum
-                        proses pengolahan.
-                    </p>
+            <div>
 
-                </article>
+                <h3 class="text-sm font-semibold text-gray-900">
+                    Proses Terjaga
+                </h3>
 
-                <article class="card-maloppo p-5">
+                <p class="mt-1 text-xs leading-5 text-gray-500">
+                    Produksi dilakukan secara bersih untuk menjaga mutu produk.
+                </p>
 
-                    <div
-                        class="flex h-11 w-11 items-center justify-center rounded-xl text-xl"
-                        style="background-color: #fff9b0;"
-                    >
-                        ✨
-                    </div>
+            </div>
 
-                    <h3 class="mt-4 font-bold text-gray-900">
-                        Proses Terjaga
-                    </h3>
+            <div>
 
-                    <p class="mt-2 text-sm leading-6 text-gray-500">
-                        Proses produksi dilakukan secara bersih untuk menjaga
-                        mutu produk.
-                    </p>
+                <h3 class="text-sm font-semibold text-gray-900">
+                    Kemasan Praktis
+                </h3>
 
-                </article>
-
-                <article class="card-maloppo p-5">
-
-                    <div
-                        class="flex h-11 w-11 items-center justify-center rounded-xl text-xl"
-                        style="background-color: #fff9b0;"
-                    >
-                        📦
-                    </div>
-
-                    <h3 class="mt-4 font-bold text-gray-900">
-                        Kemasan Praktis
-                    </h3>
-
-                    <p class="mt-2 text-sm leading-6 text-gray-500">
-                        Produk dikemas agar lebih praktis digunakan dan
-                        disimpan.
-                    </p>
-
-                </article>
+                <p class="mt-1 text-xs leading-5 text-gray-500">
+                    Produk dikemas agar mudah digunakan dan disimpan.
+                </p>
 
             </div>
 
         </section>
 
-    </main>
-
-    {{-- Ajakan --}}
-    <section class="section-maloppo-red">
-
-        <div
-            class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-7 px-6 py-12 text-center lg:flex-row lg:text-left"
-        >
-
-            <div>
-
-                <span
-                    class="inline-flex rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider"
-                    style="
-                        background-color: #f7e900;
-                        color: #990100;
-                    "
-                >
-                    Produk Maloppo
-                </span>
-
-                <h2 class="mt-4 text-2xl font-extrabold text-white">
-                    Lihat produk Maloppo lainnya
-                </h2>
-
-                <p class="mt-2 max-w-2xl text-sm leading-7 text-red-100">
-                    Temukan pilihan ukuran dan produk yang sesuai dengan
-                    kebutuhan Anda.
-                </p>
-
-            </div>
+        <div class="mt-8 text-center">
 
             <a
                 href="{{ route('catalog.index') }}"
-                class="btn-maloppo-yellow whitespace-nowrap px-7 py-3.5"
+                class="text-sm font-semibold text-red-700 transition hover:text-red-900"
             >
-                Buka Katalog Produk
+                Lihat produk Maloppo lainnya
             </a>
 
         </div>
 
-    </section>
+    </main>
 
     {{-- Footer --}}
-    <footer
-        class="border-t bg-white"
-        style="border-color: #f1e7a4;"
-    >
+    <footer class="border-t border-gray-200 bg-white">
 
-        <div class="maloppo-brand-line"></div>
+        <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
 
-        <div class="mx-auto max-w-7xl px-6 py-10">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
 
-            <div
-                class="flex flex-col items-center justify-between gap-8 lg:flex-row"
-            >
-
-                {{-- Identitas footer --}}
-                <div class="text-center lg:text-left">
+                <div>
 
                     <div
-                        class="mx-auto flex h-20 w-36 items-center justify-center overflow-hidden rounded-xl lg:mx-0"
-                        style="background-color: #f7e900;"
+                        class="flex h-14 w-32 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
                     >
                         <img
                             src="{{ asset('images/brand/logo-maloppo-wordmark.jpg') }}"
@@ -699,28 +477,27 @@
                         >
                     </div>
 
-                    <p class="mt-4 text-sm font-bold text-gray-800">
+                    <p class="mt-4 text-sm font-semibold text-gray-900">
                         UMKM Maloppo
                     </p>
 
-                    <p class="mt-1 text-xs text-gray-500">
-                        Produk minyak kelapa murni dari kelapa pilihan
+                    <p class="mt-1 max-w-sm text-xs leading-5 text-gray-500">
+                        Produk minyak kelapa murni dari kelapa pilihan.
                     </p>
 
                 </div>
 
-                {{-- Media sosial --}}
-                <div class="text-center">
+                <div class="md:text-right">
 
-                    <p class="text-sm font-bold text-gray-700">
-                        Ikuti dan hubungi UMKM Maloppo
+                    <p class="text-sm font-semibold text-gray-900">
+                        Hubungi dan ikuti Maloppo
                     </p>
 
                     <p class="mt-1 text-xs text-gray-500">
-                        Dapatkan informasi produk dan kegiatan terbaru kami.
+                        Dapatkan informasi produk dan kegiatan terbaru.
                     </p>
 
-                    <div class="mt-5">
+                    <div class="mt-4 md:flex md:justify-end">
                         <x-social-media />
                     </div>
 
@@ -729,16 +506,18 @@
             </div>
 
             <div
-                class="mt-8 flex flex-col gap-2 border-t pt-6 text-center text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between sm:text-left"
-                style="border-color: #f1e7a4;"
+                class="mt-8 flex flex-col gap-2 border-t border-gray-200 pt-5 text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between"
             >
                 <p>
-                    &copy; {{ date('Y') }} UMKM Maloppo. Hak cipta dilindungi.
+                    &copy; {{ date('Y') }} UMKM Maloppo.
                 </p>
 
-                <p>
-                    Produk lokal dari kelapa pilihan
-                </p>
+                <a
+                    href="{{ route('catalog.index') }}"
+                    class="font-medium text-gray-600 hover:text-red-700"
+                >
+                    Kembali ke Katalog
+                </a>
             </div>
 
         </div>
@@ -746,4 +525,5 @@
     </footer>
 
 </body>
+
 </html>

@@ -4,36 +4,36 @@
 
 /*
 |--------------------------------------------------------------------------
-| Identitas Visual UMKM Maloppo
+| Maloppo Clean UI
 |--------------------------------------------------------------------------
 |
-| Merah utama   : #BE0000
-| Merah gelap   : #990100
-| Kuning utama  : #F7E900
-| Kuning lembut : #FFF9B0
-| Latar halaman : #FFFEF5
+| Identitas merah dan kuning tetap dipertahankan, tetapi digunakan
+| secara terbatas agar tampilan lebih sederhana dan mudah dipahami.
 |
 */
 
 @layer base {
     :root {
-        --maloppo-red: #be0000;
-        --maloppo-red-dark: #990100;
-        --maloppo-red-soft: #fee2e2;
+        --maloppo-red: #b91c1c;
+        --maloppo-red-dark: #991b1b;
+        --maloppo-red-soft: #fef2f2;
 
-        --maloppo-yellow: #f7e900;
-        --maloppo-yellow-soft: #fff9b0;
-        --maloppo-yellow-pale: #fffdf0;
+        --maloppo-yellow: #facc15;
+        --maloppo-yellow-soft: #fef9c3;
+        --maloppo-yellow-pale: #fffdf5;
 
         --maloppo-white: #ffffff;
-        --maloppo-background: #fffef5;
+        --maloppo-background: #f8fafc;
 
-        --maloppo-text: #1f2937;
+        --maloppo-text: #111827;
         --maloppo-text-muted: #6b7280;
-        --maloppo-border: #f1e7a4;
+        --maloppo-border: #e5e7eb;
 
-        --maloppo-success: #16a34a;
-        --maloppo-success-soft: #dcfce7;
+        --maloppo-success: #15803d;
+        --maloppo-success-soft: #f0fdf4;
+
+        --maloppo-danger: #b91c1c;
+        --maloppo-danger-soft: #fef2f2;
     }
 
     html {
@@ -41,14 +41,23 @@
     }
 
     body {
+        margin: 0;
         background-color: var(--maloppo-background);
         color: var(--maloppo-text);
+        font-family:
+            Inter,
+            ui-sans-serif,
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
 
     ::selection {
-        background-color: var(--maloppo-yellow);
+        background-color: var(--maloppo-yellow-soft);
         color: var(--maloppo-red-dark);
     }
 
@@ -66,7 +75,15 @@
     textarea:focus,
     select:focus {
         border-color: var(--maloppo-red) !important;
-        --tw-ring-color: rgba(190, 0, 0, 0.18) !important;
+        --tw-ring-color: rgba(185, 28, 28, 0.12) !important;
+    }
+
+    button,
+    a,
+    input,
+    textarea,
+    select {
+        transition-duration: 150ms;
     }
 }
 
@@ -82,32 +99,35 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        border-radius: 0.625rem;
+        border: 1px solid var(--maloppo-red);
+        border-radius: 0.5rem;
         background-color: var(--maloppo-red);
-        padding: 0.75rem 1.25rem;
+        padding: 0.625rem 1rem;
         font-size: 0.875rem;
-        font-weight: 700;
+        font-weight: 600;
+        line-height: 1.25rem;
         color: var(--maloppo-white);
-        box-shadow:
-            0 1px 2px rgba(0, 0, 0, 0.05),
-            0 6px 14px rgba(190, 0, 0, 0.12);
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         transition:
             background-color 150ms ease,
-            transform 150ms ease,
+            border-color 150ms ease,
             box-shadow 150ms ease;
     }
 
     .btn-maloppo-primary:hover {
+        border-color: var(--maloppo-red-dark);
         background-color: var(--maloppo-red-dark);
-        transform: translateY(-1px);
-        box-shadow:
-            0 1px 2px rgba(0, 0, 0, 0.05),
-            0 8px 18px rgba(153, 1, 0, 0.18);
+        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.1);
     }
 
     .btn-maloppo-primary:focus {
-        outline: 3px solid rgba(247, 233, 0, 0.55);
+        outline: 3px solid rgba(185, 28, 28, 0.14);
         outline-offset: 2px;
+    }
+
+    .btn-maloppo-primary:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
     }
 
     .btn-maloppo-secondary {
@@ -115,23 +135,30 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        border: 1px solid var(--maloppo-red);
-        border-radius: 0.625rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
         background-color: var(--maloppo-white);
-        padding: 0.75rem 1.25rem;
+        padding: 0.625rem 1rem;
         font-size: 0.875rem;
-        font-weight: 700;
-        color: var(--maloppo-red);
+        font-weight: 600;
+        line-height: 1.25rem;
+        color: #374151;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         transition:
             background-color 150ms ease,
-            color 150ms ease,
-            transform 150ms ease;
+            border-color 150ms ease,
+            color 150ms ease;
     }
 
     .btn-maloppo-secondary:hover {
-        background-color: var(--maloppo-yellow-soft);
-        color: var(--maloppo-red-dark);
-        transform: translateY(-1px);
+        border-color: #9ca3af;
+        background-color: #f9fafb;
+        color: var(--maloppo-red);
+    }
+
+    .btn-maloppo-secondary:focus {
+        outline: 3px solid rgba(185, 28, 28, 0.1);
+        outline-offset: 2px;
     }
 
     .btn-maloppo-yellow {
@@ -139,21 +166,22 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        border: 1px solid var(--maloppo-yellow);
-        border-radius: 0.625rem;
+        border: 1px solid #eab308;
+        border-radius: 0.5rem;
         background-color: var(--maloppo-yellow);
-        padding: 0.75rem 1.25rem;
+        padding: 0.625rem 1rem;
         font-size: 0.875rem;
-        font-weight: 700;
-        color: var(--maloppo-red-dark);
+        font-weight: 600;
+        line-height: 1.25rem;
+        color: #713f12;
         transition:
-            filter 150ms ease,
-            transform 150ms ease;
+            background-color 150ms ease,
+            border-color 150ms ease;
     }
 
     .btn-maloppo-yellow:hover {
-        filter: brightness(0.96);
-        transform: translateY(-1px);
+        border-color: #ca8a04;
+        background-color: #eab308;
     }
 
     /*
@@ -164,26 +192,20 @@
 
     .card-maloppo {
         border: 1px solid var(--maloppo-border);
-        border-radius: 1rem;
+        border-radius: 0.75rem;
         background-color: var(--maloppo-white);
-        box-shadow:
-            0 1px 2px rgba(0, 0, 0, 0.04),
-            0 8px 24px rgba(153, 1, 0, 0.04);
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
     }
 
     .card-maloppo-hover {
         transition:
-            transform 180ms ease,
-            box-shadow 180ms ease,
-            border-color 180ms ease;
+            border-color 150ms ease,
+            box-shadow 150ms ease;
     }
 
     .card-maloppo-hover:hover {
-        border-color: rgba(190, 0, 0, 0.25);
-        transform: translateY(-3px);
-        box-shadow:
-            0 4px 8px rgba(0, 0, 0, 0.05),
-            0 14px 30px rgba(153, 1, 0, 0.08);
+        border-color: #d1d5db;
+        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07);
     }
 
     /*
@@ -195,12 +217,12 @@
     .label-maloppo {
         display: inline-flex;
         align-items: center;
-        border-radius: 9999px;
-        background-color: var(--maloppo-yellow-soft);
-        padding: 0.375rem 0.875rem;
-        font-size: 0.75rem;
+        border-radius: 0.375rem;
+        background-color: var(--maloppo-red-soft);
+        padding: 0.3rem 0.625rem;
+        font-size: 0.6875rem;
         font-weight: 700;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         color: var(--maloppo-red-dark);
         text-transform: uppercase;
     }
@@ -210,9 +232,9 @@
         align-items: center;
         border-radius: 9999px;
         background-color: var(--maloppo-red-soft);
-        padding: 0.3rem 0.75rem;
+        padding: 0.25rem 0.625rem;
         font-size: 0.75rem;
-        font-weight: 700;
+        font-weight: 600;
         color: var(--maloppo-red-dark);
     }
 
@@ -220,11 +242,11 @@
         display: inline-flex;
         align-items: center;
         border-radius: 9999px;
-        background-color: var(--maloppo-yellow);
-        padding: 0.3rem 0.75rem;
+        background-color: var(--maloppo-yellow-soft);
+        padding: 0.25rem 0.625rem;
         font-size: 0.75rem;
-        font-weight: 700;
-        color: var(--maloppo-red-dark);
+        font-weight: 600;
+        color: #854d0e;
     }
 
     /*
@@ -234,17 +256,8 @@
     */
 
     .hero-maloppo {
-        background:
-            radial-gradient(
-                circle at top right,
-                rgba(247, 233, 0, 0.42),
-                transparent 34%
-            ),
-            linear-gradient(
-                135deg,
-                #fffef5 0%,
-                #fff9b0 100%
-            );
+        border-bottom: 1px solid var(--maloppo-border);
+        background-color: var(--maloppo-white);
     }
 
     .section-maloppo-soft {
@@ -252,30 +265,25 @@
     }
 
     .section-maloppo-red {
-        background:
-            linear-gradient(
-                135deg,
-                var(--maloppo-red) 0%,
-                var(--maloppo-red-dark) 100%
-            );
+        background-color: var(--maloppo-red);
         color: var(--maloppo-white);
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Garis Dekorasi
+    | Garis Identitas
     |--------------------------------------------------------------------------
     */
 
     .maloppo-brand-line {
-        height: 0.25rem;
+        height: 2px;
         width: 100%;
         background:
             linear-gradient(
                 90deg,
                 var(--maloppo-red) 0%,
-                var(--maloppo-red) 65%,
-                var(--maloppo-yellow) 65%,
+                var(--maloppo-red) 82%,
+                var(--maloppo-yellow) 82%,
                 var(--maloppo-yellow) 100%
             );
     }
@@ -289,20 +297,36 @@
     .input-maloppo {
         width: 100%;
         border: 1px solid #d1d5db;
-        border-radius: 0.625rem;
+        border-radius: 0.5rem;
         background-color: var(--maloppo-white);
-        padding: 0.75rem 0.875rem;
+        padding: 0.625rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.5rem;
         color: var(--maloppo-text);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        box-shadow: none;
         transition:
             border-color 150ms ease,
             box-shadow 150ms ease;
     }
 
+    .input-maloppo::placeholder {
+        color: #9ca3af;
+    }
+
+    .input-maloppo:hover {
+        border-color: #9ca3af;
+    }
+
     .input-maloppo:focus {
         border-color: var(--maloppo-red);
         outline: none;
-        box-shadow: 0 0 0 3px rgba(190, 0, 0, 0.13);
+        box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+    }
+
+    .input-maloppo:disabled {
+        cursor: not-allowed;
+        background-color: #f3f4f6;
+        color: #9ca3af;
     }
 
     /*
@@ -312,21 +336,116 @@
     */
 
     .alert-maloppo-success {
-        border: 1px solid #86efac;
-        border-radius: 0.625rem;
+        border: 1px solid #bbf7d0;
+        border-radius: 0.5rem;
         background-color: var(--maloppo-success-soft);
-        padding: 1rem 1.25rem;
+        padding: 0.875rem 1rem;
         font-size: 0.875rem;
         color: #166534;
     }
 
     .alert-maloppo-error {
-        border: 1px solid #fca5a5;
-        border-radius: 0.625rem;
-        background-color: #fee2e2;
-        padding: 1rem 1.25rem;
+        border: 1px solid #fecaca;
+        border-radius: 0.5rem;
+        background-color: var(--maloppo-danger-soft);
+        padding: 0.875rem 1rem;
         font-size: 0.875rem;
-        color: #991b1b;
+        color: var(--maloppo-danger);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Komponen Clean UI Tambahan
+    |--------------------------------------------------------------------------
+    */
+
+    .page-maloppo {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 80rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .page-header-maloppo {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .page-title-maloppo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 2rem;
+        color: #111827;
+    }
+
+    .page-description-maloppo {
+        margin-top: 0.375rem;
+        max-width: 48rem;
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+        color: var(--maloppo-text-muted);
+    }
+
+    .section-header-maloppo {
+        border-bottom: 1px solid var(--maloppo-border);
+        padding: 1rem 1.25rem;
+    }
+
+    .section-title-maloppo {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .section-description-maloppo {
+        margin-top: 0.25rem;
+        font-size: 0.8125rem;
+        line-height: 1.25rem;
+        color: var(--maloppo-text-muted);
+    }
+
+    .panel-maloppo {
+        border: 1px solid var(--maloppo-border);
+        border-radius: 0.75rem;
+        background-color: var(--maloppo-white);
+    }
+
+    .table-maloppo {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .table-maloppo thead {
+        background-color: #f9fafb;
+    }
+
+    .table-maloppo th {
+        border-bottom: 1px solid var(--maloppo-border);
+        padding: 0.75rem 1rem;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: #6b7280;
+        text-transform: uppercase;
+    }
+
+    .table-maloppo td {
+        border-bottom: 1px solid #f3f4f6;
+        padding: 0.875rem 1rem;
+        font-size: 0.875rem;
+        color: #374151;
+    }
+
+    .table-maloppo tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .table-maloppo tbody tr:hover {
+        background-color: #f9fafb;
     }
 }
 
@@ -373,5 +492,9 @@
 
     .border-maloppo-soft {
         border-color: var(--maloppo-border);
+    }
+
+    .shadow-maloppo-clean {
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
     }
 }

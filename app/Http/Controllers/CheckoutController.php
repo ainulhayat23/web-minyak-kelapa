@@ -222,7 +222,7 @@ class CheckoutController extends Controller
         */
 
         // Ganti dengan nomor WhatsApp UMKM yang sebenarnya.
-        $whatsappNumber = '6282156209319';
+        $whatsappNumber = '6281244354328';
 
         $messageLines = [
             'Halo, saya ingin mengonfirmasi pesanan berikut:',

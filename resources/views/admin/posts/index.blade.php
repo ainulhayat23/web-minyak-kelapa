@@ -2,278 +2,137 @@
 
     <x-slot name="header">
 
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-
+        <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
             <div>
-                <h1 class="text-2xl font-extrabold leading-tight text-gray-900">
-                    Blog dan Kegiatan
+                <h1 class="page-title-maloppo">
+                    Kegiatan
                 </h1>
 
-                <p class="mt-2 text-sm font-normal text-gray-600">
-                    Kelola berita, kegiatan, pelatihan, dan informasi UMKM Maloppo.
+                <p class="page-description-maloppo">
+                    Kelola berita, pelatihan, kegiatan, dan informasi UMKM Maloppo.
                 </p>
             </div>
 
-            <a
-                href="{{ route('admin.posts.create') }}"
-                class="btn-maloppo-primary"
-            >
-                <span class="text-lg">+</span>
-                Tambah Kegiatan
-            </a>
+            <div class="flex flex-wrap gap-2">
 
+                <a
+                    href="{{ route('blog.index') }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-maloppo-secondary"
+                >
+                    Lihat Halaman Publik
+                </a>
+
+                <a
+                    href="{{ route('admin.posts.create') }}"
+                    class="btn-maloppo-primary"
+                >
+                    Tambah Kegiatan
+                </a>
+
+            </div>
         </div>
 
     </x-slot>
 
-    <div class="py-8 lg:py-10">
+    <div class="py-6 lg:py-8">
 
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl space-y-5 px-4 sm:px-6 lg:px-8">
 
             {{-- Notifikasi berhasil --}}
             @if (session('success'))
 
-                <div
-                    class="mb-7 flex items-start gap-3 rounded-xl border px-5 py-4 text-sm"
-                    style="
-                        background-color: #dcfce7;
-                        border-color: #86efac;
-                        color: #166534;
-                    "
-                >
-                    <span
-                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-bold"
-                        style="background-color: #bbf7d0;"
-                    >
-                        ✓
-                    </span>
-
-                    <p class="pt-1 font-medium">
-                        {{ session('success') }}
-                    </p>
+                <div class="alert-maloppo-success">
+                    {{ session('success') }}
                 </div>
 
             @endif
 
-            {{-- Statistik kegiatan --}}
-            <section class="mb-7 grid grid-cols-1 gap-4 sm:grid-cols-3">
-
-                {{-- Total kegiatan --}}
-                <article class="card-maloppo p-5">
-
-                    <div class="flex items-center justify-between gap-4">
-
-                        <div>
-                            <p class="text-sm font-semibold text-gray-500">
-                                Total Kegiatan
-                            </p>
-
-                            <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                                {{ $posts->total() }}
-                            </p>
-
-                            <p class="mt-1 text-xs text-gray-500">
-                                Seluruh data kegiatan
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
-                            style="background-color: #fff9b0;"
-                        >
-                            📰
-                        </div>
-
-                    </div>
-
-                </article>
-
-                {{-- Ditampilkan --}}
-                <article class="card-maloppo p-5">
-
-                    <div class="flex items-center justify-between gap-4">
-
-                        <div>
-                            <p class="text-sm font-semibold text-gray-500">
-                                Ditampilkan
-                            </p>
-
-                            <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                                {{ $posts->count() }}
-                            </p>
-
-                            <p class="mt-1 text-xs text-gray-500">
-                                Data pada halaman ini
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
-                            style="
-                                background-color: #dcfce7;
-                                color: #166534;
-                            "
-                        >
-                            ✓
-                        </div>
-
-                    </div>
-
-                </article>
-
-                {{-- Halaman aktif --}}
-                <article class="card-maloppo p-5">
-
-                    <div class="flex items-center justify-between gap-4">
-
-                        <div>
-                            <p class="text-sm font-semibold text-gray-500">
-                                Halaman Aktif
-                            </p>
-
-                            <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                                {{ $posts->currentPage() }}
-                            </p>
-
-                            <p class="mt-1 text-xs text-gray-500">
-                                Dari {{ $posts->lastPage() }} halaman
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
-                            style="
-                                background-color: #fee2e2;
-                                color: #991b1b;
-                            "
-                        >
-                            📄
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </section>
-
             {{-- Daftar kegiatan --}}
-            <section class="card-maloppo overflow-hidden">
+            <section class="panel-maloppo overflow-hidden">
 
-                {{-- Header kartu --}}
+                {{-- Header daftar --}}
                 <div
-                    class="flex flex-col gap-4 border-b px-6 py-5 sm:flex-row sm:items-center sm:justify-between"
-                    style="
-                        background-color: #fffdf0;
-                        border-color: #f1e7a4;
-                    "
+                    class="flex flex-col gap-3 border-b border-gray-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6"
                 >
+                    <div>
+                        <h2 class="section-title-maloppo">
+                            Daftar Kegiatan
+                        </h2>
 
-                    <div class="flex items-center gap-4">
-
-                        <div
-                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                            style="background-color: #f7e900;"
-                        >
-                            📰
-                        </div>
-
-                        <div>
-                            <h2 class="text-xl font-extrabold text-gray-900">
-                                Daftar Kegiatan Maloppo
-                            </h2>
-
-                            <p class="mt-1 text-sm text-gray-500">
-                                Informasi kegiatan yang tersimpan di dalam sistem.
-                            </p>
-                        </div>
-
+                        <p class="section-description-maloppo">
+                            {{ $posts->total() }} kegiatan tersimpan di dalam sistem.
+                        </p>
                     </div>
 
-                    <a
-                        href="{{ route('blog.index') }}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn-maloppo-secondary"
-                    >
-                        <span>🌐</span>
-                        Lihat Halaman Kegiatan
-                    </a>
+                    @if ($posts->hasPages())
 
+                        <p class="text-xs text-gray-500">
+                            Halaman {{ $posts->currentPage() }}
+                            dari {{ $posts->lastPage() }}
+                        </p>
+
+                    @endif
                 </div>
 
-                {{-- Tabel desktop --}}
+                {{-- Tampilan desktop --}}
                 <div class="hidden overflow-x-auto md:block">
 
-                    <table class="w-full border-collapse text-left">
+                    <table class="table-maloppo">
 
                         <thead>
-
-                            <tr
-                                class="border-b"
-                                style="
-                                    background-color: #fff9b0;
-                                    border-color: #f1e7a4;
-                                "
-                            >
-
-                                <th class="px-5 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+                            <tr>
+                                <th class="w-16">
                                     No.
                                 </th>
 
-                                <th class="px-5 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+                                <th>
                                     Kegiatan
                                 </th>
 
-                                <th class="px-5 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+                                <th>
                                     Penulis
                                 </th>
 
-                                <th class="px-5 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+                                <th>
                                     Status
                                 </th>
 
-                                <th class="px-5 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+                                <th>
                                     Tanggal Terbit
                                 </th>
 
-                                <th class="px-5 py-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+                                <th>
                                     Dibuat
                                 </th>
 
-                                <th class="px-5 py-4 text-center text-xs font-bold uppercase tracking-wider text-gray-700">
+                                <th class="text-right">
                                     Aksi
                                 </th>
-
                             </tr>
-
                         </thead>
 
                         <tbody>
 
                             @forelse ($posts as $post)
 
-                                <tr
-                                    class="border-b transition last:border-b-0 hover:bg-yellow-50/40"
-                                    style="border-color: #f1e7a4;"
-                                >
+                                <tr>
 
-                                    <td class="px-5 py-4 text-sm font-semibold text-gray-500">
+                                    <td class="text-gray-500">
                                         {{ $posts->firstItem() + $loop->index }}
                                     </td>
 
                                     {{-- Informasi kegiatan --}}
-                                    <td class="px-5 py-4">
+                                    <td>
 
-                                        <div class="flex items-center gap-4">
+                                        <div class="flex items-center gap-3">
 
                                             <div
-                                                class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border"
-                                                style="
-                                                    background-color: #fffdf0;
-                                                    border-color: #f1e7a4;
-                                                "
+                                                class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
                                             >
-
                                                 @if ($post->image)
 
                                                     <img
@@ -284,26 +143,25 @@
 
                                                 @else
 
-                                                    <span class="text-2xl">
-                                                        📰
+                                                    <span class="text-[10px] font-medium text-gray-400">
+                                                        Foto
                                                     </span>
 
                                                 @endif
-
                                             </div>
 
                                             <div class="min-w-0">
 
-                                                <p class="font-bold text-gray-900">
+                                                <p class="max-w-sm truncate font-medium text-gray-900">
                                                     {{ $post->title }}
                                                 </p>
 
-                                                <p class="mt-1 max-w-xs truncate text-xs text-gray-500">
+                                                <p class="mt-1 max-w-sm truncate text-xs text-gray-500">
                                                     {{
                                                         $post->excerpt
                                                         ?: \Illuminate\Support\Str::limit(
                                                             strip_tags($post->content),
-                                                            80
+                                                            90
                                                         )
                                                     }}
                                                 </p>
@@ -315,51 +173,26 @@
                                     </td>
 
                                     {{-- Penulis --}}
-                                    <td class="px-5 py-4">
-
-                                        <div class="flex items-center gap-2">
-
-                                            <div
-                                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
-                                                style="background-color: #be0000;"
-                                            >
-                                                {{ strtoupper(substr($post->user?->name ?? 'A', 0, 1)) }}
-                                            </div>
-
-                                            <span class="text-sm font-medium text-gray-700">
-                                                {{ $post->user?->name ?? 'Admin' }}
-                                            </span>
-
-                                        </div>
-
+                                    <td class="text-sm text-gray-600">
+                                        {{ $post->user?->name ?? 'Admin' }}
                                     </td>
 
                                     {{-- Status --}}
-                                    <td class="px-5 py-4">
+                                    <td>
 
                                         @if ($post->is_published)
 
                                             <span
-                                                class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold"
-                                                style="
-                                                    background-color: #dcfce7;
-                                                    color: #166534;
-                                                "
+                                                class="inline-flex rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700"
                                             >
-                                                <span>✓</span>
                                                 Diterbitkan
                                             </span>
 
                                         @else
 
                                             <span
-                                                class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold"
-                                                style="
-                                                    background-color: #fff9b0;
-                                                    color: #92400e;
-                                                "
+                                                class="inline-flex rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600"
                                             >
-                                                <span>📝</span>
                                                 Draf
                                             </span>
 
@@ -368,24 +201,22 @@
                                     </td>
 
                                     {{-- Tanggal terbit --}}
-                                    <td class="px-5 py-4 text-sm text-gray-600">
+                                    <td>
 
                                         @if ($post->published_at)
 
-                                            <div>
-                                                <p class="font-semibold text-gray-700">
-                                                    {{ $post->published_at->format('d M Y') }}
-                                                </p>
+                                            <p class="text-sm text-gray-700">
+                                                {{ $post->published_at->format('d M Y') }}
+                                            </p>
 
-                                                <p class="mt-1 text-xs text-gray-400">
-                                                    {{ $post->published_at->format('H:i') }}
-                                                </p>
-                                            </div>
+                                            <p class="mt-1 text-xs text-gray-400">
+                                                {{ $post->published_at->format('H:i') }}
+                                            </p>
 
                                         @else
 
-                                            <span class="text-gray-400">
-                                                Belum diterbitkan
+                                            <span class="text-sm text-gray-400">
+                                                Belum terbit
                                             </span>
 
                                         @endif
@@ -393,24 +224,19 @@
                                     </td>
 
                                     {{-- Tanggal dibuat --}}
-                                    <td class="px-5 py-4 text-sm text-gray-600">
+                                    <td class="text-sm text-gray-600">
                                         {{ $post->created_at->format('d M Y') }}
                                     </td>
 
                                     {{-- Aksi --}}
-                                    <td class="px-5 py-4">
+                                    <td>
 
-                                        <div class="flex items-center justify-center gap-2">
+                                        <div class="flex items-center justify-end gap-4">
 
                                             <a
                                                 href="{{ route('admin.posts.edit', $post) }}"
-                                                class="inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-xs font-bold shadow-sm"
-                                                style="
-                                                    background-color: #f7e900;
-                                                    color: #990100;
-                                                "
+                                                class="text-sm font-medium text-gray-700 transition hover:text-red-700"
                                             >
-                                                <span>✏️</span>
                                                 Edit
                                             </a>
 
@@ -424,10 +250,8 @@
 
                                                 <button
                                                     type="submit"
-                                                    class="inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-xs font-bold text-white shadow-sm"
-                                                    style="background-color: #be0000;"
+                                                    class="text-sm font-medium text-red-700 transition hover:text-red-900"
                                                 >
-                                                    <span>🗑️</span>
                                                     Hapus
                                                 </button>
 
@@ -442,36 +266,25 @@
                             @empty
 
                                 <tr>
-
                                     <td
                                         colspan="7"
-                                        class="px-6 py-20 text-center"
+                                        class="py-14 text-center"
                                     >
-
-                                        <div
-                                            class="mx-auto flex h-20 w-20 items-center justify-center rounded-full text-5xl"
-                                            style="background-color: #fff9b0;"
-                                        >
-                                            📰
-                                        </div>
-
-                                        <h3 class="mt-5 text-lg font-bold text-gray-800">
+                                        <p class="font-medium text-gray-700">
                                             Belum ada kegiatan
-                                        </h3>
+                                        </p>
 
-                                        <p class="mt-2 text-sm text-gray-500">
+                                        <p class="mt-1 text-sm text-gray-500">
                                             Tambahkan kegiatan pertama UMKM Maloppo.
                                         </p>
 
                                         <a
                                             href="{{ route('admin.posts.create') }}"
-                                            class="btn-maloppo-primary mt-6"
+                                            class="btn-maloppo-primary mt-4"
                                         >
-                                            + Tambah Kegiatan
+                                            Tambah Kegiatan
                                         </a>
-
                                     </td>
-
                                 </tr>
 
                             @endforelse
@@ -483,26 +296,18 @@
                 </div>
 
                 {{-- Tampilan HP --}}
-                <div
-                    class="divide-y md:hidden"
-                    style="border-color: #f1e7a4;"
-                >
+                <div class="divide-y divide-gray-100 md:hidden">
 
                     @forelse ($posts as $post)
 
-                        <article class="p-5">
+                        <article class="p-4">
 
-                            <div class="flex items-start gap-4">
+                            <div class="flex items-start gap-3">
 
                                 {{-- Gambar --}}
                                 <div
-                                    class="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border"
-                                    style="
-                                        background-color: #fffdf0;
-                                        border-color: #f1e7a4;
-                                    "
+                                    class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
                                 >
-
                                     @if ($post->image)
 
                                         <img
@@ -513,12 +318,11 @@
 
                                     @else
 
-                                        <span class="text-4xl">
-                                            📰
+                                        <span class="text-xs font-medium text-gray-400">
+                                            Foto
                                         </span>
 
                                     @endif
-
                                 </div>
 
                                 {{-- Informasi --}}
@@ -526,13 +330,13 @@
 
                                     <div class="flex items-start justify-between gap-3">
 
-                                        <div>
+                                        <div class="min-w-0">
 
-                                            <p class="text-xs font-semibold text-gray-400">
+                                            <p class="text-[11px] text-gray-400">
                                                 Kegiatan #{{ $posts->firstItem() + $loop->index }}
                                             </p>
 
-                                            <h3 class="mt-1 font-extrabold leading-6 text-gray-900">
+                                            <h3 class="mt-1 line-clamp-2 text-sm font-semibold leading-5 text-gray-900">
                                                 {{ $post->title }}
                                             </h3>
 
@@ -541,11 +345,7 @@
                                         @if ($post->is_published)
 
                                             <span
-                                                class="shrink-0 rounded-full px-2.5 py-1 text-xs font-bold"
-                                                style="
-                                                    background-color: #dcfce7;
-                                                    color: #166534;
-                                                "
+                                                class="shrink-0 rounded-full bg-green-50 px-2 py-1 text-[10px] font-medium text-green-700"
                                             >
                                                 Terbit
                                             </span>
@@ -553,11 +353,7 @@
                                         @else
 
                                             <span
-                                                class="shrink-0 rounded-full px-2.5 py-1 text-xs font-bold"
-                                                style="
-                                                    background-color: #fff9b0;
-                                                    color: #92400e;
-                                                "
+                                                class="shrink-0 rounded-full bg-gray-100 px-2 py-1 text-[10px] font-medium text-gray-600"
                                             >
                                                 Draf
                                             </span>
@@ -571,7 +367,7 @@
                                             $post->excerpt
                                             ?: \Illuminate\Support\Str::limit(
                                                 strip_tags($post->content),
-                                                80
+                                                100
                                             )
                                         }}
                                     </p>
@@ -580,46 +376,31 @@
 
                             </div>
 
-                            {{-- Detail tambahan --}}
-                            <div
-                                class="mt-5 grid grid-cols-2 gap-3 rounded-xl p-4"
-                                style="background-color: #fffdf0;"
-                            >
+                            {{-- Informasi tambahan --}}
+                            <div class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-gray-500">
 
-                                <div>
-                                    <p class="text-xs text-gray-400">
-                                        Penulis
-                                    </p>
+                                <span>
+                                    {{ $post->user?->name ?? 'Admin' }}
+                                </span>
 
-                                    <p class="mt-1 text-sm font-semibold text-gray-700">
-                                        {{ $post->user?->name ?? 'Admin' }}
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p class="text-xs text-gray-400">
-                                        Tanggal Terbit
-                                    </p>
-
-                                    <p class="mt-1 text-sm font-semibold text-gray-700">
-                                        {{ $post->published_at?->format('d M Y') ?? '-' }}
-                                    </p>
-                                </div>
+                                <span>
+                                    {{
+                                        $post->published_at
+                                            ? $post->published_at->format('d M Y')
+                                            : 'Belum diterbitkan'
+                                    }}
+                                </span>
 
                             </div>
 
-                            {{-- Tombol --}}
-                            <div class="mt-5 grid grid-cols-2 gap-3">
-
+                            {{-- Aksi --}}
+                            <div
+                                class="mt-4 flex items-center justify-end gap-4 border-t border-gray-100 pt-3"
+                            >
                                 <a
                                     href="{{ route('admin.posts.edit', $post) }}"
-                                    class="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold"
-                                    style="
-                                        background-color: #f7e900;
-                                        color: #990100;
-                                    "
+                                    class="text-sm font-medium text-gray-700"
                                 >
-                                    <span>✏️</span>
                                     Edit
                                 </a>
 
@@ -633,37 +414,31 @@
 
                                     <button
                                         type="submit"
-                                        class="inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white"
-                                        style="background-color: #be0000;"
+                                        class="text-sm font-medium text-red-700"
                                     >
-                                        <span>🗑️</span>
                                         Hapus
                                     </button>
 
                                 </form>
-
                             </div>
 
                         </article>
 
                     @empty
 
-                        <div class="px-6 py-16 text-center">
+                        <div class="px-5 py-12 text-center">
 
-                            <div
-                                class="mx-auto flex h-20 w-20 items-center justify-center rounded-full text-5xl"
-                                style="background-color: #fff9b0;"
-                            >
-                                📰
-                            </div>
-
-                            <h3 class="mt-5 font-bold text-gray-800">
+                            <p class="font-medium text-gray-700">
                                 Belum ada kegiatan
-                            </h3>
+                            </p>
+
+                            <p class="mt-1 text-sm text-gray-500">
+                                Tambahkan kegiatan pertama UMKM Maloppo.
+                            </p>
 
                             <a
                                 href="{{ route('admin.posts.create') }}"
-                                class="btn-maloppo-primary mt-5"
+                                class="btn-maloppo-primary mt-4"
                             >
                                 Tambah Kegiatan
                             </a>
@@ -677,13 +452,7 @@
                 {{-- Pagination --}}
                 @if ($posts->hasPages())
 
-                    <div
-                        class="border-t px-5 py-5"
-                        style="
-                            background-color: #fffdf0;
-                            border-color: #f1e7a4;
-                        "
-                    >
+                    <div class="border-t border-gray-200 bg-gray-50 px-5 py-4">
                         {{ $posts->links() }}
                     </div>
 

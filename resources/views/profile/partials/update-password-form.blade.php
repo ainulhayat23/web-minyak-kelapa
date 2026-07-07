@@ -3,7 +3,7 @@
     <form
         method="POST"
         action="{{ route('password.update') }}"
-        class="space-y-6"
+        class="space-y-5"
         x-data="{
             showCurrentPassword: false,
             showNewPassword: false,
@@ -13,56 +13,24 @@
         @csrf
         @method('PUT')
 
-        {{-- Informasi keamanan --}}
-        <div
-            class="flex items-start gap-3 rounded-xl border p-4"
-            style="
-                background-color: #fffdf0;
-                border-color: #f1e7a4;
-            "
-        >
-            <div
-                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-lg"
-                style="background-color: #fff9b0;"
-            >
-                🔐
-            </div>
-
-            <div>
-                <p class="text-sm font-bold text-gray-800">
-                    Lindungi akun administrator
-                </p>
-
-                <p class="mt-1 text-xs leading-5 text-gray-500">
-                    Gunakan password yang sulit ditebak dan berbeda dari password akun lainnya.
-                </p>
-            </div>
-        </div>
-
         {{-- Password saat ini --}}
         <div>
 
             <label
                 for="update_password_current_password"
-                class="block text-sm font-bold text-gray-700"
+                class="block text-sm font-medium text-gray-700"
             >
                 Password Saat Ini
-                <span style="color: #be0000;">*</span>
+                <span class="text-red-700">*</span>
             </label>
 
             <div class="relative mt-2">
-
-                <div
-                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400"
-                >
-                    🔒
-                </div>
 
                 <input
                     id="update_password_current_password"
                     name="current_password"
                     :type="showCurrentPassword ? 'text' : 'password'"
-                    class="input-maloppo pl-11 pr-14"
+                    class="input-maloppo pr-12"
                     placeholder="Masukkan password saat ini"
                     autocomplete="current-password"
                     required
@@ -70,17 +38,47 @@
 
                 <button
                     type="button"
-                    class="absolute inset-y-0 right-0 flex items-center px-4 text-sm font-bold text-gray-500 hover:text-maloppo-red"
+                    class="absolute inset-y-0 right-0 flex items-center justify-center px-3 text-gray-400 transition hover:text-gray-700"
                     @click="showCurrentPassword = !showCurrentPassword"
                     :aria-label="showCurrentPassword ? 'Sembunyikan password' : 'Tampilkan password'"
                 >
-                    <span x-show="!showCurrentPassword">
-                        👁️
-                    </span>
+                    <svg
+                        x-show="!showCurrentPassword"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-5 w-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
 
-                    <span x-show="showCurrentPassword" x-cloak>
-                        🙈
-                    </span>
+                    <svg
+                        x-show="showCurrentPassword"
+                        x-cloak
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-5 w-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3.98 8.223A10.477 10.477 0 002.036 11.68a1.012 1.012 0 000 .639C3.423 16.49 7.36 19.5 12 19.5c1.526 0 2.97-.324 4.272-.904M6.228 6.228A9.953 9.953 0 0112 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638a10.451 10.451 0 01-2.293 3.95M6.228 6.228L3 3m3.228 3.228l3.65 3.65m9.792 6.388L21 21m-3.33-3.33l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243L9.88 9.88"
+                        />
+                    </svg>
                 </button>
 
             </div>
@@ -91,7 +89,7 @@
 
                     @foreach ($errors->updatePassword->get('current_password') as $message)
 
-                        <p class="text-sm font-medium text-red-600">
+                        <p class="text-sm text-red-700">
                             {{ $message }}
                         </p>
 
@@ -108,25 +106,19 @@
 
             <label
                 for="update_password_password"
-                class="block text-sm font-bold text-gray-700"
+                class="block text-sm font-medium text-gray-700"
             >
                 Password Baru
-                <span style="color: #be0000;">*</span>
+                <span class="text-red-700">*</span>
             </label>
 
             <div class="relative mt-2">
-
-                <div
-                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400"
-                >
-                    🔑
-                </div>
 
                 <input
                     id="update_password_password"
                     name="password"
                     :type="showNewPassword ? 'text' : 'password'"
-                    class="input-maloppo pl-11 pr-14"
+                    class="input-maloppo pr-12"
                     placeholder="Masukkan password baru"
                     autocomplete="new-password"
                     required
@@ -134,23 +126,53 @@
 
                 <button
                     type="button"
-                    class="absolute inset-y-0 right-0 flex items-center px-4 text-sm font-bold text-gray-500 hover:text-maloppo-red"
+                    class="absolute inset-y-0 right-0 flex items-center justify-center px-3 text-gray-400 transition hover:text-gray-700"
                     @click="showNewPassword = !showNewPassword"
                     :aria-label="showNewPassword ? 'Sembunyikan password' : 'Tampilkan password'"
                 >
-                    <span x-show="!showNewPassword">
-                        👁️
-                    </span>
+                    <svg
+                        x-show="!showNewPassword"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-5 w-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
 
-                    <span x-show="showNewPassword" x-cloak>
-                        🙈
-                    </span>
+                    <svg
+                        x-show="showNewPassword"
+                        x-cloak
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-5 w-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3.98 8.223A10.477 10.477 0 002.036 11.68a1.012 1.012 0 000 .639C3.423 16.49 7.36 19.5 12 19.5c1.526 0 2.97-.324 4.272-.904M6.228 6.228A9.953 9.953 0 0112 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638a10.451 10.451 0 01-2.293 3.95M6.228 6.228L3 3m3.228 3.228l3.65 3.65m9.792 6.388L21 21m-3.33-3.33l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243L9.88 9.88"
+                        />
+                    </svg>
                 </button>
 
             </div>
 
-            <p class="mt-2 text-xs leading-5 text-gray-500">
-                Gunakan minimal 8 karakter dan kombinasikan huruf, angka, serta simbol.
+            <p class="mt-1.5 text-xs leading-5 text-gray-500">
+                Gunakan minimal 8 karakter dengan kombinasi huruf, angka, atau simbol.
             </p>
 
             @if ($errors->updatePassword->get('password'))
@@ -159,7 +181,7 @@
 
                     @foreach ($errors->updatePassword->get('password') as $message)
 
-                        <p class="text-sm font-medium text-red-600">
+                        <p class="text-sm text-red-700">
                             {{ $message }}
                         </p>
 
@@ -176,25 +198,19 @@
 
             <label
                 for="update_password_password_confirmation"
-                class="block text-sm font-bold text-gray-700"
+                class="block text-sm font-medium text-gray-700"
             >
                 Konfirmasi Password Baru
-                <span style="color: #be0000;">*</span>
+                <span class="text-red-700">*</span>
             </label>
 
             <div class="relative mt-2">
-
-                <div
-                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400"
-                >
-                    ✅
-                </div>
 
                 <input
                     id="update_password_password_confirmation"
                     name="password_confirmation"
                     :type="showConfirmationPassword ? 'text' : 'password'"
-                    class="input-maloppo pl-11 pr-14"
+                    class="input-maloppo pr-12"
                     placeholder="Ulangi password baru"
                     autocomplete="new-password"
                     required
@@ -202,17 +218,47 @@
 
                 <button
                     type="button"
-                    class="absolute inset-y-0 right-0 flex items-center px-4 text-sm font-bold text-gray-500 hover:text-maloppo-red"
+                    class="absolute inset-y-0 right-0 flex items-center justify-center px-3 text-gray-400 transition hover:text-gray-700"
                     @click="showConfirmationPassword = !showConfirmationPassword"
                     :aria-label="showConfirmationPassword ? 'Sembunyikan password' : 'Tampilkan password'"
                 >
-                    <span x-show="!showConfirmationPassword">
-                        👁️
-                    </span>
+                    <svg
+                        x-show="!showConfirmationPassword"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-5 w-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
 
-                    <span x-show="showConfirmationPassword" x-cloak>
-                        🙈
-                    </span>
+                    <svg
+                        x-show="showConfirmationPassword"
+                        x-cloak
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-5 w-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3.98 8.223A10.477 10.477 0 002.036 11.68a1.012 1.012 0 000 .639C3.423 16.49 7.36 19.5 12 19.5c1.526 0 2.97-.324 4.272-.904M6.228 6.228A9.953 9.953 0 0112 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .638a10.451 10.451 0 01-2.293 3.95M6.228 6.228L3 3m3.228 3.228l3.65 3.65m9.792 6.388L21 21m-3.33-3.33l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243L9.88 9.88"
+                        />
+                    </svg>
                 </button>
 
             </div>
@@ -223,7 +269,7 @@
 
                     @foreach ($errors->updatePassword->get('password_confirmation') as $message)
 
-                        <p class="text-sm font-medium text-red-600">
+                        <p class="text-sm text-red-700">
                             {{ $message }}
                         </p>
 
@@ -235,57 +281,33 @@
 
         </div>
 
-        {{-- Peringatan --}}
-        <div
-            class="rounded-xl border p-4"
-            style="
-                background-color: #fff9b0;
-                border-color: #f7e900;
-            "
-        >
-            <div class="flex items-start gap-3">
-
-                <span class="text-lg">
-                    ⚠️
-                </span>
-
-                <p class="text-xs leading-6 text-gray-600">
-                    Setelah password berhasil diubah, gunakan password baru tersebut saat login berikutnya.
-                </p>
-
-            </div>
-        </div>
+        <p class="text-xs leading-5 text-gray-500">
+            Setelah password diperbarui, gunakan password baru saat login berikutnya.
+        </p>
 
         {{-- Tombol --}}
         <div
-            class="flex flex-col gap-3 border-t pt-6 sm:flex-row sm:items-center"
-            style="border-color: #f1e7a4;"
+            class="flex flex-col gap-3 border-t border-gray-200 pt-5 sm:flex-row sm:items-center"
         >
 
             <button
                 type="submit"
-                class="btn-maloppo-primary px-7 py-3"
+                class="btn-maloppo-primary"
             >
-                <span>🔐</span>
                 Perbarui Password
             </button>
 
             @if (session('status') === 'password-updated')
 
-                <div
+                <p
                     x-data="{ show: true }"
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 3000)"
-                    class="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold"
-                    style="
-                        background-color: #dcfce7;
-                        color: #166534;
-                    "
+                    class="text-sm font-medium text-green-700"
                 >
-                    <span>✓</span>
-                    Password berhasil diperbarui
-                </div>
+                    Password berhasil diperbarui.
+                </p>
 
             @endif
 

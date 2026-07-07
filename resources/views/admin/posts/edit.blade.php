@@ -2,14 +2,15 @@
 
     <x-slot name="header">
 
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-
+        <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
             <div>
-                <h1 class="text-2xl font-extrabold leading-tight text-gray-900">
-                    Edit Blog atau Kegiatan
+                <h1 class="page-title-maloppo">
+                    Edit Kegiatan
                 </h1>
 
-                <p class="mt-2 text-sm font-normal text-gray-600">
+                <p class="page-description-maloppo">
                     Perbarui informasi kegiatan {{ $post->title }}.
                 </p>
             </div>
@@ -18,56 +19,32 @@
                 href="{{ route('admin.posts.index') }}"
                 class="btn-maloppo-secondary"
             >
-                <span aria-hidden="true">←</span>
-                Kembali ke Daftar Kegiatan
+                Kembali
             </a>
-
         </div>
 
     </x-slot>
 
-    <div class="py-8 lg:py-10">
+    <div class="py-6 lg:py-8">
 
         <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
 
             {{-- Kesalahan validasi --}}
             @if ($errors->any())
 
-                <div class="alert-maloppo-error mb-7">
+                <div class="alert-maloppo-error mb-5">
 
-                    <div class="flex items-start gap-3">
+                    <p class="font-semibold">
+                        Perubahan belum dapat disimpan.
+                    </p>
 
-                        <div
-                            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-bold"
-                            style="
-                                background-color: #fecaca;
-                                color: #991b1b;
-                            "
-                        >
-                            !
-                        </div>
-
-                        <div>
-
-                            <p class="font-bold">
-                                Perubahan belum dapat disimpan
-                            </p>
-
-                            <p class="mt-1 text-sm">
-                                Periksa kembali data berikut:
-                            </p>
-
-                            <ul class="mt-2 list-inside list-disc space-y-1 text-sm">
-                                @foreach ($errors->all() as $error)
-                                    <li>
-                                        {{ $error }}
-                                    </li>
-                                @endforeach
-                            </ul>
-
-                        </div>
-
-                    </div>
+                    <ul class="mt-2 list-inside list-disc space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>
+                                {{ $error }}
+                            </li>
+                        @endforeach
+                    </ul>
 
                 </div>
 
@@ -77,7 +54,7 @@
                 action="{{ route('admin.posts.update', $post) }}"
                 method="POST"
                 enctype="multipart/form-data"
-                class="space-y-7"
+                class="space-y-5"
                 x-data="{
                     imagePreview: @js(
                         $post->image
@@ -98,8 +75,8 @@
 
                         const reader = new FileReader();
 
-                        reader.onload = (e) => {
-                            this.imagePreview = e.target.result;
+                        reader.onload = (event) => {
+                            this.imagePreview = event.target.result;
                         };
 
                         reader.readAsDataURL(file);
@@ -109,80 +86,51 @@
                 @csrf
                 @method('PUT')
 
-                {{-- Informasi utama --}}
-                <section class="card-maloppo overflow-hidden">
+                {{-- Informasi kegiatan --}}
+                <section class="panel-maloppo overflow-hidden">
 
-                    <div
-                        class="border-b px-6 py-5 md:px-8"
-                        style="
-                            background-color: #fffdf0;
-                            border-color: #f1e7a4;
-                        "
-                    >
+                    <div class="section-header-maloppo">
 
-                        <div class="flex items-center gap-4">
+                        <h2 class="section-title-maloppo">
+                            Informasi Kegiatan
+                        </h2>
 
-                            <div
-                                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                                style="background-color: #f7e900;"
-                            >
-                                📰
-                            </div>
-
-                            <div>
-                                <h2 class="text-xl font-extrabold text-gray-900">
-                                    Informasi Kegiatan
-                                </h2>
-
-                                <p class="mt-1 text-sm text-gray-500">
-                                    Perbarui judul dan ringkasan kegiatan.
-                                </p>
-                            </div>
-
-                        </div>
+                        <p class="section-description-maloppo">
+                            Perbarui judul dan ringkasan singkat kegiatan.
+                        </p>
 
                     </div>
 
-                    <div class="space-y-6 p-6 md:p-8">
+                    <div class="space-y-5 p-5 sm:p-6">
 
                         {{-- Judul --}}
                         <div>
 
                             <label
                                 for="title"
-                                class="block text-sm font-bold text-gray-700"
+                                class="block text-sm font-medium text-gray-700"
                             >
                                 Judul Kegiatan
-                                <span style="color: #be0000;">*</span>
+                                <span class="text-red-700">*</span>
                             </label>
 
-                            <div class="relative mt-2">
+                            <input
+                                type="text"
+                                name="title"
+                                id="title"
+                                value="{{ old('title', $post->title) }}"
+                                class="input-maloppo mt-2"
+                                placeholder="Masukkan judul kegiatan"
+                                autocomplete="off"
+                                required
+                            >
 
-                                <div
-                                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400"
-                                >
-                                    🏷️
-                                </div>
-
-                                <input
-                                    type="text"
-                                    name="title"
-                                    id="title"
-                                    value="{{ old('title', $post->title) }}"
-                                    class="input-maloppo pl-11"
-                                    placeholder="Masukkan judul kegiatan"
-                                    autocomplete="off"
-                                    required
-                                >
-
-                            </div>
-
-                            <p class="mt-2 text-xs leading-5 text-gray-500">
-                                Gunakan judul yang singkat, jelas, dan menggambarkan isi kegiatan.
+                            <p class="mt-1.5 text-xs leading-5 text-gray-500">
+                                Gunakan judul yang singkat dan menggambarkan isi kegiatan.
                             </p>
 
                             @error('title')
-                                <p class="mt-2 text-sm font-medium text-red-600">
+                                <p class="mt-2 text-sm text-red-700">
                                     {{ $message }}
                                 </p>
                             @enderror
@@ -194,7 +142,7 @@
 
                             <label
                                 for="excerpt"
-                                class="block text-sm font-bold text-gray-700"
+                                class="block text-sm font-medium text-gray-700"
                             >
                                 Ringkasan Singkat
                             </label>
@@ -203,16 +151,16 @@
                                 name="excerpt"
                                 id="excerpt"
                                 rows="4"
-                                class="input-maloppo resize-y"
+                                class="input-maloppo mt-2 resize-y"
                                 placeholder="Tuliskan ringkasan singkat mengenai kegiatan"
                             >{{ old('excerpt', $post->excerpt) }}</textarea>
 
-                            <p class="mt-2 text-xs leading-5 text-gray-500">
-                                Ringkasan akan ditampilkan pada kartu kegiatan di halaman publik.
+                            <p class="mt-1.5 text-xs leading-5 text-gray-500">
+                                Ditampilkan pada kartu kegiatan di halaman publik.
                             </p>
 
                             @error('excerpt')
-                                <p class="mt-2 text-sm font-medium text-red-600">
+                                <p class="mt-2 text-sm text-red-700">
                                     {{ $message }}
                                 </p>
                             @enderror
@@ -224,47 +172,28 @@
                 </section>
 
                 {{-- Isi kegiatan --}}
-                <section class="card-maloppo overflow-hidden">
+                <section class="panel-maloppo overflow-hidden">
 
-                    <div
-                        class="border-b px-6 py-5 md:px-8"
-                        style="
-                            background-color: #fffdf0;
-                            border-color: #f1e7a4;
-                        "
-                    >
+                    <div class="section-header-maloppo">
 
-                        <div class="flex items-center gap-4">
+                        <h2 class="section-title-maloppo">
+                            Isi Kegiatan
+                        </h2>
 
-                            <div
-                                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                                style="background-color: #f7e900;"
-                            >
-                                📝
-                            </div>
-
-                            <div>
-                                <h2 class="text-xl font-extrabold text-gray-900">
-                                    Isi Berita atau Kegiatan
-                                </h2>
-
-                                <p class="mt-1 text-sm text-gray-500">
-                                    Perbarui informasi kegiatan secara lengkap.
-                                </p>
-                            </div>
-
-                        </div>
+                        <p class="section-description-maloppo">
+                            Perbarui informasi kegiatan secara lengkap dan berurutan.
+                        </p>
 
                     </div>
 
-                    <div class="p-6 md:p-8">
+                    <div class="p-5 sm:p-6">
 
                         <label
                             for="content"
-                            class="block text-sm font-bold text-gray-700"
+                            class="block text-sm font-medium text-gray-700"
                         >
-                            Isi Kegiatan
-                            <span style="color: #be0000;">*</span>
+                            Isi Berita atau Kegiatan
+                            <span class="text-red-700">*</span>
                         </label>
 
                         <textarea
@@ -272,29 +201,17 @@
                             id="content"
                             rows="12"
                             class="input-maloppo mt-2 resize-y"
-                            placeholder="Tuliskan informasi kegiatan secara lengkap..."
+                            placeholder="Tuliskan waktu, lokasi, peserta, proses pelaksanaan, dan hasil kegiatan..."
                             required
                         >{{ old('content', $post->content) }}</textarea>
 
-                        <div
-                            class="mt-3 flex items-start gap-3 rounded-xl border p-4"
-                            style="
-                                background-color: #fffdf0;
-                                border-color: #f1e7a4;
-                            "
-                        >
-                            <span class="text-lg">
-                                💡
-                            </span>
-
-                            <p class="text-xs leading-6 text-gray-600">
-                                Tuliskan informasi secara terurut, seperti waktu, tempat,
-                                peserta, proses pelaksanaan, dan hasil kegiatan.
-                            </p>
-                        </div>
+                        <p class="mt-2 text-xs leading-5 text-gray-500">
+                            Susun isi mulai dari latar belakang, waktu dan tempat,
+                            pelaksanaan, hingga hasil kegiatan.
+                        </p>
 
                         @error('content')
-                            <p class="mt-2 text-sm font-medium text-red-600">
+                            <p class="mt-2 text-sm text-red-700">
                                 {{ $message }}
                             </p>
                         @enderror
@@ -304,179 +221,126 @@
                 </section>
 
                 {{-- Gambar dan publikasi --}}
-                <section class="card-maloppo overflow-hidden">
+                <section class="panel-maloppo overflow-hidden">
 
-                    <div
-                        class="border-b px-6 py-5 md:px-8"
-                        style="
-                            background-color: #fffdf0;
-                            border-color: #f1e7a4;
-                        "
-                    >
+                    <div class="section-header-maloppo">
 
-                        <div class="flex items-center gap-4">
+                        <h2 class="section-title-maloppo">
+                            Gambar dan Publikasi
+                        </h2>
 
-                            <div
-                                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl"
-                                style="background-color: #f7e900;"
-                            >
-                                🖼️
-                            </div>
-
-                            <div>
-                                <h2 class="text-xl font-extrabold text-gray-900">
-                                    Gambar dan Publikasi
-                                </h2>
-
-                                <p class="mt-1 text-sm text-gray-500">
-                                    Ganti gambar atau ubah status publikasi kegiatan.
-                                </p>
-                            </div>
-
-                        </div>
+                        <p class="section-description-maloppo">
+                            Ganti gambar utama atau ubah status penerbitan kegiatan.
+                        </p>
 
                     </div>
 
-                    <div class="p-6 md:p-8">
+                    <div class="grid grid-cols-1 gap-6 p-5 sm:p-6 md:grid-cols-2">
 
-                        <div class="grid grid-cols-1 gap-7 md:grid-cols-2">
+                        {{-- Gambar utama --}}
+                        <div>
 
-                            {{-- Gambar kegiatan --}}
-                            <div>
+                            <label
+                                for="image"
+                                class="block text-sm font-medium text-gray-700"
+                            >
+                                Gambar Utama
+                            </label>
 
-                                <label
-                                    for="image"
-                                    class="block text-sm font-bold text-gray-700"
-                                >
-                                    Gambar Utama
-                                </label>
+                            <label
+                                for="image"
+                                class="mt-2 flex min-h-52 cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-dashed border-gray-300 bg-gray-50 p-5 text-center transition hover:border-gray-400 hover:bg-gray-100"
+                            >
 
-                                <label
-                                    for="image"
-                                    class="mt-2 flex min-h-72 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed p-5 text-center transition hover:bg-yellow-50"
-                                    style="
-                                        background-color: #fffdf0;
-                                        border-color: #f7e900;
-                                    "
-                                >
+                                <template x-if="imagePreview">
 
-                                    <template x-if="imagePreview">
+                                    <div class="w-full">
 
-                                        <div class="w-full">
-
-                                            <img
-                                                :src="imagePreview"
-                                                alt="Pratinjau gambar kegiatan"
-                                                class="mx-auto max-h-60 w-full rounded-xl object-contain"
-                                            >
-
-                                            <p
-                                                x-show="imageName"
-                                                x-text="imageName"
-                                                class="mt-3 truncate text-xs font-medium text-gray-600"
-                                            ></p>
-
-                                            <p class="mt-2 text-xs font-bold text-maloppo-red">
-                                                Klik untuk mengganti gambar
-                                            </p>
-
-                                        </div>
-
-                                    </template>
-
-                                    <template x-if="!imagePreview">
-
-                                        <div>
-
-                                            <div
-                                                class="mx-auto flex h-16 w-16 items-center justify-center rounded-full text-3xl"
-                                                style="background-color: #fff9b0;"
-                                            >
-                                                📷
-                                            </div>
-
-                                            <p class="mt-4 font-bold text-gray-800">
-                                                Belum ada gambar kegiatan
-                                            </p>
-
-                                            <p class="mt-2 text-xs leading-5 text-gray-500">
-                                                Klik untuk memilih gambar dari perangkat.
-                                            </p>
-
-                                            <span
-                                                class="mt-4 inline-flex rounded-lg px-4 py-2 text-xs font-bold text-white"
-                                                style="background-color: #be0000;"
-                                            >
-                                                Pilih Gambar
-                                            </span>
-
-                                        </div>
-
-                                    </template>
-
-                                </label>
-
-                                <input
-                                    type="file"
-                                    name="image"
-                                    id="image"
-                                    accept=".jpg,.jpeg,.png,.webp"
-                                    class="sr-only"
-                                    @change="previewImage($event)"
-                                >
-
-                                <p class="mt-3 text-xs leading-5 text-gray-500">
-                                    Kosongkan jika gambar lama tidak ingin diganti.
-                                    Format JPG, JPEG, PNG, atau WEBP. Maksimal 2 MB.
-                                </p>
-
-                                @error('image')
-                                    <p class="mt-2 text-sm font-medium text-red-600">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-
-                            </div>
-
-                            {{-- Status publikasi --}}
-                            <div>
-
-                                <p class="text-sm font-bold text-gray-700">
-                                    Status Publikasi
-                                </p>
-
-                                <div
-                                    class="mt-2 rounded-2xl border p-6"
-                                    style="
-                                        background-color: #fff9b0;
-                                        border-color: #f7e900;
-                                    "
-                                >
-
-                                    <div class="flex items-start gap-4">
-
-                                        <div
-                                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl text-white"
-                                            style="background-color: #be0000;"
+                                        <img
+                                            :src="imagePreview"
+                                            alt="Pratinjau gambar kegiatan"
+                                            class="mx-auto max-h-52 w-full rounded-lg object-contain"
                                         >
-                                            🌐
-                                        </div>
 
-                                        <div>
+                                        <p
+                                            x-show="imageName"
+                                            x-text="imageName"
+                                            class="mt-3 truncate text-xs text-gray-600"
+                                        ></p>
 
-                                            <h3 class="font-bold text-gray-900">
-                                                Terbitkan di Website
-                                            </h3>
-
-                                            <p class="mt-2 text-sm leading-6 text-gray-600">
-                                                Kegiatan yang diterbitkan akan tampil pada halaman publik Maloppo.
-                                            </p>
-
-                                        </div>
+                                        <p class="mt-1 text-xs font-medium text-red-700">
+                                            Klik untuk mengganti gambar
+                                        </p>
 
                                     </div>
 
-                                    {{-- Nilai 0 dikirim saat checkbox dilepas --}}
+                                </template>
+
+                                <template x-if="!imagePreview">
+
+                                    <div>
+
+                                        <svg
+                                            class="mx-auto h-9 w-9 text-gray-400"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M3 16.5V6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v9.75m-18 0v.75a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 17.25v-.75M3 16.5l4.72-4.72a2.25 2.25 0 013.182 0l1.348 1.348m0 0l2.098-2.098a2.25 2.25 0 013.182 0L21 14.25M14.25 8.25h.008v.008h-.008V8.25z"
+                                            />
+                                        </svg>
+
+                                        <p class="mt-3 text-sm font-medium text-gray-700">
+                                            Pilih gambar kegiatan
+                                        </p>
+
+                                        <p class="mt-1 text-xs leading-5 text-gray-500">
+                                            JPG, JPEG, PNG, atau WEBP. Maksimal 2 MB.
+                                        </p>
+
+                                    </div>
+
+                                </template>
+
+                            </label>
+
+                            <input
+                                type="file"
+                                name="image"
+                                id="image"
+                                accept=".jpg,.jpeg,.png,.webp"
+                                class="sr-only"
+                                @change="previewImage($event)"
+                            >
+
+                            <p class="mt-2 text-xs leading-5 text-gray-500">
+                                Kosongkan jika gambar lama tidak ingin diganti.
+                            </p>
+
+                            @error('image')
+                                <p class="mt-2 text-sm text-red-700">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+
+                        </div>
+
+                        {{-- Status dan ringkasan --}}
+                        <div class="space-y-4">
+
+                            <div>
+
+                                <p class="text-sm font-medium text-gray-700">
+                                    Status Publikasi
+                                </p>
+
+                                <div class="mt-2 rounded-lg border border-gray-200 bg-gray-50 p-4">
+
                                     <input
                                         type="hidden"
                                         name="is_published"
@@ -485,17 +349,16 @@
 
                                     <label
                                         for="is_published"
-                                        class="mt-6 flex cursor-pointer items-center justify-between gap-4 rounded-xl bg-white p-4"
+                                        class="flex cursor-pointer items-start justify-between gap-5"
                                     >
-
                                         <div>
 
-                                            <p class="text-sm font-bold text-gray-800">
-                                                Terbitkan kegiatan
+                                            <p class="text-sm font-medium text-gray-900">
+                                                Terbitkan di website
                                             </p>
 
                                             <p class="mt-1 text-xs leading-5 text-gray-500">
-                                                Hilangkan centang untuk mengubah kegiatan menjadi draf.
+                                                Kegiatan yang diterbitkan dapat dilihat pengunjung.
                                             </p>
 
                                         </div>
@@ -505,8 +368,7 @@
                                             name="is_published"
                                             id="is_published"
                                             value="1"
-                                            class="h-5 w-5 rounded border-gray-300 shadow-sm"
-                                            style="color: #be0000;"
+                                            class="mt-1 h-5 w-5 shrink-0 rounded border-gray-300 text-red-700 focus:ring-red-200"
                                             {{ old('is_published', $post->is_published) ? 'checked' : '' }}
                                         >
 
@@ -514,47 +376,41 @@
 
                                 </div>
 
-                                {{-- Ringkasan kegiatan --}}
-                                <div
-                                    class="mt-5 rounded-2xl border p-5"
-                                    style="
-                                        background-color: #fffdf0;
-                                        border-color: #f1e7a4;
-                                    "
-                                >
+                            </div>
 
-                                    <p class="text-xs font-bold uppercase tracking-wider text-gray-500">
-                                        Ringkasan Kegiatan
-                                    </p>
+                            {{-- Ringkasan kegiatan --}}
+                            <div class="rounded-lg border border-gray-200 p-4">
 
-                                    <div class="mt-4 space-y-3">
+                                <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    Ringkasan Kegiatan
+                                </p>
 
-                                        <div class="flex items-start justify-between gap-4 text-sm">
+                                <dl class="mt-4 space-y-3">
 
-                                            <span class="text-gray-500">
-                                                Judul
-                                            </span>
+                                    <div class="flex items-start justify-between gap-4 text-sm">
 
-                                            <span class="max-w-56 text-right font-bold text-gray-800">
-                                                {{ $post->title }}
-                                            </span>
+                                        <dt class="text-gray-500">
+                                            Judul
+                                        </dt>
 
-                                        </div>
+                                        <dd class="max-w-56 text-right font-medium text-gray-900">
+                                            {{ $post->title }}
+                                        </dd>
 
-                                        <div class="flex items-center justify-between gap-4 text-sm">
+                                    </div>
 
-                                            <span class="text-gray-500">
-                                                Status saat ini
-                                            </span>
+                                    <div class="flex items-start justify-between gap-4 text-sm">
+
+                                        <dt class="text-gray-500">
+                                            Status saat ini
+                                        </dt>
+
+                                        <dd>
 
                                             @if ($post->is_published)
 
                                                 <span
-                                                    class="rounded-full px-3 py-1 text-xs font-bold"
-                                                    style="
-                                                        background-color: #dcfce7;
-                                                        color: #166534;
-                                                    "
+                                                    class="inline-flex rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700"
                                                 >
                                                     Diterbitkan
                                                 </span>
@@ -562,46 +418,42 @@
                                             @else
 
                                                 <span
-                                                    class="rounded-full px-3 py-1 text-xs font-bold"
-                                                    style="
-                                                        background-color: #fff9b0;
-                                                        color: #92400e;
-                                                    "
+                                                    class="inline-flex rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600"
                                                 >
                                                     Draf
                                                 </span>
 
                                             @endif
 
-                                        </div>
-
-                                        <div class="flex items-center justify-between gap-4 text-sm">
-
-                                            <span class="text-gray-500">
-                                                Tanggal terbit
-                                            </span>
-
-                                            <span class="text-right font-medium text-gray-700">
-                                                {{ $post->published_at?->format('d M Y H:i') ?? '-' }}
-                                            </span>
-
-                                        </div>
-
-                                        <div class="flex items-center justify-between gap-4 text-sm">
-
-                                            <span class="text-gray-500">
-                                                Terakhir diperbarui
-                                            </span>
-
-                                            <span class="text-right font-medium text-gray-700">
-                                                {{ $post->updated_at->format('d M Y H:i') }}
-                                            </span>
-
-                                        </div>
+                                        </dd>
 
                                     </div>
 
-                                </div>
+                                    <div class="flex items-start justify-between gap-4 text-sm">
+
+                                        <dt class="text-gray-500">
+                                            Tanggal terbit
+                                        </dt>
+
+                                        <dd class="text-right font-medium text-gray-700">
+                                            {{ $post->published_at?->format('d M Y H:i') ?? '-' }}
+                                        </dd>
+
+                                    </div>
+
+                                    <div class="flex items-start justify-between gap-4 text-sm">
+
+                                        <dt class="text-gray-500">
+                                            Terakhir diperbarui
+                                        </dt>
+
+                                        <dd class="text-right font-medium text-gray-700">
+                                            {{ $post->updated_at->format('d M Y H:i') }}
+                                        </dd>
+
+                                    </div>
+
+                                </dl>
 
                             </div>
 
@@ -612,31 +464,23 @@
                 </section>
 
                 {{-- Tombol tindakan --}}
-                <section class="card-maloppo p-5 md:p-6">
-
-                    <div
-                        class="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between"
+                <div
+                    class="flex flex-col-reverse gap-3 border-t border-gray-200 pt-5 sm:flex-row sm:items-center sm:justify-end"
+                >
+                    <a
+                        href="{{ route('admin.posts.index') }}"
+                        class="btn-maloppo-secondary"
                     >
+                        Batal
+                    </a>
 
-                        <a
-                            href="{{ route('admin.posts.index') }}"
-                            class="btn-maloppo-secondary"
-                        >
-                            <span aria-hidden="true">←</span>
-                            Batal dan Kembali
-                        </a>
-
-                        <button
-                            type="submit"
-                            class="btn-maloppo-primary px-8 py-4 text-base"
-                        >
-                            <span>💾</span>
-                            Perbarui Kegiatan
-                        </button>
-
-                    </div>
-
-                </section>
+                    <button
+                        type="submit"
+                        class="btn-maloppo-primary"
+                    >
+                        Simpan Perubahan
+                    </button>
+                </div>
 
             </form>
 
