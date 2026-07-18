@@ -273,15 +273,15 @@
         open = false;
         closeNotificationToast();
     "
-    class="sticky top-0 z-50 border-b border-gray-200 bg-white"
+    class="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm"
 >
-    <div class="maloppo-brand-line"></div>
+    <div class="h-1 w-full bg-gradient-to-r from-red-700 via-red-600 to-yellow-400"></div>
 
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         <div class="flex h-16 items-center justify-between">
 
-            {{-- Bagian kiri --}}
+            {{-- Kiri --}}
             <div class="flex min-w-0 items-center">
 
                 {{-- Logo --}}
@@ -289,22 +289,18 @@
                     href="{{ route('dashboard') }}"
                     class="flex shrink-0 items-center gap-3"
                 >
-                    <div
-                        class="flex h-10 w-16 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white"
+                    <img
+                        src="{{ asset('images/brand/logo-maloppo-wordmark.jpg') }}"
+                        alt="UMKM Maloppo"
+                        class="h-10 w-auto rounded-lg object-contain"
                     >
-                        <img
-                            src="{{ asset('images/brand/logo-maloppo-wordmark.jpg') }}"
-                            alt="UMKM Maloppo"
-                            class="h-full w-full object-contain"
-                        >
-                    </div>
 
                     <div class="hidden sm:block">
-                        <p class="text-sm font-bold text-gray-900">
-                            Maloppo
+                        <p class="text-sm font-bold leading-none text-red-700">
+                            UMKM Maloppo
                         </p>
 
-                        <p class="text-xs text-gray-500">
+                        <p class="mt-1 text-xs text-gray-500">
                             Admin
                         </p>
                     </div>
@@ -315,40 +311,40 @@
 
                     <a
                         href="{{ route('dashboard') }}"
-                        class="rounded-lg px-3 py-2 text-sm font-medium transition
+                        class="rounded-lg px-3 py-2 text-sm font-semibold transition
                             {{ request()->routeIs('dashboard')
                                 ? 'bg-red-50 text-red-700'
-                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}"
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-red-700' }}"
                     >
                         Dashboard
                     </a>
 
                     <a
                         href="{{ route('admin.products.index') }}"
-                        class="rounded-lg px-3 py-2 text-sm font-medium transition
+                        class="rounded-lg px-3 py-2 text-sm font-semibold transition
                             {{ request()->routeIs('admin.products.*')
                                 ? 'bg-red-50 text-red-700'
-                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}"
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-red-700' }}"
                     >
                         Produk
                     </a>
 
                     <a
                         href="{{ route('admin.posts.index') }}"
-                        class="rounded-lg px-3 py-2 text-sm font-medium transition
+                        class="rounded-lg px-3 py-2 text-sm font-semibold transition
                             {{ request()->routeIs('admin.posts.*')
                                 ? 'bg-red-50 text-red-700'
-                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}"
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-red-700' }}"
                     >
                         Kegiatan
                     </a>
 
                     <a
                         href="{{ route('admin.orders.index') }}"
-                        class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition
+                        class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition
                             {{ $ordersActive
                                 ? 'bg-red-50 text-red-700'
-                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}"
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-red-700' }}"
                     >
                         <span>
                             Pesanan
@@ -364,10 +360,10 @@
 
                     <a
                         href="{{ route('admin.orders.history') }}"
-                        class="rounded-lg px-3 py-2 text-sm font-medium transition
+                        class="rounded-lg px-3 py-2 text-sm font-semibold transition
                             {{ $historyActive
                                 ? 'bg-red-50 text-red-700'
-                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}"
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-red-700' }}"
                     >
                         Riwayat
                     </a>
@@ -376,13 +372,13 @@
 
             </div>
 
-            {{-- Bagian kanan desktop --}}
+            {{-- Kanan desktop --}}
             <div class="hidden items-center gap-2 lg:flex">
 
                 {{-- Notifikasi --}}
                 <a
                     href="{{ route('admin.orders.index') }}"
-                    class="relative inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
+                    class="relative inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 transition hover:bg-red-50 hover:text-red-700"
                     :title="unreadCount > 0
                         ? unreadCount + ' pesanan belum dibaca'
                         : 'Tidak ada pesanan baru'"
@@ -416,7 +412,7 @@
                     href="{{ route('home') }}"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+                    class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-4 py-2.5 text-sm font-semibold text-red-700 transition hover:bg-red-50"
                 >
                     Lihat Website
                 </a>
@@ -430,14 +426,12 @@
                             type="button"
                             class="inline-flex items-center gap-2 rounded-lg px-2 py-1.5 text-left transition hover:bg-gray-100"
                         >
-                            <div
-                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-700 text-xs font-bold text-white"
-                            >
+                            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-700 text-xs font-bold text-white">
                                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                             </div>
 
                             <div class="hidden xl:block">
-                                <p class="max-w-32 truncate text-sm font-medium text-gray-800">
+                                <p class="max-w-32 truncate text-sm font-semibold text-gray-800">
                                     {{ Auth::user()->name }}
                                 </p>
                             </div>
@@ -461,7 +455,7 @@
                     <x-slot name="content">
 
                         <div class="border-b border-gray-100 px-4 py-3">
-                            <p class="truncate text-sm font-medium text-gray-800">
+                            <p class="truncate text-sm font-semibold text-gray-800">
                                 {{ Auth::user()->name }}
                             </p>
 
@@ -497,12 +491,12 @@
 
             </div>
 
-            {{-- Bagian kanan HP --}}
+            {{-- Kanan HP --}}
             <div class="flex items-center gap-1 lg:hidden">
 
                 <a
                     href="{{ route('admin.orders.index') }}"
-                    class="relative inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition hover:bg-gray-100"
+                    class="relative inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition hover:bg-red-50 hover:text-red-700"
                     aria-label="Notifikasi pesanan"
                 >
                     <svg
@@ -531,7 +525,7 @@
                 <button
                     type="button"
                     @click="open = !open"
-                    class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition hover:bg-gray-100"
+                    class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition hover:bg-red-50 hover:text-red-700"
                     aria-label="Buka menu"
                 >
                     <svg
@@ -585,7 +579,7 @@
 
             <a
                 href="{{ route('dashboard') }}"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium
+                class="block rounded-lg px-3 py-2.5 text-sm font-semibold
                     {{ request()->routeIs('dashboard')
                         ? 'bg-red-50 text-red-700'
                         : 'text-gray-700 hover:bg-gray-50' }}"
@@ -595,7 +589,7 @@
 
             <a
                 href="{{ route('admin.products.index') }}"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium
+                class="block rounded-lg px-3 py-2.5 text-sm font-semibold
                     {{ request()->routeIs('admin.products.*')
                         ? 'bg-red-50 text-red-700'
                         : 'text-gray-700 hover:bg-gray-50' }}"
@@ -605,7 +599,7 @@
 
             <a
                 href="{{ route('admin.posts.index') }}"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium
+                class="block rounded-lg px-3 py-2.5 text-sm font-semibold
                     {{ request()->routeIs('admin.posts.*')
                         ? 'bg-red-50 text-red-700'
                         : 'text-gray-700 hover:bg-gray-50' }}"
@@ -615,7 +609,7 @@
 
             <a
                 href="{{ route('admin.orders.index') }}"
-                class="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium
+                class="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold
                     {{ $ordersActive
                         ? 'bg-red-50 text-red-700'
                         : 'text-gray-700 hover:bg-gray-50' }}"
@@ -634,7 +628,7 @@
 
             <a
                 href="{{ route('admin.orders.history') }}"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium
+                class="block rounded-lg px-3 py-2.5 text-sm font-semibold
                     {{ $historyActive
                         ? 'bg-red-50 text-red-700'
                         : 'text-gray-700 hover:bg-gray-50' }}"
@@ -646,7 +640,7 @@
                 href="{{ route('home') }}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                class="block rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50"
             >
                 Lihat Website
             </a>
@@ -657,14 +651,12 @@
 
             <div class="flex items-center gap-3">
 
-                <div
-                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-700 text-xs font-bold text-white"
-                >
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-700 text-xs font-bold text-white">
                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                 </div>
 
                 <div class="min-w-0">
-                    <p class="truncate text-sm font-medium text-gray-900">
+                    <p class="truncate text-sm font-semibold text-gray-900">
                         {{ Auth::user()->name }}
                     </p>
 
@@ -679,7 +671,7 @@
 
                 <a
                     href="{{ route('profile.edit') }}"
-                    class="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-center text-sm font-medium text-gray-700"
+                    class="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-center text-sm font-semibold text-gray-700"
                 >
                     Profil
                 </a>
@@ -693,7 +685,7 @@
 
                     <button
                         type="submit"
-                        class="w-full rounded-lg bg-red-700 px-3 py-2 text-sm font-medium text-white"
+                        class="w-full rounded-lg bg-red-700 px-3 py-2 text-sm font-semibold text-white"
                     >
                         Keluar
                     </button>
@@ -715,15 +707,13 @@
         x-transition:leave="transition duration-150 ease-in"
         x-transition:leave-start="translate-y-0 opacity-100"
         x-transition:leave-end="translate-y-2 opacity-0"
-        class="fixed bottom-4 right-4 z-[70] w-[calc(100%-2rem)] max-w-sm rounded-xl border border-gray-200 bg-white p-4 shadow-lg sm:bottom-6 sm:right-6"
+        class="fixed bottom-4 right-4 z-[70] w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-red-100 bg-white p-4 shadow-lg sm:bottom-6 sm:right-6"
         role="alert"
         aria-live="polite"
     >
         <div class="flex items-start gap-3">
 
-            <div
-                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-700"
-            >
+            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-700">
                 <svg
                     class="h-5 w-5"
                     xmlns="http://www.w3.org/2000/svg"
@@ -751,14 +741,14 @@
 
                         <p class="mt-1 text-sm leading-5 text-gray-600">
                             <span
-                                class="font-medium text-gray-900"
+                                class="font-semibold text-gray-900"
                                 x-text="latestOrder?.customer_name"
                             ></span>
 
                             melakukan pesanan senilai
 
                             <span
-                                class="font-semibold text-red-700"
+                                class="font-bold text-red-700"
                                 x-text="latestOrder?.total_formatted"
                             ></span>.
                         </p>
@@ -770,20 +760,7 @@
                         class="shrink-0 text-gray-400 transition hover:text-gray-700"
                         aria-label="Tutup notifikasi"
                     >
-                        <svg
-                            class="h-5 w-5"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.8"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
+                        ✕
                     </button>
 
                 </div>
@@ -797,7 +774,7 @@
 
                     <a
                         :href="notificationUrl()"
-                        class="text-sm font-semibold text-red-700 transition hover:text-red-900"
+                        class="text-sm font-bold text-red-700 transition hover:text-red-900"
                     >
                         Lihat pesanan
                     </a>

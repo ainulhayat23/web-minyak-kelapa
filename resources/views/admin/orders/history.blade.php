@@ -2,25 +2,29 @@
 
     <x-slot name="header">
 
-        <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
             <div>
-                <h1 class="page-title-maloppo">
+                <p class="text-sm font-semibold uppercase tracking-[0.20em] text-red-700">
+                    Riwayat Pesanan
+                </p>
+
+                <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900">
                     Riwayat Pesanan
                 </h1>
 
-                <p class="page-description-maloppo">
+                <p class="mt-2 text-sm leading-6 text-gray-500">
                     Lihat pesanan yang telah selesai atau dibatalkan.
                 </p>
             </div>
 
             <a
                 href="{{ route('admin.orders.index') }}"
-                class="btn-maloppo-secondary"
+                class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-5 py-3 text-sm font-semibold text-red-700 shadow-sm transition hover:bg-red-50"
             >
                 Pesanan Aktif
             </a>
+
         </div>
 
     </x-slot>
@@ -39,18 +43,12 @@
                 default => 'bg-gray-100 text-gray-600',
             };
 
-            $whatsappNumber = preg_replace(
-                '/[^0-9]/',
-                '',
-                $order->customer_phone
-            );
+            $whatsappNumber = preg_replace('/[^0-9]/', '', $order->customer_phone);
 
             if (str_starts_with($whatsappNumber, '0')) {
-                $whatsappNumber =
-                    '62' . substr($whatsappNumber, 1);
+                $whatsappNumber = '62' . substr($whatsappNumber, 1);
             } elseif (str_starts_with($whatsappNumber, '8')) {
-                $whatsappNumber =
-                    '62' . $whatsappNumber;
+                $whatsappNumber = '62' . $whatsappNumber;
             }
 
             $messageLines = [
@@ -60,9 +58,7 @@
                 '',
                 'Kode Pesanan: ' . $order->order_code,
                 'Status Pesanan: ' . $statusLabel,
-                'Tanggal Pesanan: ' .
-                    $order->created_at->format('d/m/Y H:i') .
-                    ' WITA',
+                'Tanggal Pesanan: ' . $order->created_at->format('d/m/Y H:i') . ' WITA',
                 '',
                 'Alamat Pengiriman:',
                 $order->customer_address,
@@ -71,73 +67,48 @@
             ];
 
             foreach ($order->items as $item) {
-                $messageLines[] =
-                    '- ' .
-                    $item->product_name .
-                    ' (' .
-                    ($item->product_size ?? '-') .
-                    ')';
+                $messageLines[] = '- ' . $item->product_name . ' (' . ($item->product_size ?? '-') . ')';
 
                 $messageLines[] =
                     '  ' .
                     $item->quantity .
                     ' x Rp ' .
-                    number_format(
-                        $item->price,
-                        0,
-                        ',',
-                        '.'
-                    ) .
+                    number_format($item->price, 0, ',', '.') .
                     ' = Rp ' .
-                    number_format(
-                        $item->subtotal,
-                        0,
-                        ',',
-                        '.'
-                    );
+                    number_format($item->subtotal, 0, ',', '.');
             }
 
             $messageLines[] = '';
 
             $messageLines[] =
                 'Total Pesanan: Rp ' .
-                number_format(
-                    $order->total_amount,
-                    0,
-                    ',',
-                    '.'
-                );
+                number_format($order->total_amount, 0, ',', '.');
 
             $messageLines[] = '';
 
             if ($order->status === 'completed') {
-                $messageLines[] =
-                    'Pesanan Anda telah selesai. Terima kasih telah berbelanja di UMKM Maloppo.';
+                $messageLines[] = 'Pesanan Anda telah selesai. Terima kasih telah berbelanja di UMKM Maloppo.';
             } else {
-                $messageLines[] =
-                    'Pesanan Anda telah dibatalkan. Silakan hubungi kami apabila membutuhkan informasi lebih lanjut.';
+                $messageLines[] = 'Pesanan Anda telah dibatalkan. Silakan hubungi kami apabila membutuhkan informasi lebih lanjut.';
             }
 
             return [
                 'statusLabel' => $statusLabel,
                 'statusClass' => $statusClass,
                 'whatsappNumber' => $whatsappNumber,
-                'whatsappMessage' => implode(
-                    "\n",
-                    $messageLines
-                ),
+                'whatsappMessage' => implode("\n", $messageLines),
             ];
         };
     @endphp
 
-    <div class="py-6 lg:py-8">
+    <div class="py-8">
 
-        <div class="mx-auto max-w-7xl space-y-5 px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
 
             {{-- Notifikasi berhasil --}}
             @if (session('success'))
 
-                <div class="alert-maloppo-success">
+                <div class="rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-semibold text-green-800 shadow-sm">
                     {{ session('success') }}
                 </div>
 
@@ -146,24 +117,74 @@
             {{-- Notifikasi kesalahan --}}
             @if (session('error'))
 
-                <div class="alert-maloppo-error">
+                <div class="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm font-semibold text-red-800 shadow-sm">
                     {{ session('error') }}
                 </div>
 
             @endif
 
-            {{-- Filter --}}
-            <section class="panel-maloppo p-4 sm:p-5">
+            {{-- Ringkasan kecil --}}
+            <section class="grid grid-cols-1 gap-4 sm:grid-cols-3">
 
-                <div
-                    class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-                >
+                <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                    <p class="text-sm font-semibold text-gray-500">
+                        Total Riwayat
+                    </p>
+
+                    <p class="mt-2 text-3xl font-bold text-gray-900">
+                        {{ $orders->total() }}
+                    </p>
+
+                    <p class="mt-1 text-xs text-gray-500">
+                        Pesanan ditemukan berdasarkan filter.
+                    </p>
+                </div>
+
+                <div class="rounded-2xl border border-green-100 bg-green-50 p-5 shadow-sm">
+                    <p class="text-sm font-semibold text-green-700">
+                        Status Selesai
+                    </p>
+
+                    <p class="mt-2 text-lg font-bold text-gray-900">
+                        Pesanan Berhasil
+                    </p>
+
+                    <p class="mt-1 text-xs text-gray-600">
+                        Pesanan yang telah selesai dapat dicek kembali di halaman ini.
+                    </p>
+                </div>
+
+                <div class="rounded-2xl border border-red-100 bg-red-50 p-5 shadow-sm">
+                    <p class="text-sm font-semibold text-red-700">
+                        Status Dibatalkan
+                    </p>
+
+                    <p class="mt-2 text-lg font-bold text-gray-900">
+                        Pesanan Batal
+                    </p>
+
+                    <p class="mt-1 text-xs text-gray-600">
+                        Pesanan yang dibatalkan tetap tersimpan sebagai riwayat.
+                    </p>
+                </div>
+
+            </section>
+
+            {{-- Filter --}}
+            <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
                     <div>
-                        <h2 class="text-sm font-semibold text-gray-900">
+                        <p class="text-sm font-semibold uppercase tracking-[0.20em] text-red-700">
+                            Filter
+                        </p>
+
+                        <h2 class="mt-2 text-xl font-bold text-gray-900">
                             Filter Riwayat
                         </h2>
 
-                        <p class="mt-1 text-xs text-gray-500">
+                        <p class="mt-1 text-sm text-gray-500">
                             Pilih status pesanan yang ingin ditampilkan.
                         </p>
                     </div>
@@ -172,9 +193,9 @@
 
                         <a
                             href="{{ route('admin.orders.history') }}"
-                            class="inline-flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-medium transition
+                            class="inline-flex items-center justify-center rounded-lg border px-4 py-2.5 text-sm font-semibold transition
                                 {{ $status === null
-                                    ? 'border-red-700 bg-red-700 text-white'
+                                    ? 'border-red-700 bg-red-700 text-white shadow-sm'
                                     : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50' }}"
                         >
                             Semua
@@ -182,9 +203,9 @@
 
                         <a
                             href="{{ route('admin.orders.history', ['status' => 'completed']) }}"
-                            class="inline-flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-medium transition
+                            class="inline-flex items-center justify-center rounded-lg border px-4 py-2.5 text-sm font-semibold transition
                                 {{ $status === 'completed'
-                                    ? 'border-green-700 bg-green-700 text-white'
+                                    ? 'border-green-700 bg-green-700 text-white shadow-sm'
                                     : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50' }}"
                         >
                             Selesai
@@ -192,59 +213,53 @@
 
                         <a
                             href="{{ route('admin.orders.history', ['status' => 'cancelled']) }}"
-                            class="inline-flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-medium transition
+                            class="inline-flex items-center justify-center rounded-lg border px-4 py-2.5 text-sm font-semibold transition
                                 {{ $status === 'cancelled'
-                                    ? 'border-red-700 bg-red-700 text-white'
+                                    ? 'border-red-700 bg-red-700 text-white shadow-sm'
                                     : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50' }}"
                         >
                             Dibatalkan
                         </a>
 
                     </div>
+
                 </div>
 
             </section>
 
             {{-- Daftar riwayat --}}
-            <section class="panel-maloppo overflow-hidden">
+            <section class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
 
                 {{-- Header daftar --}}
-                <div
-                    class="flex flex-col gap-3 border-b border-gray-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6"
-                >
+                <div class="flex flex-col gap-3 border-b border-gray-200 bg-white px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+
                     <div>
-                        <h2 class="section-title-maloppo">
+                        <h2 class="text-2xl font-bold text-gray-900">
                             Daftar Riwayat
                         </h2>
 
-                        <p class="section-description-maloppo">
+                        <p class="mt-1 text-sm text-gray-500">
                             {{ $orders->total() }} pesanan ditemukan berdasarkan filter.
                         </p>
                     </div>
 
-                    <div class="flex items-center gap-3">
+                    <div class="flex flex-wrap items-center gap-3">
 
                         @if ($status === 'completed')
 
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700"
-                            >
+                            <span class="inline-flex rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">
                                 Selesai
                             </span>
 
                         @elseif ($status === 'cancelled')
 
-                            <span
-                                class="inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700"
-                            >
+                            <span class="inline-flex rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-700">
                                 Dibatalkan
                             </span>
 
                         @else
 
-                            <span
-                                class="inline-flex rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600"
-                            >
+                            <span class="inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-600">
                                 Semua Status
                             </span>
 
@@ -252,14 +267,14 @@
 
                         @if ($orders->hasPages())
 
-                            <span class="text-xs text-gray-500">
-                                Halaman {{ $orders->currentPage() }}
-                                dari {{ $orders->lastPage() }}
+                            <span class="rounded-full bg-gray-100 px-4 py-2 text-xs font-semibold text-gray-600">
+                                Halaman {{ $orders->currentPage() }} dari {{ $orders->lastPage() }}
                             </span>
 
                         @endif
 
                     </div>
+
                 </div>
 
                 @if ($orders->count() > 0)
@@ -267,57 +282,56 @@
                     {{-- Tampilan desktop --}}
                     <div class="hidden overflow-x-auto lg:block">
 
-                        <table class="table-maloppo">
+                        <table class="min-w-full divide-y divide-gray-200">
 
-                            <thead>
+                            <thead class="bg-gray-50">
                                 <tr>
-                                    <th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">
                                         Pesanan
                                     </th>
 
-                                    <th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">
                                         Pelanggan
                                     </th>
 
-                                    <th class="text-center">
+                                    <th class="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider text-gray-500">
                                         Produk
                                     </th>
 
-                                    <th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">
                                         Total
                                     </th>
 
-                                    <th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">
                                         Status
                                     </th>
 
-                                    <th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">
                                         Tanggal
                                     </th>
 
-                                    <th class="text-right">
+                                    <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-gray-500">
                                         Aksi
                                     </th>
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody class="divide-y divide-gray-100 bg-white">
 
                                 @foreach ($orders as $order)
 
                                     @php
-                                        $orderData =
-                                            $prepareHistoryOrder($order);
+                                        $orderData = $prepareHistoryOrder($order);
                                     @endphp
 
-                                    <tr>
+                                    <tr class="transition hover:bg-gray-50">
 
                                         {{-- Pesanan --}}
-                                        <td>
+                                        <td class="px-6 py-4">
 
                                             <a
                                                 href="{{ route('admin.orders.show', $order) }}"
-                                                class="font-medium text-gray-900 transition hover:text-red-700"
+                                                class="font-bold text-gray-900 transition hover:text-red-700"
                                             >
                                                 {{ $order->order_code }}
                                             </a>
@@ -325,9 +339,9 @@
                                         </td>
 
                                         {{-- Pelanggan --}}
-                                        <td>
+                                        <td class="px-6 py-4">
 
-                                            <p class="font-medium text-gray-900">
+                                            <p class="font-semibold text-gray-900">
                                                 {{ $order->customer_name }}
                                             </p>
 
@@ -338,30 +352,32 @@
                                         </td>
 
                                         {{-- Jumlah produk --}}
-                                        <td class="text-center">
-                                            {{ $order->items_count }}
+                                        <td class="px-6 py-4 text-center">
+
+                                            <span class="inline-flex rounded-full bg-yellow-50 px-3 py-1 text-xs font-bold text-red-700">
+                                                {{ $order->items_count }} produk
+                                            </span>
+
                                         </td>
 
                                         {{-- Total --}}
-                                        <td class="font-medium text-gray-900">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">
                                             Rp {{ number_format($order->total_amount, 0, ',', '.') }}
                                         </td>
 
                                         {{-- Status --}}
-                                        <td>
+                                        <td class="px-6 py-4">
 
-                                            <span
-                                                class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium {{ $orderData['statusClass'] }}"
-                                            >
+                                            <span class="inline-flex rounded-full px-3 py-1 text-xs font-bold {{ $orderData['statusClass'] }}">
                                                 {{ $orderData['statusLabel'] }}
                                             </span>
 
                                         </td>
 
                                         {{-- Tanggal --}}
-                                        <td>
+                                        <td class="px-6 py-4">
 
-                                            <p class="text-sm text-gray-700">
+                                            <p class="text-sm font-semibold text-gray-700">
                                                 {{ $order->created_at->format('d M Y') }}
                                             </p>
 
@@ -372,13 +388,13 @@
                                         </td>
 
                                         {{-- Aksi --}}
-                                        <td>
+                                        <td class="px-6 py-4">
 
-                                            <div class="flex items-center justify-end gap-4">
+                                            <div class="flex items-center justify-end gap-3">
 
                                                 <a
                                                     href="{{ route('admin.orders.show', $order) }}"
-                                                    class="text-sm font-medium text-gray-700 transition hover:text-red-700"
+                                                    class="inline-flex items-center justify-center rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 hover:text-red-700"
                                                 >
                                                     Detail
                                                 </a>
@@ -387,7 +403,7 @@
                                                     href="https://wa.me/{{ $orderData['whatsappNumber'] }}?text={{ urlencode($orderData['whatsappMessage']) }}"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    class="text-sm font-medium text-green-700 transition hover:text-green-900"
+                                                    class="inline-flex items-center justify-center rounded-lg border border-green-200 px-3 py-2 text-sm font-semibold text-green-700 transition hover:bg-green-50 hover:text-green-900"
                                                 >
                                                     WhatsApp
                                                 </a>
@@ -412,31 +428,27 @@
                         @foreach ($orders as $order)
 
                             @php
-                                $orderData =
-                                    $prepareHistoryOrder($order);
+                                $orderData = $prepareHistoryOrder($order);
                             @endphp
 
-                            <article class="p-4 sm:p-5">
+                            <article class="p-5">
 
                                 {{-- Kode dan status --}}
                                 <div class="flex items-start justify-between gap-3">
 
                                     <div class="min-w-0">
 
-                                        <h3 class="text-sm font-semibold text-gray-900">
+                                        <h3 class="text-sm font-bold text-gray-900">
                                             {{ $order->order_code }}
                                         </h3>
 
                                         <p class="mt-1 text-xs text-gray-500">
-                                            {{ $order->created_at->format('d M Y, H:i') }}
-                                            WITA
+                                            {{ $order->created_at->format('d M Y, H:i') }} WITA
                                         </p>
 
                                     </div>
 
-                                    <span
-                                        class="shrink-0 rounded-full px-2.5 py-1 text-[10px] font-medium {{ $orderData['statusClass'] }}"
-                                    >
+                                    <span class="shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold {{ $orderData['statusClass'] }}">
                                         {{ $orderData['statusLabel'] }}
                                     </span>
 
@@ -445,7 +457,7 @@
                                 {{-- Pelanggan --}}
                                 <div class="mt-4">
 
-                                    <p class="text-sm font-medium text-gray-900">
+                                    <p class="text-sm font-bold text-gray-900">
                                         {{ $order->customer_name }}
                                     </p>
 
@@ -456,16 +468,14 @@
                                 </div>
 
                                 {{-- Informasi ringkas --}}
-                                <div
-                                    class="mt-4 grid grid-cols-2 gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3"
-                                >
+                                <div class="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-gray-200 bg-gray-50 p-4">
 
                                     <div>
                                         <p class="text-xs text-gray-500">
                                             Jumlah Produk
                                         </p>
 
-                                        <p class="mt-1 text-sm font-medium text-gray-900">
+                                        <p class="mt-1 text-sm font-bold text-gray-900">
                                             {{ $order->items_count }} produk
                                         </p>
                                     </div>
@@ -475,7 +485,7 @@
                                             Total
                                         </p>
 
-                                        <p class="mt-1 text-sm font-semibold text-gray-900">
+                                        <p class="mt-1 text-sm font-bold text-red-700">
                                             Rp {{ number_format($order->total_amount, 0, ',', '.') }}
                                         </p>
                                     </div>
@@ -483,13 +493,11 @@
                                 </div>
 
                                 {{-- Aksi --}}
-                                <div
-                                    class="mt-4 flex items-center justify-end gap-4 border-t border-gray-100 pt-3"
-                                >
+                                <div class="mt-4 flex items-center justify-end gap-3 border-t border-gray-100 pt-4">
 
                                     <a
                                         href="{{ route('admin.orders.show', $order) }}"
-                                        class="text-sm font-medium text-gray-700"
+                                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700"
                                     >
                                         Detail
                                     </a>
@@ -498,7 +506,7 @@
                                         href="https://wa.me/{{ $orderData['whatsappNumber'] }}?text={{ urlencode($orderData['whatsappMessage']) }}"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        class="text-sm font-medium text-green-700"
+                                        class="inline-flex items-center justify-center rounded-lg border border-green-200 px-4 py-2 text-sm font-semibold text-green-700"
                                     >
                                         WhatsApp
                                     </a>
@@ -523,20 +531,23 @@
                 @else
 
                     {{-- Riwayat kosong --}}
-                    <div class="px-5 py-14 text-center">
+                    <div class="px-5 py-16 text-center">
 
-                        <p class="font-medium text-gray-700">
+                        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-50 text-2xl">
+                            📦
+                        </div>
+
+                        <p class="mt-4 text-lg font-bold text-gray-800">
                             Riwayat pesanan belum tersedia
                         </p>
 
                         <p class="mx-auto mt-1 max-w-md text-sm leading-6 text-gray-500">
-                            Pesanan yang selesai atau dibatalkan akan ditampilkan
-                            pada halaman ini.
+                            Pesanan yang selesai atau dibatalkan akan ditampilkan pada halaman ini.
                         </p>
 
                         <a
                             href="{{ route('admin.orders.index') }}"
-                            class="btn-maloppo-secondary mt-4"
+                            class="mt-5 inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-5 py-3 text-sm font-semibold text-red-700 shadow-sm transition hover:bg-red-50"
                         >
                             Lihat Pesanan Aktif
                         </a>
