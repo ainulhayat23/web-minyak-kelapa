@@ -5,34 +5,34 @@
         class="w-full"
     >
 
-        {{-- Identitas --}}
-        <div class="mb-6 text-center">
+        {{-- Logo dan identitas --}}
+        <div class="mb-7 text-center">
 
-            <a
-                href="{{ route('home') }}"
-                class="inline-flex items-center justify-center"
-            >
-                <div
-                    class="flex h-14 w-32 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white"
+            <div class="flex justify-center">
+                <a
+                    href="{{ route('home') }}"
+                    class="inline-flex items-center justify-center"
                 >
                     <img
                         src="{{ asset('images/brand/logo-maloppo-wordmark.jpg') }}"
                         alt="Logo UMKM Maloppo"
-                        class="h-full w-full object-contain"
+                        class="h-16 w-auto rounded-xl object-contain"
                     >
-                </div>
-            </a>
+                </a>
+            </div>
 
-            <p class="mt-5 text-xs font-semibold uppercase tracking-wider text-red-700">
-                Akses Administrator
-            </p>
+            <div class="mt-5 flex justify-center">
+                <span class="inline-flex items-center rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.20em] text-red-700">
+                    Akses Administrator
+                </span>
+            </div>
 
-            <h1 class="mt-2 text-2xl font-semibold text-gray-900">
+            <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900">
                 Masuk ke Dashboard
             </h1>
 
-            <p class="mx-auto mt-2 max-w-sm text-sm leading-6 text-gray-500">
-                Masukkan email dan password administrator UMKM Maloppo.
+            <p class="mx-auto mt-3 max-w-sm text-sm leading-6 text-gray-500">
+                Gunakan akun administrator untuk mengelola produk, kegiatan, dan pesanan UMKM Maloppo.
             </p>
 
         </div>
@@ -40,7 +40,7 @@
         {{-- Status sesi --}}
         @if (session('status'))
 
-            <div class="mb-5 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            <div class="mb-5 rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-semibold text-green-800">
                 {{ session('status') }}
             </div>
 
@@ -49,28 +49,25 @@
         {{-- Kesalahan login --}}
         @if ($errors->any())
 
-            <div class="alert-maloppo-error mb-5">
+            <div class="mb-5 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-800">
 
-                <p class="font-semibold">
+                <p class="font-bold">
                     Login belum berhasil.
                 </p>
 
                 <ul class="mt-2 list-inside list-disc space-y-1">
-
                     @foreach ($errors->all() as $error)
-
                         <li>
                             {{ $error }}
                         </li>
-
                     @endforeach
-
                 </ul>
 
             </div>
 
         @endif
 
+        {{-- Form login --}}
         <form
             method="POST"
             action="{{ route('login') }}"
@@ -83,9 +80,9 @@
 
                 <label
                     for="email"
-                    class="block text-sm font-medium text-gray-700"
+                    class="block text-sm font-semibold text-gray-700"
                 >
-                    Email
+                    Email Administrator
                 </label>
 
                 <input
@@ -93,7 +90,7 @@
                     type="email"
                     name="email"
                     value="{{ old('email') }}"
-                    class="input-maloppo mt-2"
+                    class="mt-2 block w-full rounded-xl border-gray-300 px-4 py-3 text-sm shadow-sm transition focus:border-red-500 focus:ring-red-500"
                     placeholder="Masukkan email administrator"
                     autocomplete="username"
                     autofocus
@@ -101,11 +98,9 @@
                 >
 
                 @error('email')
-
-                    <p class="mt-2 text-sm text-red-700">
+                    <p class="mt-2 text-sm font-medium text-red-700">
                         {{ $message }}
                     </p>
-
                 @enderror
 
             </div>
@@ -117,7 +112,7 @@
 
                     <label
                         for="password"
-                        class="block text-sm font-medium text-gray-700"
+                        class="block text-sm font-semibold text-gray-700"
                     >
                         Password
                     </label>
@@ -126,7 +121,7 @@
 
                         <a
                             href="{{ route('password.request') }}"
-                            class="text-xs font-medium text-red-700 transition hover:text-red-900"
+                            class="text-xs font-semibold text-red-700 transition hover:text-red-900"
                         >
                             Lupa password?
                         </a>
@@ -141,7 +136,7 @@
                         id="password"
                         :type="showPassword ? 'text' : 'password'"
                         name="password"
-                        class="input-maloppo pr-12"
+                        class="block w-full rounded-xl border-gray-300 px-4 py-3 pr-12 text-sm shadow-sm transition focus:border-red-500 focus:ring-red-500"
                         placeholder="Masukkan password"
                         autocomplete="current-password"
                         required
@@ -149,7 +144,7 @@
 
                     <button
                         type="button"
-                        class="absolute inset-y-0 right-0 flex items-center justify-center px-3 text-gray-400 transition hover:text-gray-700"
+                        class="absolute inset-y-0 right-0 flex items-center justify-center px-4 text-gray-400 transition hover:text-red-700"
                         @click="showPassword = !showPassword"
                         :aria-label="showPassword ? 'Sembunyikan password' : 'Tampilkan password'"
                     >
@@ -159,7 +154,7 @@
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke-width="1.5"
+                            stroke-width="1.7"
                             stroke="currentColor"
                             class="h-5 w-5"
                         >
@@ -181,7 +176,7 @@
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke-width="1.5"
+                            stroke-width="1.7"
                             stroke="currentColor"
                             class="h-5 w-5"
                         >
@@ -197,11 +192,9 @@
                 </div>
 
                 @error('password')
-
-                    <p class="mt-2 text-sm text-red-700">
+                    <p class="mt-2 text-sm font-medium text-red-700">
                         {{ $message }}
                     </p>
-
                 @enderror
 
             </div>
@@ -217,7 +210,7 @@
                         id="remember_me"
                         type="checkbox"
                         name="remember"
-                        class="rounded border-gray-300 text-red-700 shadow-sm focus:ring-red-600"
+                        class="rounded border-gray-300 text-red-700 shadow-sm focus:ring-red-500"
                     >
 
                     <span class="ml-2 text-sm text-gray-600">
@@ -234,26 +227,26 @@
             {{-- Tombol masuk --}}
             <button
                 type="submit"
-                class="btn-maloppo-primary w-full"
+                class="inline-flex w-full items-center justify-center rounded-xl bg-red-700 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             >
                 Masuk ke Dashboard
             </button>
 
         </form>
 
-        {{-- Kembali ke website --}}
+        {{-- Kembali --}}
         <div class="mt-6 border-t border-gray-200 pt-5 text-center">
 
             <a
                 href="{{ route('home') }}"
-                class="text-sm font-medium text-gray-600 transition hover:text-red-700"
+                class="text-sm font-semibold text-gray-600 transition hover:text-red-700"
             >
                 Kembali ke Website Maloppo
             </a>
 
         </div>
 
-        {{-- Informasi keamanan --}}
+        {{-- Catatan keamanan --}}
         <p class="mt-4 text-center text-xs leading-5 text-gray-400">
             Halaman ini hanya digunakan oleh administrator resmi UMKM Maloppo.
         </p>
