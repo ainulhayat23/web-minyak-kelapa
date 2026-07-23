@@ -87,79 +87,98 @@
                 <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
 
                     {{-- Total produk --}}
-                    <article class="panel-maloppo p-4 sm:p-5">
-
-                        <p class="text-xs font-medium text-gray-500 sm:text-sm">
-                            Total Produk
-                        </p>
-
-                        <p class="mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
-                            {{ $totalProducts }}
-                        </p>
-
-                        <p class="mt-2 text-xs text-gray-500">
-                            Seluruh produk
-                        </p>
-
+                    <article class="panel-maloppo p-4 sm:p-5 relative overflow-hidden group hover:border-red-300 transition-all duration-300 hover:shadow-md">
+                        <div class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-blue-50 opacity-50 transition-transform duration-300 group-hover:scale-110"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                                    Total Produk
+                                </p>
+                                <p class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl">
+                                    {{ $totalProducts }}
+                                </p>
+                                <p class="mt-2 text-xs text-gray-500">
+                                    Seluruh produk
+                                </p>
+                            </div>
+                            <div class="rounded-xl bg-blue-50 p-2.5 text-blue-600 ring-1 ring-blue-100">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                                </svg>
+                            </div>
+                        </div>
                     </article>
 
                     {{-- Produk aktif --}}
-                    <article class="panel-maloppo p-4 sm:p-5">
-
-                        <p class="text-xs font-medium text-gray-500 sm:text-sm">
-                            Produk Aktif
-                        </p>
-
-                        <p class="mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
-                            {{ $activeProducts }}
-                        </p>
-
-                        <p class="mt-2 text-xs text-green-700">
-                            Tampil di katalog
-                        </p>
-
+                    <article class="panel-maloppo p-4 sm:p-5 relative overflow-hidden group hover:border-green-300 transition-all duration-300 hover:shadow-md">
+                        <div class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-green-50 opacity-50 transition-transform duration-300 group-hover:scale-110"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                                    Produk Aktif
+                                </p>
+                                <p class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl">
+                                    {{ $activeProducts }}
+                                </p>
+                                <p class="mt-2 text-xs text-green-700 font-medium">
+                                    Tampil di katalog
+                                </p>
+                            </div>
+                            <div class="rounded-xl bg-green-50 p-2.5 text-green-600 ring-1 ring-green-100">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
                     </article>
 
                     {{-- Stok habis --}}
-                    <article class="panel-maloppo p-4 sm:p-5">
-
-                        <p class="text-xs font-medium text-gray-500 sm:text-sm">
-                            Stok Habis
-                        </p>
-
-                        <p
-                            class="mt-2 text-2xl font-semibold sm:text-3xl
-                                {{ $outOfStockProducts > 0
-                                    ? 'text-red-700'
-                                    : 'text-gray-900' }}"
-                        >
-                            {{ $outOfStockProducts }}
-                        </p>
-
-                        <a
-                            href="{{ route('admin.products.index') }}"
-                            class="mt-2 inline-block text-xs font-medium text-red-700 hover:text-red-900"
-                        >
-                            Periksa produk
-                        </a>
-
+                    <article class="panel-maloppo p-4 sm:p-5 relative overflow-hidden group hover:border-red-300 transition-all duration-300 hover:shadow-md">
+                        <div class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-red-50 opacity-50 transition-transform duration-300 group-hover:scale-110"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                                    Stok Habis
+                                </p>
+                                <p class="mt-2 text-2xl font-bold sm:text-3xl {{ $outOfStockProducts > 0 ? 'text-red-700' : 'text-gray-900' }}">
+                                    {{ $outOfStockProducts }}
+                                </p>
+                                <a href="{{ route('admin.products.index') }}" class="mt-2 inline-flex items-center gap-1 text-xs font-medium text-red-700 hover:text-red-900 transition-colors">
+                                    Periksa produk
+                                    <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="rounded-xl {{ $outOfStockProducts > 0 ? 'bg-red-50 text-red-600 ring-red-100' : 'bg-gray-50 text-gray-500 ring-gray-100' }} p-2.5 ring-1">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            </div>
+                        </div>
                     </article>
 
                     {{-- Total stok --}}
-                    <article class="panel-maloppo p-4 sm:p-5">
-
-                        <p class="text-xs font-medium text-gray-500 sm:text-sm">
-                            Total Stok
-                        </p>
-
-                        <p class="mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
-                            {{ $totalStock }}
-                        </p>
-
-                        <p class="mt-2 text-xs text-gray-500">
-                            Seluruh persediaan
-                        </p>
-
+                    <article class="panel-maloppo p-4 sm:p-5 relative overflow-hidden group hover:border-yellow-300 transition-all duration-300 hover:shadow-md">
+                        <div class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-yellow-50 opacity-50 transition-transform duration-300 group-hover:scale-110"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                                    Total Stok
+                                </p>
+                                <p class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl">
+                                    {{ $totalStock }}
+                                </p>
+                                <p class="mt-2 text-xs text-gray-500">
+                                    Seluruh persediaan
+                                </p>
+                            </div>
+                            <div class="rounded-xl bg-yellow-50 p-2.5 text-yellow-600 ring-1 ring-yellow-100">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                </svg>
+                            </div>
+                        </div>
                     </article>
 
                 </div>
@@ -185,12 +204,16 @@
 
                     <a
                         href="{{ route('admin.products.index') }}"
-                        class="px-4 py-4 transition hover:bg-gray-50 sm:px-5"
+                        class="group px-4 py-5 transition-all hover:bg-red-50/50 sm:px-6 flex flex-col justify-center items-center text-center"
                     >
-                        <p class="text-sm font-semibold text-gray-900">
+                        <div class="mb-3 rounded-full bg-red-100 p-3 text-red-600 transition-transform group-hover:-translate-y-1 group-hover:shadow-sm">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900 group-hover:text-red-700">
                             Produk
                         </p>
-
                         <p class="mt-1 text-xs leading-5 text-gray-500">
                             Kelola data dan stok produk.
                         </p>
@@ -198,12 +221,16 @@
 
                     <a
                         href="{{ route('admin.posts.index') }}"
-                        class="px-4 py-4 transition hover:bg-gray-50 sm:px-5"
+                        class="group px-4 py-5 transition-all hover:bg-yellow-50/50 sm:px-6 flex flex-col justify-center items-center text-center"
                     >
-                        <p class="text-sm font-semibold text-gray-900">
+                        <div class="mb-3 rounded-full bg-yellow-100 p-3 text-yellow-600 transition-transform group-hover:-translate-y-1 group-hover:shadow-sm">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900 group-hover:text-yellow-700">
                             Kegiatan
                         </p>
-
                         <p class="mt-1 text-xs leading-5 text-gray-500">
                             Kelola berita dan aktivitas.
                         </p>
@@ -211,12 +238,16 @@
 
                     <a
                         href="{{ route('admin.orders.index') }}"
-                        class="px-4 py-4 transition hover:bg-gray-50 sm:px-5"
+                        class="group px-4 py-5 transition-all hover:bg-green-50/50 sm:px-6 flex flex-col justify-center items-center text-center"
                     >
-                        <p class="text-sm font-semibold text-gray-900">
+                        <div class="mb-3 rounded-full bg-green-100 p-3 text-green-600 transition-transform group-hover:-translate-y-1 group-hover:shadow-sm">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900 group-hover:text-green-700">
                             Pesanan
                         </p>
-
                         <p class="mt-1 text-xs leading-5 text-gray-500">
                             Periksa pesanan pelanggan.
                         </p>
@@ -226,12 +257,16 @@
                         href="{{ route('catalog.index') }}"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="px-4 py-4 transition hover:bg-gray-50 sm:px-5"
+                        class="group px-4 py-5 transition-all hover:bg-blue-50/50 sm:px-6 flex flex-col justify-center items-center text-center"
                     >
-                        <p class="text-sm font-semibold text-gray-900">
+                        <div class="mb-3 rounded-full bg-blue-100 p-3 text-blue-600 transition-transform group-hover:-translate-y-1 group-hover:shadow-sm">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900 group-hover:text-blue-700">
                             Katalog Publik
                         </p>
-
                         <p class="mt-1 text-xs leading-5 text-gray-500">
                             Lihat tampilan untuk pelanggan.
                         </p>
